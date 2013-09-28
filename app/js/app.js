@@ -6,5 +6,6 @@ angular.module('storyTellersAid', ['storyTellersAid.filters', 'storyTellersAid.s
   config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/stories', {templateUrl: 'partials/stories.html', controller: 'StoryController'});
     $routeProvider.when('/stories/new', {templateUrl: 'partials/newStory.html', controller: 'StoryController'});
+    $routeProvider.when('/stories/new/chapters/new', {templateUrl: 'partials/newChapter.html', controller: 'StoryController'});
     $routeProvider.otherwise({redirectTo: '/stories'});
   }]);
