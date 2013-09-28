@@ -2,9 +2,12 @@
 
 /* Controllers */
 
-angular.module('myApp.controllers', []).
-  controller('MyCtrl1', [function() {
+angular.module('storyTellersAid.controllers', []).
+  controller('StoryController', [function($scope) {
 
+/*			$scope.addStory = function() {
+			}
+*/
   }])
   .controller('MyCtrl2', [function() {
 
