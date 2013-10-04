@@ -1,0 +1,64 @@
+<div class="page-header">
+	<h1>New Scene</h1>
+</div>
+<form class="form-horizontal">
+	<div class="form-group">
+		<label for="name" class="col-lg-2 control-label">Name</label>
+		<div class="col-lg-10">
+			<input name="name" type="text" ng-model="story.chapter.name" class="form-control" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="location" class="col-lg-2 control-label">Location</label>
+		<div class="col-lg-10">
+			<textarea name="location"  ng-model="story.chapter.scene.location" class="form-control" rows="10"></textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="playerDescription" class="col-lg-2 control-label">Player Description</label>
+		<div class="col-lg-10">
+			<textarea name="playerDescription"  ng-model="story.chapter.scene.playerDescription" class="form-control" rows="10"></textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="gmdescription" class="col-lg-2 control-label">GM Description</label>
+		<div class="col-lg-10">
+			<textarea name="gmdescription"  ng-model="story.chapter.scene.gmdescription" class="form-control" rows="10"></textarea>
+		</div>
+	</div>
+	<table class="table">
+		<caption>Clues<button class="btn btn-default">Add</button></caption>
+		<thead>
+			<tr>
+				<th>Number</th>
+				<th>Description</th>
+				<th>Location</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="clue in clues">
+				<td>{{clue.number}}</td>
+				<td>{{clue.description}}</td>
+				<td>{{clue.location}}</td>
+				<td>
+					<button class="btn btn-default">Edit</button>
+					<button class="btn btn-default">Delete</button>
+				</td>
+			</tr>
+	</table>
+	<table class="table">
+		<caption>Cast<a href="#/stories/new/cast/new" class="btn btn-default">Add</button></caption>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Role</th>
+				<th>High Concept</th>
+				<th>Trouble</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr><td>Dr. Evil</td><td>Leader of the bad guys</td><td>Hysterically evil</td><td>Sweet Tooth</td><td><button class="btn btn-default">Edit</button><button class="btn btn-default">Delete</button></tr>
+		</tbody>
+	</table>
+</form>
+

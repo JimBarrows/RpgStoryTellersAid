@@ -4,20 +4,23 @@
 <a href="#/stories/new" class="btn btn-default">Add</a>
 <table class="table table-striped table-bordered">
 <thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Setting</th>
-<th>Status</th>
-</tr>
+	<tr>
+		<th>Name</th>
+		<th>Description</th>
+		<th>Setting</th>
+		<th>Status</th>
+	</tr>
 </thead>
 <tbody>
-<tr>
-	<td>Some Story</td>
-	<td>Can the plucky heros battle evil</td>
-	<td>Deadlands: Noir</td>
-	<td>Ready for play</td>
-	<td><button class="btn btn-default">edit</button><button class="btn btn-default">delete</button></td>
-</tr>
+	<tr ng-repeat="story in stories">
+		<td>{{story.name}}</td>
+		<td>{{story.description}}</td>
+		<td>{{story.setting}}</td>
+		<td>{{story.status}}</td>
+		<td>
+			<a href="#/stories/edit/{{story.id}}" class="btn btn-default">Edit</a>
+			<button ng-click="delete( story)" class="btn btn-default">Delete</button>
+		</td>
+	</tr>
 </tbody>
 </table>

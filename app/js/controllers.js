@@ -2,13 +2,43 @@
 
 /* Controllers */
 
-angular.module('storyTellersAid.controllers', []).
-  controller('StoryController', [function($scope) {
+angular.module('storyTellersAid.controllers', [])
 
-/*			$scope.addStory = function() {
+	.controller('StoryController', ['$scope', 
+																	'storyService', 
+		function($scope, storySvc) {
+
+			$scope.stories =  storySvc.list();
+			$scope.delete = function( story) {
+				storySvc.delete( story);
+				$scope.stories =  storySvc.list();
 			}
-*/
-  }])
-  .controller('MyCtrl2', [function() {
 
+		}])
+
+	.controller('StoryFormController', ['$scope', '$routeParams', 'storyService',
+
+		function($scope, $routeParams,storySvc) {
+
+			$scope.story = storySvc.find( $routeParams.id)
+
+			$scope.saveStory = function() {
+				storySvc.save( $scope.story)
+			}
+
+			$scope.cancel = function() {
+				$scope.story = storySvc.find( $routeParams.id)	
+			}
+
+		}])
+
+  .controller('ClueTable', ['$scope', function($scope) {
+		$scope.clues = [
+			{ "number" : "1",
+				"description" : "New Description",
+				"location" : "Somewhere"},
+			{ "number" : "2",
+				"description" : "Another Description",
+				"location" : "Somewhere"}
+		];
   }]);
