@@ -20,7 +20,11 @@ angular.module('storyTellersAid.controllers', [])
 
 		function($scope, $routeParams,storySvc) {
 
-			$scope.story = storySvc.find( $routeParams.id)
+			if( typeof $routeParams.id === "undefined") {
+				$scope.story = null
+			} else {
+				$scope.story = storySvc.find( $routeParams.id)
+			}
 
 			$scope.saveStory = function() {
 				storySvc.save( $scope.story)

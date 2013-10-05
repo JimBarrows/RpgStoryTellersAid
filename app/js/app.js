@@ -13,13 +13,9 @@ angular.module('storyTellersAid', [
     	.when('/stories', 
     		{templateUrl: 'partials/stories.html', 
     		controller: 'StoryController'});
-    $routeProvider.when('/stories/new', {templateUrl: 'partials/newStory.html', 
-    																			controller: 'StoryFormController'});
-    $routeProvider.when('/stories/edit/:id', {templateUrl: 'partials/newStory.html', 
-    																			controller: 'StoryFormController'});
-    $routeProvider.when('/stories/new/chapters/new', {templateUrl: 'partials/newChapter.html', 
-    																									controller: 'StoryController'});
-    $routeProvider.when('/stories/new/chapters/new/scenes/new', {templateUrl: 'partials/newScene.html', 
-    																															controller: 'ClueTable'});
+    $routeProvider.when('/stories/new', {templateUrl: 'partials/newStory.html'}),
+    $routeProvider.when('/stories/edit/:id', {templateUrl: 'partials/newStory.html'}),
+    $routeProvider.when('/stories/new/chapters/new', {templateUrl: 'partials/newChapter.html'}),
+    $routeProvider.when('/stories/new/chapters/new/scenes/new', {templateUrl: 'partials/newScene.html'}),
     $routeProvider.otherwise({redirectTo: '/stories'});
   }]);
