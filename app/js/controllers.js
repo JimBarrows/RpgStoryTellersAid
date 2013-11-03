@@ -47,6 +47,11 @@ angular.module('storyTellersAid.controllers', [])
 												 $location.path("stories/edit/" + $scope.story.id + "/chapters/" + chapter.id)
 										 }
 
+										 $scope.deleteChapter = function( chapter) {
+
+												 storySvc.deleteChapter( $scope.story, chapter)
+												 
+										 }
 								 }])
 
 		.controller('ChapterFormController',

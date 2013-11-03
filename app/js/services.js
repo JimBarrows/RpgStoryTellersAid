@@ -73,6 +73,13 @@ angular.module('storyTellersAid.services', []).
 								}
 								this.save( story)
 						},
+
+						deleteChapter: function( story, chapter) {
+								var indexOf = story.chapters.map( function( s) {return s.id;}).indexOf( chapter.id)
+								if( indexOf >= 0) {
+										story.chapters.splice( indexOf, 1)
+								}
+						},
 						
   					delete: function( story) {
 								var index =	stories.map(function (s) {return s.id;}).indexOf( story.id)
