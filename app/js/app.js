@@ -3,6 +3,7 @@
 
 // Declare app level module which depends on filters, and services
 angular.module('storyTellersAid', [
+		'ui.bootstrap',
 		'storyTellersAid.filters', 
 		'storyTellersAid.services', 
 		'storyTellersAid.directives', 

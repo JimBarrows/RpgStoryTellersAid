@@ -1,31 +1,5 @@
 <div class="page-header">
 	<h1>New Chapter</h1>
 </div>
-<form class="form-horizontal">
-	<div class="form-group">
-		<label for="name" class="col-lg-2 control-label">Name</label>
-		<div class="col-lg-10">
-			<input name="name" type="text" ng-model="story.chapter.name" class="form-control" />
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="description" class="col-lg-2 control-label">Description</label>
-		<div class="col-lg-10">
-			<textarea name="description"  ng-model="story.chapter.description" class="form-control" rows="10"></textarea>
-		</div>
-	</div>
-	<table class="table">
-		<caption>Scenes<a href="#/stories/new/chapters/new/scenes/new" class="btn btn-default">Add</a></caption>
-		<thead>
-			<tr>
-				<th>Number</th>
-				<th>Name</th>
-				<th>Description</th>
-				<th>Location</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr><td>1</td><td>A lady walks in</td><td>blah</td><td>Characters office</td><td><button class="btn btn-default">Edit</button><button class="btn btn-default">Delete</button></tr>
-	</table>
-</form>
-
+<div ng-include="'partials/chapterForm.html'">
+</div>

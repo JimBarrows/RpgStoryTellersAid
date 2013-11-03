@@ -23,51 +23,36 @@
 			<input name="status" type="text" ng-model="story.status" class="form-control" />
 		</div>
 	</div>
-	<button class="btn btn-primary" ng-click="saveStory()">Save</button>
-	<button class="btn btn-default" ng-click="cancel()">Cancel</button>
-	<a class="btn btn-default" href="#/stories">Done</a>
-	<table class="table">
-		<caption>Chapters <a href="#/stories/new/chapters/new" class="btn btn-default">Add</a></caption>
-		<thead>
-			<tr>
-				<th>Number</th>
-				<th>Name</th>
-				<th>Description</th>
-				<th>Scenes</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr><td>1</td><td>Opening</td><td>Sets the tone for the story and suggests the protagonist’s primary problem.</td><td>None</td><td><button>Edit</button><button>Delete</button></tr>
-			<tr><td>2</td><td>Theme is Stated</td><td>A question or statement, usually made to the protagonist, indicating the stories main thematic idea.</td><td>None</td><td><button>Edit</button><button>Delete</button></tr>
-			<tr><td>3</td><td>Setup</td><td>An introduction to the main characters and setting - the background</td><td>None</td><td><button>Edit</button><button>Delete</button></tr>
-			<tr><td>4</td><td>Catalyst</td><td>A major event that changes the protagonist's world and sets the story in motion</td><td>None</td><td><button>Edit</button><button>Delete</button></tr>
-			<tr><td>5</td><td>Debate</td><td>A question is raised about the choice now before the protagonist.  Often this section lays out the stakes for the journey ahead</td><td>None</td><td><button>Edit</button><button>Delete</button></tr>
-			<tr><td>6</td><td>Break into Act II</td><td>The hero definitely leaves his old world or situation and enters a strange new one</td><td>None</td><td><button>Edit</button><button>Delete</button></tr>
-			<tr><td>7</td><td>B-Story</td><td>A secondary plotline that often fleshes out side characters - frequently a mentor or a love interest - who assist the hero on his journey</td><td>None</td><td><button>Edit</button><button>Delete</button></tr>
-			<tr><td>8</td><td>Fun and Games</td><td>Offers the "promise of the premise."  It's an exploration of the story's core concept that gives the story it's "trailer-friendly moments"  It's usually lighter in tone, and it typically builds to a big victory at the midpoint.</td><td>None</td><td><button>Edit</button><button>Delete</button></tr>
-			<tr><td>9</td><td>Midpoint</td><td>The A &amp; B stories cross.  The story build to either a false victory or (less often) false defeat.  New information is revealed that raises the stakes.</td><td>None</td></tr>
-			<tr><td>10</td><td>Bad Guys Clsoe In</td><td>After the victory at the midpoint, things grow steadily worse as the villains regroup adn push forward.</td><td>None</td><td><button>Edit</button><button>Delete</button></tr>
-			<tr><td>11</td><td>All is lost</td><td>Mirroring the midpoint, it's usually a false defeat.  The hero's life is in shambles.  Often there's a mjor death or at least the sense of death - a reference to dying or mortality somehow.</td><td>None</td><td><button>Edit</button><button>Delete</button></tr>
-			<tr><td>12</td><td>Dark night of the soul</td><td>A moment of contemplation in which the hero consdiers how far he's come and all he's learned.  It's the moment in which the hero asks, "Why is all this happening?"</td><td>None</td><td><button>Edit</button><button>Delete</button></tr>
-			<tr><td>13</td><td>Break into Act III</td><td>A "Eureka!" moment that gives the hero the strength to keep going - and provides the key to success in Act III</td><td>None</td><td><button>Edit</button><button>Delete</button></tr>
-			<tr><td>14</td><td>Finale</td><td>Relying on all he has learned throughout the story, the hero sovles his problems, defeats the villains, and changes the world for the better.</td><td>None</td><td><button>Edit</button><button>Delete</button></tr>
-		</tbody>
-	</table>
-	<table class="table">
-		<caption>Cast<a href="#/stories/new/cast/new" class="btn btn-default">Add</button></caption>
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Role</th>
-				<th>High Concept</th>
-				<th>Trouble</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr><td>Dr. Evil</td><td>Leader of the bad guys</td><td>Hysterically evil</td><td>Sweet Tooth</td><td><button class="btn btn-default">Edit</button><button class="btn btn-default">Delete</button></tr>
-		</tbody>
-	</table>
-	<button class="btn btn-primary" ng-click="saveStory()">Save</button>
-	<button class="btn btn-default" ng-click="cancel()">Cancel</button>
-	<a class="btn btn-default" href="#/stories">Done</a>
+	<div class="row">
+		<div class="col-md-offset-4 col-md-4">
+			<button class="btn btn-primary" ng-click="saveStory()">Save</button>
+			<button class="btn btn-default" ng-click="cancel()">Cancel</button>
+			<a class="btn btn-default" href="#/stories">Done</a>
+		</div>
+	</div>
+		<hr/>
+	<tabset>
+		<tab heading="Chapters">
+			<a href="#/stories/new/chapters/new" class="btn btn-default">Add</a>
+			<table class="table">
+				<thead>
+					<tr> <th>Number</th> <th>Name</th> <th>Description</th> <th>Scenes</th> </tr>
+				</thead>
+				<tbody>
+					<tr><td>1</td><td>Opening</td><td>Sets the tone for the story and suggests the protagonist’s primary problem.</td><td>None</td><td><button>Edit</button><button>Delete</button></tr>
+				</tbody>
+			</table>
+		</tab>
+		<tab heading="Cast">
+			<a href="#/stories/new/cast/new" class="btn btn-default">Add</a>
+			<table class="table">
+				<thead>
+					<tr> <th>Name</th> <th>Role</th> <th>High Concept</th> <th>Trouble</th> </tr>
+				</thead>
+				<tbody>
+					<tr><td>Dr. Evil</td><td>Leader of the bad guys</td><td>Hysterically evil</td><td>Sweet Tooth</td><td><button class="btn btn-default">Edit</button><button class="btn btn-default">Delete</button></tr>
+				</tbody>
+			</table>
+		</tab>
+	</tabset>
 </form>
