@@ -42,6 +42,11 @@ angular.module('storyTellersAid.controllers', [])
 										 $scope.addChapter = function() {
 												 $location.path("stories/edit/" + $scope.story.id + "/chapters/new")
 										 }
+
+										 $scope.editChapter = function( chapter) {
+												 $location.path("stories/edit/" + $scope.story.id + "/chapters/" + chapter.id)
+										 }
+
 								 }])
 
 		.controller('ChapterFormController',
@@ -52,16 +57,25 @@ angular.module('storyTellersAid.controllers', [])
 
 								 function( $scope, $routeParams, $location, storySvc) {
 										 $scope.story = storySvc.find( $routeParams.id)
-										 if( typeof $routeParams.chapterId === "undefined") {
+										 var chapterIndex = $scope.story.chapters.map( 
+												 function( s) { 
+														 return s.id;})
+												 .indexOf( parseInt($routeParams.chapterId))
+
+										 if( chapterIndex < 0) {
 												 $scope.chapter = null
 												 $scope.title = "New Chapter for " + $scope.story.name
 										 } else {
-												 $scope.chapter = $scope.story.findChapterById( $routeParams.chapterId)
+												 $scope.chapter = $scope.story.chapters[chapterIndex]
 												 $scope.title = "Edit " + $scope.chapter.name + " for story " +$scope.story.name
 										 }
 
 										 $scope.saveChapter = function() {
 												 storySvc.saveChapter( $scope.story, $scope.chapter)
+										 }
+
+										 $scope.done = function() {
+												 $location.path("stories/edit/" + $scope.story.id )
 										 }
 
 								 }])

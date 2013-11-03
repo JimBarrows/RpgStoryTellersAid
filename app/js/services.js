@@ -3,13 +3,18 @@
 /* Services */
 
 var stories = [
-		{ "id" : "1",
+		{ "id" : 1,
 			"name" : "Story 1",
 			"description" : "Story 1 Description",
 			"setting" : "Story 1 setting",
 			"status" : "Story 1 status",
-			"chapters" : []},
-		{ "id" : "2",
+			"chapters" : [{
+					"id" : 0,
+					"name" : "Ch 1 St 1",
+					"description" : "Ch 1 St 1 Descrip",
+					"scenes" : []
+			}]},
+		{ "id" : 2,
 			"name" : "Story 2",
 			"description" : "Story 2 Description",
 			"setting" : "Story 2 setting",
