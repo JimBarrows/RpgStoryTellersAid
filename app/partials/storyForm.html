@@ -33,13 +33,22 @@
 		<hr/>
 	<tabset>
 		<tab heading="Chapters">
-			<a href="#/stories/new/chapters/new" class="btn btn-default">Add</a>
+			<button ng-click="addChapter()" class="btn btn-default">Add</button>
 			<table class="table">
 				<thead>
 					<tr> <th>Number</th> <th>Name</th> <th>Description</th> <th>Scenes</th> </tr>
 				</thead>
 				<tbody>
-					<tr><td>1</td><td>Opening</td><td>Sets the tone for the story and suggests the protagonist’s primary problem.</td><td>None</td><td><button>Edit</button><button>Delete</button></tr>
+					<tr ng-repeat="chapter in story.chapters">
+						<td>{{chapter.id + 1}}</td>
+						<td>{{chapter.name}}</td>
+						<td>{{chapter.description}}</td>
+						<td>{{chapter.scenes.length}}</td>
+						<td>
+							<button class="btn btn-default">Edit</button>
+							<button class="btn btn-default">Delete</button>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</tab>

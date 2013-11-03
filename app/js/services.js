@@ -4,16 +4,23 @@
 
 var stories = [
 		{ "id" : "1",
-			"name" : "Blah Storye",
-			"description" : "Foo New Description",
-			"setting" : "A setting",
-			"status" : "Somewhere"},
+			"name" : "Story 1",
+			"description" : "Story 1 Description",
+			"setting" : "Story 1 setting",
+			"status" : "Story 1 status",
+			"chapters" : []},
 		{ "id" : "2",
-			"name" : "Blah Storye",
-			"description" : "Foo New Description",
-			"setting" : "A setting",
-			"status" : "Somewhere"},
+			"name" : "Story 2",
+			"description" : "Story 2 Description",
+			"setting" : "Story 2 setting",
+			"status" : "Story 2 status"},
 ];
+
+var chapter = {
+		"id" : "1",
+		"name" : "some name",
+		"description" : "description"
+}
 
 var nextStoryId=3
 
@@ -45,6 +52,22 @@ angular.module('storyTellersAid.services', []).
   							}
   							_.sortBy( stories, function( story) { return story.id})
   					},
+
+						saveChapter: function( story, chapter) {
+								var foundAt = story.chapters.map( 
+										function(s) {
+												return s.id;})
+										.indexOf( chapter.id)
+								if( foundAt < 0) {
+										var nextId = story.chapters.length
+										chapter.id = nextId
+										chapter.scenes = []
+										story.chapters.push( chapter)
+								} else {
+										story.chapters[foundAt] = chapter
+								}
+								this.save( story)
+						},
 						
   					delete: function( story) {
 								var index =	stories.map(function (s) {return s.id;}).indexOf( story.id)
