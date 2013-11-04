@@ -100,6 +100,10 @@ angular.module('storyTellersAid.controllers', [])
 																				+ scene.id)
 										 }
 
+										 $scope.deleteScene = function( scene) {
+												 storySvc.deleteScene( $scope.story, $scope.chapter, scene)
+										 }
+
 								 }])
 
 		.controller('SceneFormController',

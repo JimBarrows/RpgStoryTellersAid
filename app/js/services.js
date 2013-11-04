@@ -100,8 +100,17 @@ angular.module('storyTellersAid.services', []).
 								if( indexOf >= 0) {
 										story.chapters.splice( indexOf, 1)
 								}
+
 						},
 						
+						deleteScene: function( story, chapter, scene) {
+								
+								var sceneIndex = chapter.scenes.map(function( s) {return s.id;}).indexOf(scene.id)
+								if( sceneIndex >= 0) {
+										chapter.scenes.splice( sceneIndex, 1)
+								}
+						},
+
   					delete: function( story) {
 								var index =	stories.map(function (s) {return s.id;}).indexOf( story.id)
   							if( index > -1) {
