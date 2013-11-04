@@ -83,8 +83,51 @@ angular.module('storyTellersAid.controllers', [])
 												 $location.path("stories/edit/" + $scope.story.id )
 										 }
 
+										 $scope.addScene = function() {
+												 $location.path("stories/edit/" 
+																				+ $scope.story.id 
+																				+ "/chapters/" 
+																				+ $scope.chapter.id 
+																				+ "/scenes/new" )
+										 }
+
 								 }])
 
+		.controller('SceneFormController',
+								['$scope',
+								 '$routeParams',
+								 '$location',
+								 'storyService',
+
+								 function( $scope, $routeParams, $location, storySvc) {
+										 var story = storySvc.find( $routeParams.id)
+										 var chapterIndex = story.chapters.map( 
+												 function( s) {
+														 return s.id;
+												 }).indexOf( parseInt($routeParams.chapterId))
+										 var chapter = story.chapters[ chapterIndex]
+										 var sceneIndex = chapter.scenes.map(
+												 function( s) {
+														 return s.id
+												 }).indexOf( parseInt($routeParams.sceneId))
+										 var scene = null
+										 if( sceneIndex < 0) {
+												 $scope.title = "New Scene for Chapter " + chapter.name 
+										 } else {
+												 scene = chapter.scenese[sceneIndex]
+												 $scope.title = "Edit Scene " + scene.name
+										 }
+
+										 $scope.save = function() {
+												 storySvc.saveScene( story, chapter, $scope.scene)
+										 }
+
+										 $scope.done = function() {
+												 $location.path("stories/edit/" + story.id + "/chapters/" + chapter.id )
+										 }
+
+										 $scope.scene = scene
+								 }])
 
 		.controller('ClueTable', 
 								['$scope', 

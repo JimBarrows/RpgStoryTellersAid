@@ -74,6 +74,21 @@ angular.module('storyTellersAid.services', []).
 								this.save( story)
 						},
 
+						saveScene: function( story, chapter, scene) {
+								var sceneIndex = chapter.scenes.map( 
+										function( s) { 
+												return s.id;})
+										.indexOf( scene.id)
+
+								if( sceneIndex < 0) {
+										scene.id = chapter.scenes.length
+										chapter.scenes.push( scene)
+								} else {
+										chapter.scenes[sceneIndex] = scene
+								}
+								this.saveChapter( story, chapter)
+						},
+
 						deleteChapter: function( story, chapter) {
 								var indexOf = story.chapters.map( function( s) {return s.id;}).indexOf( chapter.id)
 								if( indexOf >= 0) {

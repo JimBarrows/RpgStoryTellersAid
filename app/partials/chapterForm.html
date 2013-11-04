@@ -23,13 +23,22 @@
 	</div>
 	<tabset>
 		<tab heading="Scenes">
-			<a href="#/stories/new/chapters/new/scenes/new" class="btn btn-default">Add</a>
+			<button ng-click="addScene()" class="btn btn-default">Add</button>
 			<table class="table">
 				<thead>
 					<tr> <th>Number</th> <th>Name</th> <th>Description</th> <th>Location</th> </tr>
 			</thead>
 			<tbody>
-				<tr><td>1</td><td>A lady walks in</td><td>blah</td><td>Characters office</td><td><button class="btn btn-default">Edit</button><button class="btn btn-default">Delete</button></tr>
+				<tr ng-repeat="scene in chapter.scenes">
+					<td>{{scene.id + 1}}</td>
+					<td>{{scene.name}}</td>
+					<td>{{scene.gmdescription}}</td>
+					<td>{{scene.location}}</td>
+					<td>
+						<button class="btn btn-default">Edit</button>
+						<button class="btn btn-default">Delete</button>
+					</td>
+				</tr>
 		</table>
 		</tab>
 	</tabset>
