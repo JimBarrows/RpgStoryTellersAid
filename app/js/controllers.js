@@ -91,6 +91,15 @@ angular.module('storyTellersAid.controllers', [])
 																				+ "/scenes/new" )
 										 }
 
+										 $scope.editScene = function( scene) {
+												 $location.path("stories/edit/" 
+																				+ $scope.story.id 
+																				+ "/chapters/" 
+																				+ $scope.chapter.id 
+																				+ "/scenes/"
+																				+ scene.id)
+										 }
+
 								 }])
 
 		.controller('SceneFormController',
@@ -114,7 +123,7 @@ angular.module('storyTellersAid.controllers', [])
 										 if( sceneIndex < 0) {
 												 $scope.title = "New Scene for Chapter " + chapter.name 
 										 } else {
-												 scene = chapter.scenese[sceneIndex]
+												 scene = chapter.scenes[sceneIndex]
 												 $scope.title = "Edit Scene " + scene.name
 										 }
 

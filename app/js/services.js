@@ -12,7 +12,13 @@ var stories = [
 					"id" : 0,
 					"name" : "Ch 1 St 1",
 					"description" : "Ch 1 St 1 Descrip",
-					"scenes" : []
+					"scenes" : [{
+							"id": 0,
+							"name" : "Scene 1",
+							"location" : "location 1",
+							"playerdescription" : "player description 1",
+							"gmdescription" : "gm description 1"
+					}]
 			}]},
 		{ "id" : 2,
 			"name" : "Story 2",
