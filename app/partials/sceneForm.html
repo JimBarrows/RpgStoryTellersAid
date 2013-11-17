@@ -35,7 +35,7 @@
 	</div>
 	<tabset>
 		<tab heading="Clues">
-			<a href="#/stories/new/chapters/new/scenes/new/clues/new" class="btn btn-default">Add</a>
+			<button ng-click="addClue()" class="btn btn-default">Add</button>
 			<table class="table">
 				<thead>
 				<tr>
@@ -45,7 +45,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="clue in clues">
+				<tr ng-repeat="clue in scene.clues">
 					<td>{{clue.number}}</td>
 					<td>{{clue.description}}</td>
 					<td>{{clue.location}}</td>

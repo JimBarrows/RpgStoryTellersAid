@@ -33,6 +33,7 @@ angular.module('storyTellersAid.controllers', [])
 
 										 $scope.saveStory = function() {
 												 storySvc.save( $scope.story)
+												 $location.path("stories/edit/" + $scope.story.id)
 										 }
 
 										 $scope.cancel = function() {
@@ -62,10 +63,13 @@ angular.module('storyTellersAid.controllers', [])
 
 								 function( $scope, $routeParams, $location, storySvc) {
 										 $scope.story = storySvc.find( $routeParams.id)
-										 var chapterIndex = $scope.story.chapters.map( 
-												 function( s) { 
-														 return s.id;})
-												 .indexOf( parseInt($routeParams.chapterId))
+										 var chapterIndex = -1
+										 if( $scope.story.chapters){
+												 chapterIndex = $scope.story.chapters.map( 
+														 function( s) { 
+																 return s.id;})
+														 .indexOf( parseInt($routeParams.chapterId))
+										 }
 
 										 if( chapterIndex < 0) {
 												 $scope.chapter = null
@@ -77,6 +81,7 @@ angular.module('storyTellersAid.controllers', [])
 
 										 $scope.saveChapter = function() {
 												 storySvc.saveChapter( $scope.story, $scope.chapter)
+												 $location.path("stories/edit/" + $scope.story.id + "/chapters/" +$scope.chapter.id)
 										 }
 
 										 $scope.done = function() {
@@ -133,24 +138,52 @@ angular.module('storyTellersAid.controllers', [])
 
 										 $scope.save = function() {
 												 storySvc.saveScene( story, chapter, $scope.scene)
+												 $location.path("stories/edit/" + story.id + "/chapters/" + chapter.id + "/scenes/" + $scope.scene.id)
 										 }
 
 										 $scope.done = function() {
 												 $location.path("stories/edit/" + story.id + "/chapters/" + chapter.id )
 										 }
 
+										 $scope.addClue = function() {
+												 $location.path("stories/edit/" 
+																				+ story.id 
+																				+ "/chapters/" 
+																				+ chapter.id
+																				+ "/clues/new")
+										 }
+
 										 $scope.scene = scene
 								 }])
 
-		.controller('ClueTable', 
-								['$scope', 
-								 function($scope) {
-										 $scope.clues = [
-												 { "number" : "1",
-													 "description" : "New Description",
-													 "location" : "Somewhere"},
-												 { "number" : "2",
-													 "description" : "Another Description",
-													 "location" : "Somewhere"}
-										 ];
-								 }]);
+		.controller('ClueFormController', 
+								['$scope',
+								 '$routeParams',
+								 '$location',
+								 'storyService',
+
+								 function( $scope, $routeParams, $location, storySvc) {
+										 var story = storySvc.find( $routeParams.id)
+										 var chapterIndex = story.chapters.map( 
+												 function( s) {
+														 return s.id;
+												 }).indexOf( parseInt($routeParams.chapterId))
+										 var chapter = story.chapters[ chapterIndex]
+										 var sceneIndex = chapter.scenes.map(
+												 function( s) {
+														 return s.id
+												 }).indexOf( parseInt($routeParams.sceneId))
+										 var scene = chapter.scenes[ sceneIndex]
+										 var clueIndex = scene.clues.map(
+												 function( s) {
+														 return s.id;
+												 }).indexOf( parseInt( $routeParams.clueId))
+										 var clue = null
+										 if( clueIndex < 0) {
+												 $scope.title = "New Clue for Scene " + scene.name 
+										 } else {
+												 clue = scene.clues[clueIndex]
+												 $scope.title = "Edit clue " + clue.name
+										 }
+										 $scope.clue = clue
+								 }])

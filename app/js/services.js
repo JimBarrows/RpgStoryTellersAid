@@ -65,6 +65,9 @@ angular.module('storyTellersAid.services', []).
   					},
 
 						saveChapter: function( story, chapter) {
+								if( !story.chapters) {
+										story.chapters = []
+								}
 								var foundAt = story.chapters.map( 
 										function(s) {
 												return s.id;})
