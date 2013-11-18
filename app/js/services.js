@@ -134,6 +134,14 @@ angular.module('storyTellersAid.services', []).
 								}
 						},
 
+						deleteClue: function( story, chapter, scene, clue) {
+								
+								var clueIndex = scene.clues.map(function( s) {return s.id;}).indexOf(clue.id)
+								if( clueIndex >= 0) {
+										scene.clues.splice( clueIndex, 1)
+								}
+						},
+
   					delete: function( story) {
 								var index =	stories.map(function (s) {return s.id;}).indexOf( story.id)
   							if( index > -1) {

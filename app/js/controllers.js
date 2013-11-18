@@ -155,6 +155,21 @@ angular.module('storyTellersAid.controllers', [])
 																				+ "/clues/new")
 										 }
 
+										 $scope.editClue = function( clue) {
+												 $location.path("stories/edit/" 
+																				+ story.id 
+																				+ "/chapters/" 
+																				+ chapter.id
+																				+ "/scenes/"
+																				+ $scope.scene.id
+																				+ "/clues/"
+																				+ clue.id)
+										 }
+										 
+										 $scope.deleteClue = function( clue) {
+												 storySvc.deleteClue( story, chapter, scene, clue)
+										 }
+
 										 $scope.scene = scene
 								 }])
 

@@ -39,19 +39,19 @@
 			<table class="table">
 				<thead>
 				<tr>
-					<th>Number</th>
+					<th>Name</th>
 					<th>Description</th>
-					<th>Location</th>
+					<th>Obtain by</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="clue in scene.clues">
-					<td>{{clue.number}}</td>
+					<td>{{clue.name}}</td>
 					<td>{{clue.description}}</td>
-					<td>{{clue.location}}</td>
+					<td>{{clue.obtainBy}}</td>
 					<td>
-						<button class="btn btn-default">Edit</button>
-						<button class="btn btn-default">Delete</button>
+						<button class="btn btn-default" ng-click="editClue( clue)">Edit</button>
+						<button class="btn btn-default" ng-click="deleteClue( clue)">Delete</button>
 					</td>
 				</tr>
 			</table>
