@@ -98,6 +98,26 @@ angular.module('storyTellersAid.services', []).
 								this.saveChapter( story, chapter)
 						},
 
+						saveClue: function( story, chapter, scene, clue) {
+								var clueIndex = -1
+								if( scene.clues) {
+										clueIndex = scene.clues.map( 
+										function( s) { 
+												return s.id;})
+										.indexOf( clue.id)
+								} else {
+										scene.clues = []
+								}
+
+								if( clueIndex < 0) {
+										clue.id = scene.clues.length
+										scene.clues.push( clue)
+								} else {
+										scene.clues[clueIndex] = clue
+								}
+
+						},
+
 						deleteChapter: function( story, chapter) {
 								var indexOf = story.chapters.map( function( s) {return s.id;}).indexOf( chapter.id)
 								if( indexOf >= 0) {

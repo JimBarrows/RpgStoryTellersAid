@@ -150,6 +150,8 @@ angular.module('storyTellersAid.controllers', [])
 																				+ story.id 
 																				+ "/chapters/" 
 																				+ chapter.id
+																				+ "/scenes/"
+																				+ $scope.scene.id
 																				+ "/clues/new")
 										 }
 
@@ -174,16 +176,40 @@ angular.module('storyTellersAid.controllers', [])
 														 return s.id
 												 }).indexOf( parseInt($routeParams.sceneId))
 										 var scene = chapter.scenes[ sceneIndex]
-										 var clueIndex = scene.clues.map(
-												 function( s) {
-														 return s.id;
-												 }).indexOf( parseInt( $routeParams.clueId))
+										 var clueIndex = -1
+										 if( scene.clues) {
+												 clueIndex = scene.clues.map(
+														 function( s) {
+																 return s.id;
+														 }).indexOf( parseInt( $routeParams.clueId))
+										 }
 										 var clue = null
 										 if( clueIndex < 0) {
 												 $scope.title = "New Clue for Scene " + scene.name 
 										 } else {
 												 clue = scene.clues[clueIndex]
 												 $scope.title = "Edit clue " + clue.name
+										 }
+
+										 $scope.save = function() {
+												 storySvc.saveClue( story, chapter, scene, $scope.clue)
+												 $location.path("stories/edit/" 
+																				+ story.id 
+																				+ "/chapters/" 
+																				+ chapter.id 
+																				+ "/scenes/" 
+																				+ scene.id
+																				+ "/clues/"
+																				+ $scope.clue.id)
+										 }
+
+										 $scope.done = function() {
+												 $location.path("stories/edit/" 
+																				+ story.id 
+																				+ "/chapters/" 
+																				+ chapter.id
+																				+ "/scenes/"
+																				+ scene.id)
 										 }
 										 $scope.clue = clue
 								 }])

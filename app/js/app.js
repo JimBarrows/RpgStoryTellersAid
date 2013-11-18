@@ -30,5 +30,7 @@ angular.module('storyTellersAid', [
 												{templateUrl: 'partials/sceneForm.html'}),
     $routeProvider.when('/stories/edit/:id/chapters/:chapterId/scenes/:sceneId/clues/new', 
 												{templateUrl: 'partials/clueForm.html'}),
+    $routeProvider.when('/stories/edit/:id/chapters/:chapterId/scenes/:sceneId/clues/:clueId', 
+												{templateUrl: 'partials/clueForm.html'}),
     $routeProvider.otherwise({redirectTo: '/stories'});
   }]);
