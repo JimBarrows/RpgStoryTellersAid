@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Story Tellers Aid</title>
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/normalize.css">
+		<link rel="stylesheet" href="css/bootstrap.min.css" media="screen"/>
+</head>
+<body>
+
+  <script type="text/x-handlebars" id="application">
+		<header>
+			<h1>Story Tellers Aide</h1>
+		</header>
+		{{outlet}}
+		<footer>
+			2013
+		</footer>
+	</script>
+
+  <script type="text/x-handlebars" id="stories">
+		<div class="page-header">
+			<h1>Stories</h1>
+		</div>
+		<button {{action addStory}} class="btn btn-default">Add</button>
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Setting</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#each itemController="storyRow"}}
+				<tr>
+					<td>{{name}}</td>
+					<td>{{description}}</td>
+					<td>{{setting}}</td>
+					<td>{{status}}</td>
+					<td>
+						<button {{action editStory}} class="btn btn-default">Edit</button>
+						<button {{action deleteStory}} class="btn btn-default">Delete</button>
+					</td>
+				</tr>
+				{{/each}}
+			</tbody>
+		</table>
+  </script>
+
+  <script type="text/x-handlebars" id="storyForm">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label for="name" class="col-lg-2 control-label">Name</label>
+				<div class="col-lg-10">
+					{{input type="text" name="name" value=name class="form-control"}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="description" class="col-lg-2 control-label">Description</label>
+				<div class="col-lg-10">
+					{{textarea value=description name="description" class="form-control" rows="10"}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="setting" class="col-lg-2 control-label">Setting</label>
+				<div class="col-lg-10">
+					{{input value=setting type="text" id="setting" class="form-control"}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="status" class="col-lg-2 control-label">Status</label>
+				<div class="col-lg-10">
+					{{input value=status type="text" id="status" class="form-control"}}
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-offset-4 col-md-4">
+					<button {{action saveStory this}}class="btn btn-primary" >Save</button>
+					<button class="btn btn-default" >Cancel</button>
+					<a class="btn btn-default" href="#/stories">Done</a>
+				</div>
+			</div>
+			<hr/>
+			<tabset>
+				<tab heading="Chapters">
+					<button class="btn btn-default">Add</button>
+					<table class="table">
+						<thead>
+							<tr> <th>Number</th> <th>Name</th> <th>Description</th> <th>Scenes</th> </tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>Chapter</td>
+								<td>Description</td>
+								<td>2</td>
+								<td>
+									<button class="btn btn-default">Edit</button>
+									<button class="btn btn-default">Delete</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</tab>
+				<tab heading="Cast">
+					<a href="#/stories/new/cast/new" class="btn btn-default">Add</a>
+					<table class="table">
+						<thead>
+							<tr> 
+								<th>Name</th> 
+								<th>Role</th> 
+								<th>High Concept</th> 
+								<th>Trouble</th> 
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Dr. Evil</td>
+								<td>Leader of the bad guys</td>
+								<td>Hysterically evil</td>
+								<td>Sweet Tooth</td>
+								<td>
+									<button class="btn btn-default">Edit</button>
+									<button class="btn btn-default">Delete</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</tab>
+			</tabset>
+		</form>
+	</script>
+
+  <script src="js/libs/jquery-1.9.1.js"></script>
+  <script src="js/libs/handlebars-1.0.0.js"></script>
+  <script src="js/libs/ember-1.1.2.js"></script>
+  <script src="js/libs/ember-data.js"></script>
+  <script src="js/libs/bootstrap.min.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/router.js"></script>
+	<script src="js/models/story.js"></script>
+	<script src="js/controllers/story_row_controller.js"></script>
+	<script src="js/controllers/story_form_controller.js"></script>
+</body>
+</html>
