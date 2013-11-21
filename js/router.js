@@ -38,3 +38,13 @@ App.StoryNewRoute = Ember.Route.extend({
 				this.render('storyForm',{into:'application'});
 		}
 })
+
+App.StoryEditRoute = Ember.Route.extend({
+		setupController: function(controller, model) {
+        this.controllerFor('story.form').setProperties({
+						content: model})
+		},
+		renderTemplate: function() {
+				this.render('storyForm',{into:'application'});
+		}
+})

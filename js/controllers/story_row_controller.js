@@ -4,6 +4,10 @@ App.StoryRowController = Ember.ObjectController.extend({
 						var story = this.get('model')
 						story.deleteRecord()
 						story.save()
+				},
+
+				editStory: function() {
+						this.get('target').transitionTo("/story/" + this.get('model').id + "/edit")
 				}
 		}
 })
