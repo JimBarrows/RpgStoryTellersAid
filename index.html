@@ -86,12 +86,11 @@
 			</div>
 			<hr/>
 			<ul class="nav nav-tabs">
-				<li>{{#link-to 'story.chapters' story data-toggle="tab"}}Chapters 2{{/link-to}}</li>
-				<li>{{#link-to 'story.cast' story data-toggle="tab"}}Cast 2{{/link-to}}</li>
-
+				<li {{bind-attr class="showChapters:active"}}><a {{action showChapterTab}} data-toggle="tab">Chapters</a></li>
+				<li {{bind-attr class="showCast:active"}}><a {{action showCastTab}}  data-toggle="tab">Cast</a></li>
 			</ul>
 			<div class="tab-content">
-				<div id="chapters" class="tab-pane active">
+				<div id="chapters" {{bind-attr class=":tab-pane showChapters:active"}}>
 					<button class="btn btn-default">Add</button>
 					<table class="table">
 						<thead>
@@ -105,7 +104,7 @@
 						<tbody>
 							{{#each chapter in chapters}}
 							<tr>
-								<td>not implemente</td>
+								<td>Not implemented</td>
 								<td>{{chapter.name}}</td>
 								<td>{{chapter.description}}</td>
 								<td>Not implemented</td>
@@ -118,40 +117,45 @@
 						</tbody>
 					</table>
 				</div>
-				<div id="cast" class="tab-pane">
-					<a href="#/stories/new/cast/new" class="btn btn-default">Add</a>
-					<table class="table">
-						<thead>
-							<tr> 
-								<th>Name</th> 
-								<th>Role</th> 
-								<th>High Concept</th> 
-								<th>Trouble</th> 
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Dr. Evil</td>
-								<td>Leader of the bad guys</td>
-								<td>Hysterically evil</td>
-								<td>Sweet Tooth</td>
-								<td>
-									<button class="btn btn-default">Edit</button>
-									<button class="btn btn-default">Delete</button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+			</div>
+			<div id="cast" {{bind-attr class=":tab-pane showCast:active"}}>
+				<a href="#/stories/new/cast/new" class="btn btn-default">Add</a>
+				<table class="table">
+					<thead>
+						<tr> 
+							<th>Name</th> 
+							<th>Role</th> 
+							<th>High Concept</th> 
+							<th>Trouble</th> 
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Dr. Evil</td>
+							<td>Leader of the bad guys</td>
+							<td>Hysterically evil</td>
+							<td>Sweet Tooth</td>
+							<td>
+								<button class="btn btn-default">Edit</button>
+								<button class="btn btn-default">Delete</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</form>
+	</script>
+
+  <script type="text/x-handlebars" id="castList">
+		<div id="cast" class="tab-pane">
+
+		</div>
 	</script>
 
   <script src="js/libs/jquery-1.9.1.js"></script>
   <script src="js/libs/handlebars-1.0.0.js"></script>
   <script src="js/libs/ember-1.1.2.js"></script>
   <script src="js/libs/ember-data.js"></script>
-  <script src="js/libs/bootstrap.min.js"></script>
   <script src="js/app.js"></script>
   <script src="js/router.js"></script>
 	<script src="js/models/story.js"></script>

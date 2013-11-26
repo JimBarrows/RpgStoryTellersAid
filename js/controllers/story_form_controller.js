@@ -6,9 +6,23 @@ App.StoryFormController = Ember.ObjectController.extend({
 				},
 				addChapter: function() {
 						this.get("target").transitionTo("story.chapter.new")
-				}},
+				},
+				showChapterTab: function() {
+						this.set('showChapters', true)
+						this.set('showCast',false)
+				},
+				
+				showCastTab: function() {
+						this.set('showChapters', false)
+						this.set('showCast',true)
+				}
+		},
 
 		isNew: function() {
 				return this.get('content').get('id');
-		}.property()
+		}.property(),
+
+		showChapters: true, 
+
+		showCast: false 
 })
