@@ -5,7 +5,12 @@ App.Router.map(function() {
 		this.resource('story', function() {
 				this.route('new', {path: '/new'})
 				this.route('view', {path: '/:story_id'})
+				this.route('chapters', {path: '/:story_id/chapters'})
+				this.route('cast', {path: '/:story_id/cast'})
 				this.route('edit', {path: '/:story_id/edit'})
+				this.route('chapter', {path: '/:story_id/edit/chapter'}, function() {
+						this.route('new', {path: '/:story_id/edit/chapter/new'})
+				})
 		})
 });
 
