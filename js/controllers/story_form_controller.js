@@ -1,8 +1,14 @@
 App.StoryFormController = Ember.ObjectController.extend({
 		actions:{
 				saveStory: function( story) {
-						story.save();
+						story.save()
 						this.transitionToRoute("story.edit", story)
+				},
+				doneStory: function() {
+						this.transitionToRoute("stories")
+				},
+				cancelStory: function( story) {
+						story.rollback();
 				},
 				addChapter: function() {
 						this.transitionToRoute("story.chapter.new")

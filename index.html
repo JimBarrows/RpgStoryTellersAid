@@ -79,9 +79,9 @@
 			</div>
 			<div class="row">
 				<div class="col-md-offset-4 col-md-4">
-					<button {{action saveStory this}}class="btn btn-primary" >Save</button>
-					<button class="btn btn-default" >Cancel</button>
-					<a class="btn btn-default" href="#/stories">Done</a>
+					<button {{action saveStory model}}class="btn btn-primary" >Save</button>
+					<button class="btn btn-default" {{action cancelStory model}} >Cancel</button>
+					<button class="btn btn-default" {{action doneStory}} >Done</button>
 				</div>
 			</div>
 			<hr/>
