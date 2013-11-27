@@ -35,15 +35,15 @@
 				</tr>
 			</thead>
 			<tbody>
-				{{#each itemController="storyRow"}}
+				{{#each story in model itemController="storyRow"}}
 				<tr>
 					<td>{{name}}</td>
 					<td>{{description}}</td>
 					<td>{{setting}}</td>
 					<td>{{status}}</td>
 					<td>
-						<button {{action editStory}} class="btn btn-default">Edit</button>
-						<button {{action deleteStory}} class="btn btn-default">Delete</button>
+						<button {{action editStory story}} class="btn btn-default">Edit</button>
+						<button {{action deleteStory story}} class="btn btn-default">Delete</button>
 					</td>
 				</tr>
 				{{/each}}
@@ -91,7 +91,7 @@
 			</ul>
 			<div class="tab-content">
 				<div id="chapters" {{bind-attr class=":tab-pane showChapters:active"}}>
-					<button class="btn btn-default">Add</button>
+					<button {{action addChapter model}} class="btn btn-default">Add</button>
 					<table class="table">
 						<thead>
 							<tr> 

@@ -10,8 +10,8 @@ App.StoryFormController = Ember.ObjectController.extend({
 				cancelStory: function( story) {
 						story.rollback();
 				},
-				addChapter: function() {
-						this.transitionToRoute("story.chapter.new")
+				addChapter: function( story) {
+						this.transitionToRoute("story.chapter.new", story)
 				},
 				showChapterTab: function() {
 						this.set('showChapters', true)
