@@ -2,10 +2,10 @@ App.StoryFormController = Ember.ObjectController.extend({
 		actions:{
 				saveStory: function( story) {
 						story.save();
-						this.get("target").transitionTo("story")
+						this.transitionToRoute("story.edit", story)
 				},
 				addChapter: function() {
-						this.get("target").transitionTo("story.chapter.new")
+						this.transitionToRoute("story.chapter.new")
 				},
 				showChapterTab: function() {
 						this.set('showChapters', true)
