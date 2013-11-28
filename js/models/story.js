@@ -58,7 +58,8 @@ App.Chapter.FIXTURES =  [
 				number: 1,
 				name : "Ch 1 St 1",
 				description : "Ch 1 St 1 Descrip",
-				scenes : [0, 1]
+				scenes : [0, 1],
+				story:1
 		}
 ]
 

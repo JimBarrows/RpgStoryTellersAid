@@ -7,7 +7,9 @@ App.Router.map(function() {
 				this.route('new')
 		})
 
-		this.resource('chapter', {path:"/chapter"})
+		this.resource('chapter', {path:"/story/:story_id/chapter"}, function() {
+				this.route('edit', {path: '/:chapter_id'})
+		})
 });
 
 App.StoriesRoute = Ember.Route.extend({
@@ -34,8 +36,8 @@ App.StoryNewRoute = Ember.Route.extend({
 		}
 })
 
-App.ChapterRoute = Ember.Route.extend({
+App.ChapterEditRoute = Ember.Route.extend({
 		model: function(params) {
-				return this.store.find('story',params.story_id)
+				return this.store.find('chapter',params.chapter_id)
 		}
 })

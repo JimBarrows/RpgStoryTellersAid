@@ -15,6 +15,9 @@ App.StoryEditController = Ember.ObjectController.extend({
 				addChapter: function( story) {
 						this.transitionToRoute("chapter.new", story)
 				},
+				editChapter: function( story, chapter) {
+						this.transitionToRoute("chapter.edit", story, chapter)
+				},
 				showChapterTab: function() {
 						this.set('showChapters', true)
 						this.set('showCast',false)
