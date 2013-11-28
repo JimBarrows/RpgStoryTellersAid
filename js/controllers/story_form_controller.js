@@ -1,8 +1,10 @@
-App.StoryFormController = Ember.ObjectController.extend({
+App.StoryEditController = Ember.ObjectController.extend({
 		actions:{
 				saveStory: function( story) {
 						story.save()
-						this.transitionToRoute("story.edit", story)
+						if( this.get('isNew') == true) {
+								this.transitionToRoute("story.edit", story)
+						}
 				},
 				doneStory: function() {
 						this.transitionToRoute("stories")
@@ -11,7 +13,7 @@ App.StoryFormController = Ember.ObjectController.extend({
 						story.rollback();
 				},
 				addChapter: function( story) {
-						this.transitionToRoute("story.chapter.new", story)
+						this.transitionToRoute("chapter.new", story)
 				},
 				showChapterTab: function() {
 						this.set('showChapters', true)
@@ -25,7 +27,7 @@ App.StoryFormController = Ember.ObjectController.extend({
 		},
 
 		isNew: function() {
-				return this.get('content').get('id');
+				return false
 		}.property(),
 
 		showChapters: true, 

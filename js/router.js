@@ -2,28 +2,18 @@ App.Router.map(function() {
 
 		this.resource('stories', {path: '/'})
 
-		this.resource('story', function() {
-				this.route('new', {path: '/new'})
-				this.route('view', {path: '/:story_id'})
-				this.route('chapters', {path: '/:story_id/chapters'})
-				this.route('cast', {path: '/:story_id/cast'})
-				this.route('edit', {path: '/:story_id/edit'})
-				this.route('chapter', {path: '/:story_id/edit/chapter'}, function() {
-						this.route('new', {path: '/:story_id/edit/chapter/new'})
-				})
+		this.resource('story', {path: '/story'}, function() {
+				this.route('edit', {path: '/:story_id'})
+				this.route('new')
 		})
-});
 
-App.StoriesIndexRoute = Ember.Route.extend({
-		model: function() {
-				return this.modelfFor('stories')
-		}
+		this.resource('chapter', {path:"/chapter"})
 });
 
 App.StoriesRoute = Ember.Route.extend({
 		actions: {
 				addStory: function() {
-						this.transitionTo('/story/new')
+						this.transitionTo('story.new')
 				}	
 		},
 
@@ -32,24 +22,20 @@ App.StoriesRoute = Ember.Route.extend({
 		}
 });
 
-
 App.StoryNewRoute = Ember.Route.extend({
-		setupController: function(controller, model) {
-        this.controllerFor('story.form').setProperties({
-						isNew: true,
-						content: this.store.createRecord('story')})
+		setupController: function( controller, model) {
+				this.controllerFor('story.edit').setProperties({isNew:true, content:model})
+		},
+		model: function(params) {
+				return this.store.createRecord('story')
 		},
 		renderTemplate: function() {
-				this.render('storyForm',{into:'application'});
+				this.render('story.edit')
 		}
 })
 
-App.StoryEditRoute = Ember.Route.extend({
-		setupController: function(controller, model) {
-        this.controllerFor('story.form').setProperties({
-						content: model})
-		},
-		renderTemplate: function() {
-				this.render('storyForm',{into:'application'});
+App.ChapterRoute = Ember.Route.extend({
+		model: function(params) {
+				return this.store.find('story',params.story_id)
 		}
 })
