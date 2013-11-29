@@ -17,6 +17,10 @@ App.ChapterEditController = Ember.ObjectController.extend({
 						if( ! this.get('isNew')) {
 								chapter.rollback();
 						}
+				},
+
+				editScene: function( story, chapter, scene) {
+						this.transitionToRoute("scene.edit", story, chapter, scene)
 				}
 		},
 

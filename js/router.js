@@ -9,6 +9,9 @@ App.Router.map(function() {
 
 		this.resource('chapter', {path:"/story/:story_id/chapter"}, function() {
 				this.route('edit', {path: '/:chapter_id/edit'})
+				this.resource('scene', {path:":chapter_id/scene"}, function() {
+						this.route('edit', {path: '/:scene_id/edit'})
+				})
 		})
 
 		this.resource('chapter.new', {path:'/story/:story_id/chapter/new'})
@@ -62,5 +65,11 @@ App.ChapterNewRoute = Ember.Route.extend({
 
 		renderTemplate: function() {
 				this.render('chapter.edit')
+		}
+})
+
+App.SceneEditRoute = Ember.Route.extend({
+		model: function(params) {
+				return this.store.find('scene',params.scene_id)
 		}
 })

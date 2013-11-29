@@ -54,12 +54,12 @@ App.Story.FIXTURES =  [
 
 App.Chapter.FIXTURES =  [
 		{
-				id : 1,
+				id: 1,
 				number: 1,
-				name : "Ch 1 St 1",
-				description : "Ch 1 St 1 Descrip",
-				scenes : [0, 1],
-				story:1
+				name: "Ch 1 St 1",
+				description: "Ch 1 St 1 Descrip",
+				scenes: [0, 1],
+				story: 1
 		}
 ]
 
@@ -71,7 +71,8 @@ App.Scene.FIXTURES =  [
 				location : "location 1",
 				playerdescription : "player description 1",
 				gmdescription : "gm description 1",
-				cast: [1,2]
+				cast: [1,2],
+				chapter: 1
 		},
 		{
 				id: 1,
@@ -80,7 +81,8 @@ App.Scene.FIXTURES =  [
 				location : "location 2",
 				playerdescription : "player description 2",
 				gmdescription : "gm description 2",
-				cast: [3,4]
+				cast: [3,4],
+				chapter: 1
 		}
 ]
 
