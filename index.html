@@ -91,64 +91,72 @@
 			</ul>
 			<div class="tab-content">
 				<div id="chapters" {{bind-attr class=":tab-pane showChapters:active"}}>
-					<button {{action addChapter model}} class="btn btn-default">Add</button>
-					<table class="table">
-						<thead>
-							<tr> 
-								<th>Number</th> 
-								<th>Name</th> 
-								<th>Description</th> 
-								<th>Scenes</th> 
-							</tr>
-						</thead>
-						<tbody>
-							{{#each chapter in chapters}}
-							<tr>
-								<td>{{chapter.number}}</td>
-								<td>{{chapter.name}}</td>
-								<td>{{chapter.description}}</td>
-								<td>
-									<ul>
-										{{#each scene in chapter.scenes}}
-										<li>{{scene.number}} - {{scene.name}}</li>
-										{{/each}}
-									</ul>
-								</td>
-								<td>
-									<button {{action editChapter model chapter}} class="btn btn-default">Edit</button>
-									<button {{action deleteChapter model chapter}} class="btn btn-default">Delete</button>
-								</td>
-							</tr>
-							{{/each}}
-						</tbody>
-					</table>
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<button {{action addChapter model}} class="btn btn-default">Add</button>
+							<table class="table">
+								<thead>
+									<tr> 
+										<th>Number</th> 
+										<th>Name</th> 
+										<th>Description</th> 
+										<th>Scenes</th> 
+									</tr>
+								</thead>
+								<tbody>
+									{{#each chapter in chapters}}
+									<tr>
+										<td>{{chapter.number}}</td>
+										<td>{{chapter.name}}</td>
+										<td>{{chapter.description}}</td>
+										<td>
+											<ul>
+												{{#each scene in chapter.scenes}}
+												<li>{{scene.number}} - {{scene.name}}</li>
+												{{/each}}
+											</ul>
+										</td>
+										<td>
+											<button {{action editChapter model chapter}} class="btn btn-default">Edit</button>
+											<button {{action deleteChapter model chapter}} class="btn btn-default">Delete</button>
+										</td>
+									</tr>
+									{{/each}}
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
 				<div id="cast" {{bind-attr class=":tab-pane showCast:active"}}>
-					<a href="#/stories/new/cast/new" class="btn btn-default">Add</a>
-					<table class="table">
-						<thead>
-							<tr> 
-								<th>Name</th> 
-								<th>Role</th> 
-								<th>High Concept</th> 
-								<th>Trouble</th> 
-							</tr>
-						</thead>
-						<tbody>
-							{{#each actor in cast}}
-							<tr>
-								<td>{{actor.name}}</td>
-								<td>{{actor.role}}</td>
-								<td>{{actor.highConcept}}</td>
-								<td>{{actor.trouble}}</td>
-								<td>
-									<button class="btn btn-default">Edit</button>
-									<button class="btn btn-default">Delete</button>
-								</td>
-							</tr>
-							{{/each}}
-						</tbody>
-					</table>
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<a href="#/stories/new/cast/new" class="btn btn-default">Add</a>
+							<table class="table">
+								<thead>
+									<tr> 
+										<th>Name</th> 
+										<th>Role</th> 
+										<th>High Concept</th> 
+										<th>Trouble</th> 
+									</tr>
+								</thead>
+								<tbody>
+									{{#each actor in cast}}
+									<tr>
+										<td>{{actor.name}}</td>
+										<td>{{actor.role}}</td>
+										<td>{{actor.highConcept}}</td>
+										<td>{{actor.trouble}}</td>
+										<td>
+											<button class="btn btn-default">Edit</button>
+											<button class="btn btn-default">Delete</button>
+										</td>
+									</tr>
+									{{/each}}
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
