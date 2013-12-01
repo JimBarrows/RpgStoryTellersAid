@@ -17,7 +17,7 @@ App.StoryEditController = Ember.ObjectController.extend({
 				},
 
 				addChapter: function( story) {
-						this.transitionToRoute("chapter.new", this.store.createRecord('chapter', {story: story}))
+						this.transitionToRoute("chapter.new", story)
 				},
 
 				editChapter: function( story, chapter) {
