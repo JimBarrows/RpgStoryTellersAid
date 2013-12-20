@@ -5,24 +5,19 @@ App.Router.map(function() {
 		this.resource('story', {path: '/story'}, function() {
 				this.route('edit', {path: '/:story_id/edit'})
 				this.route('new')
-				this.resource('chapter', {path: '/:story_id/chapter'}, function() {
-						this.route('new')
-						this.route('edit', {path: '/:chapter_id/edit'})
-				})
+				this.resource('chapter', 
+											{path: '/:story_id/chapter'}, 
+											function() {
+													this.route('new')
+													this.route('edit', {path: '/:chapter_id/edit'})
+													this.resource('scene',
+																				{path: '/:chapter_id/scene'}, 
+																				function() {
+																						this.route('edit', {path: '/:scene_id/edit'})
+																						this.route('new')
+																				})
+											})
 		})
-
-/*
-		this.resource('chapter', {path: '/story/:story_id/chapter'}, function() {
-				this.route('new')
-				this.route('edit', {path: '/:chapter_id/edit'})
-		})
-*/
-/*
-		this.resource('scene', function() {
-				this.route('edit', {path: '/:scene_id/edit'})
-				this.route('new')
-		})
-*/
 });
 
 App.StoriesRoute = Ember.Route.extend({
@@ -90,12 +85,10 @@ App.SceneNewRoute = Ember.Route.extend({
 		},
 
 		model: function(params) {
+				var chapter = this.modelFor('scene')
 				var scene = this.store.createRecord('scene')
-				this.store.find('chapter', params.chapter_id).then(function( chapter) {
-						chapter.get('scenes').push(scene)
-						scene.set('chapter', chapter)
-				})
-						
+				chapter.get('scenes').pushObject( scene)
+				scene.set('chapter', chapter)
 				return scene
 		},
 

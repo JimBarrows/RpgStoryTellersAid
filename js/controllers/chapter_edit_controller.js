@@ -25,6 +25,11 @@ App.ChapterEditController = Ember.ObjectController.extend({
 
 				addScene: function(  chapter) {
 						this.transitionToRoute("scene.new", chapter)
+				},
+
+				deleteScene: function( chapter, scene) {
+						chapter.get('scenes').removeObject(scene)
+						chapter.save()
 				}
 		},
 
