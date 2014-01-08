@@ -29,20 +29,7 @@ App.StoryEditController = App.StoryFormController.extend({
 		save : function() {
 			var story = this.get('model');
 			story.save();
-		},
-
-		addChapter : function(story) {
-			this.transitionToRoute("chapter.new", story);
-		},
-
-		editChapter : function(story, chapter) {
-			this.transitionToRoute("chapter.edit", story, chapter);
-		},
-
-		deleteChapter : function(story, chapter) {
-			story.get('chapters').removeObject(chapter);
-			story.save();
-		},
+		},		
 
 		showChapterTab : function() {
 			this.set('showChapters', true);

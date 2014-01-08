@@ -26,14 +26,19 @@ App.Router.map(function() {
 			this.route('edit');
 			this.route('delete');
 
-			/*
-			 * this.resource('scene', { path : '/:chapter_id/scene' },
-			 * function() { this.route('new'); this.route('edit', { path :
-			 * '/:scene_id' }); this.route('edit', { path : '/:scene_id/edit'
-			 * }); this.route('delete', { path : '/:scene_id/delete' });
-			 * 
-			 * });
-			 */
+			this.resource('scene.new', {
+				path : '/scene/new'
+			});
+			
+			this.resource('scene', {
+				path : '/scene/:scene_id'
+			}, function() {
+
+				this.route('edit');
+				this.route('delete');
+
+			});
+
 		});
 	});
 
@@ -97,37 +102,42 @@ App.ChapterDeleteRoute = Ember.Route.extend({
 	afterModel : function(resolvedModel, transition, queryParams) {
 		var story = this.modelFor('story');
 		resolvedModel.set('story', null);
-		story.get('chapters').removeObject( resolvedModel);
+		story.get('chapters').removeObject(resolvedModel);
 		resolvedModel.deleteRecord();
 		resolvedModel.save();
 		this.transitionTo('story.edit', story);
 	}
 });
 
-App.SceneEditRoute = Ember.Route.extend({
-	model : function(params) {
-		return this.store.find('scene', params.scene_id);
-	}
-});
 
 App.SceneNewRoute = Ember.Route.extend({
 
-	setupController : function(controller, model) {
-		this.controllerFor('scene.edit').setProperties({
-			isNew : true,
-			content : model
-		});
-	},
+	model : function(params) {
+		var scene = this.store.createRecord('scene');
+		var chapter = this.modelFor('chapter');
+		scene.set('chapter', chapter);
+		chapter.get('scenes').pushObject(scene);
+		return scene;
+	}
+});
+
+App.SceneEditRoute = Ember.Route.extend({
+	model : function(params) {
+		return this.modelFor('scene');
+	}
+});
+
+App.SceneDeleteRoute = Ember.Route.extend({
 
 	model : function(params) {
-		var chapter = this.modelFor('scene');
-		var scene = this.store.createRecord('scene');
-		chapter.get('scenes').pushObject(scene);
-		scene.set('chapter', chapter);
-		return scene;
+		return this.modelFor('scene');
 	},
-
-	renderTemplate : function() {
-		this.render('scene.edit');
+	afterModel : function(resolvedModel, transition, queryParams) {
+		var chapter = this.modelFor('chapter');
+		resolvedModel.set('chapter', null);
+		chapter.get('scenes').removeObject(resolvedModel);
+		resolvedModel.deleteRecord();
+		resolvedModel.save();
+		this.transitionTo('chapter.edit', chapter);
 	}
 });
