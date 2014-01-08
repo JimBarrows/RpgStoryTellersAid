@@ -8,8 +8,8 @@ App.Story = DS.Model.extend({
 });
 
 App.Chapter = DS.Model.extend({
-		name: DS.attr('string'),
-		number: DS.attr('number'),
+		name: DS.attr('string', {defaultValue: 'New Chapter'}),
+		number: DS.attr('number', {defaultVAlue: 1}),
 		description: DS.attr('string'),
 		story: DS.belongsTo('story'),
 		scenes: DS.hasMany('scene',{async: true})
@@ -23,7 +23,7 @@ App.Scene = DS.Model.extend({
 		gmDescription: DS.attr('string'),
 		chapter: DS.belongsTo('chapter'),
 		cast: DS.hasMany('actor', {async: true})
-})
+});
 
 App.Actor = DS.Model.extend({
 		name: DS.attr('string'),

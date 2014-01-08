@@ -1,25 +1,42 @@
 App.Router.map(function() {
 
-	this.resource('stories', {	path : '/'	});
+	this.resource('stories', {
+		path : '/'
+	});
 
-	this.resource('story', {path : '/story'	}, function() {
-		
-		this.route('new');
-		this.route('index', {path : '/:story_id'});
-		this.route('edit', {path : '/:story_id/edit'});
-		this.route('delete', {path:"/:story_id/delete"});
-		
-		this.resource('chapter', {path : '/:story_id/chapter'}, function() {
-			
-			this.route('new');
-			this.route('edit', {path : '/:chapter_id/edit'});			
-			this.resource('scene', {path : '/:chapter_id/scene'}, function() {				
-				this.route('new');				
-				this.route('edit', {path : '/:scene_id/edit'});
-				
-			});
+	this.route('story.new', {
+		path : '/story/new'
+	});
+
+	this.resource('story', {
+		path : '/story/:story_id'
+	}, function() {
+
+		this.route('edit');
+		this.route('delete');
+
+		this.resource('chapter.new', {
+			path : '/chapter/new'
+		});
+
+		this.resource('chapter', {
+			path : '/chapter/:chapter_id'
+		}, function() {
+
+			this.route('edit');
+			this.route('delete');
+
+			/*
+			 * this.resource('scene', { path : '/:chapter_id/scene' },
+			 * function() { this.route('new'); this.route('edit', { path :
+			 * '/:scene_id' }); this.route('edit', { path : '/:scene_id/edit'
+			 * }); this.route('delete', { path : '/:scene_id/delete' });
+			 * 
+			 * });
+			 */
 		});
 	});
+
 });
 
 App.StoriesRoute = Ember.Route.extend({
@@ -38,47 +55,52 @@ App.StoryNewRoute = Ember.Route.extend({
 App.StoryEditRoute = Ember.Route.extend({
 
 	model : function(params) {
-		return this.store.find('story', params.story_id);
+		return this.modelFor('story');
 	}
 });
 
 App.StoryDeleteRoute = Ember.Route.extend({
 
 	model : function(params) {
-		return this.store.find('story', params.story_id);
+		return this.modelFor('story');
 	},
-	afterModel: function( resolvedModel, transition, queryParams) {
+	afterModel : function(resolvedModel, transition, queryParams) {
 		resolvedModel.deleteRecord();
 		resolvedModel.save();
 		this.transitionTo('stories');
 	}
 });
 
-App.ChapterEditRoute = Ember.Route.extend({
+App.ChapterNewRoute = Ember.Route.extend({
+
 	model : function(params) {
-		return this.store.find('chapter', params.chapter_id);
+		var chapter = this.store.createRecord('chapter');
+		var story = this.modelFor('story');
+		chapter.set('story', story);
+		story.get('chapters').pushObject(chapter);
+		return chapter;
 	}
 });
 
-App.ChapterNewRoute = Ember.Route.extend({
-
-	setupController : function(controller, model) {
-		this.controllerFor('chapter.edit').setProperties({
-			isNew : true,
-			content : model
-		});
-	},
+App.ChapterEditRoute = Ember.Route.extend({
 
 	model : function(params) {
-		var story = this.modelFor('chapter');
-		var chapter = this.store.createRecord('chapter');
-		story.get('chapters').pushObject(chapter);
-		chapter.set('story', story);
-		return chapter;
-	},
+		return this.modelFor('chapter');
+	}
+});
 
-	renderTemplate : function() {
-		this.render('chapter.edit');
+App.ChapterDeleteRoute = Ember.Route.extend({
+
+	model : function(params) {
+		return this.modelFor('chapter');
+	},
+	afterModel : function(resolvedModel, transition, queryParams) {
+		var story = this.modelFor('story');
+		resolvedModel.set('story', null);
+		story.get('chapters').removeObject( resolvedModel);
+		resolvedModel.deleteRecord();
+		resolvedModel.save();
+		this.transitionTo('story.edit', story);
 	}
 });
 

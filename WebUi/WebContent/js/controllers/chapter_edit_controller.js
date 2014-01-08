@@ -1,40 +1,46 @@
+App.ChapterNewController = Ember.ObjectController.extend({
+	actions : {
+		save : function() {
+			var chapter = this.get('model');
+			var dis = this;
+			chapter.save().then(function(chapter) {
+				dis.transitionToRoute('chapter.edit', chapter.get('story'), chapter);
+			});
+		}
+	}
+});
+
 App.ChapterEditController = Ember.ObjectController.extend({
 
-		actions: {
+	actions : {
 
-				saveChapter: function( chapter) {
-						if (this.get('isNew')) {
-								chapter.get('story').get('chapters').pushObject( chapter)
-						}
-						chapter.save()
-				},
-
-				doneChapter: function(chapter) {
-						this.transitionToRoute("story.edit", chapter.get('story'))
-				},
-
-				cancelChapter: function( chapter) {
-						if( ! this.get('isNew')) {
-								chapter.rollback();
-						}
-				},
-
-				editScene: function( story, chapter, scene) {
-						this.transitionToRoute("scene.edit", story, chapter, scene)
-				},
-
-				addScene: function(  chapter) {
-						this.transitionToRoute("scene.new", chapter)
-				},
-
-				deleteScene: function( chapter, scene) {
-						chapter.get('scenes').removeObject(scene)
-						chapter.save()
-				}
+		save : function() {
+			this.get('model').save();
 		},
 
-		isNew: function() {
-				return false
-		}.property()
+		done : function() {
+			this.transitionToRoute("story.edit", this.get('model').get('story'));
+		},
 
-})
+		cancel : function(chapter) {
+			
+			this.get('model').rollback();
+			
+		},
+
+		editScene : function(story, chapter, scene) {
+			this.transitionToRoute("scene.edit", story, chapter, scene);
+		},
+
+		addScene : function(chapter) {
+			this.transitionToRoute("scene.new", chapter);
+		},
+
+		deleteScene : function(chapter, scene) {
+			this.get('model').get('scenes').removeObject(scene);
+			this.get('model').save();
+		}
+	}
+
+
+});
