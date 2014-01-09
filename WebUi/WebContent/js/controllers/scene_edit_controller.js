@@ -31,18 +31,18 @@ App.SceneEditController = App.SceneFormController.extend({
 			Scene.save();
 		},		
 
-		showChapterTab : function() {
-			this.set('showChapters', true);
+		showClueTab : function() {
+			this.set('showClues', true);
 			this.set('showCast', false);
 		},
 
 		showCastTab : function() {
-			this.set('showChapters', false);
+			this.set('showClues', false);
 			this.set('showCast', true);
 		}
 	},
 
-	showChapters : true,
+	showClues : true,
 
 	showCast : false
 });

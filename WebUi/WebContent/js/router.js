@@ -29,7 +29,7 @@ App.Router.map(function() {
 			this.resource('scene.new', {
 				path : '/scene/new'
 			});
-			
+
 			this.resource('scene', {
 				path : '/scene/:scene_id'
 			}, function() {
@@ -37,6 +37,16 @@ App.Router.map(function() {
 				this.route('edit');
 				this.route('delete');
 
+				this.resource('clue.new', {
+					path : '/clue/new'
+				});
+
+				this.resource('clue', {
+					path : '/clue/:clue_id'
+				}, function() {
+					this.route('edit');
+					this.route('delete');
+				});
 			});
 
 		});
@@ -109,7 +119,6 @@ App.ChapterDeleteRoute = Ember.Route.extend({
 	}
 });
 
-
 App.SceneNewRoute = Ember.Route.extend({
 
 	model : function(params) {
@@ -139,5 +148,37 @@ App.SceneDeleteRoute = Ember.Route.extend({
 		resolvedModel.deleteRecord();
 		resolvedModel.save();
 		this.transitionTo('chapter.edit', chapter);
+	}
+});
+
+App.ClueNewRoute = Ember.Route.extend({
+
+	model : function(params) {
+		var clue = this.store.createRecord('clue');
+		var scene = this.modelFor('scene');
+		clue.set('scene', scene);
+		scene.get('clues').pushObject(clue);
+		return clue;
+	}
+});
+
+App.ClueEditRoute = Ember.Route.extend({
+	model : function(params) {
+		return this.modelFor('clue');
+	}
+});
+
+App.ClueDeleteRoute = Ember.Route.extend({
+
+	model : function(params) {
+		return this.modelFor('clue');
+	},
+	afterModel : function(resolvedModel, transition, queryParams) {
+		var scene = this.modelFor('scene');
+		resolvedModel.set('scene', null);
+		scene.get('clues').removeObject(resolvedModel);
+		resolvedModel.deleteRecord();
+		resolvedModel.save();
+		this.transitionTo('scene.edit', scene);
 	}
 });
