@@ -5,9 +5,6 @@ App.Story = DS.Model.extend({
 	status : DS.attr('string'),
 	chapters : DS.hasMany('chapter', {
 		async : true
-	}),
-	cast : DS.hasMany('actor', {
-		async : true
 	})
 });
 
@@ -45,8 +42,7 @@ App.Actor = DS.Model.extend({
 	role : DS.attr('string'),
 	highConcept : DS.attr('string'),
 	trouble : DS.attr('string'),
-	scenes : DS.hasMany('scene'),
-	story : DS.belongsTo('story')
+	scene : DS.belongsTo('scene')
 });
 
 App.Clue = DS.Model.extend({
@@ -62,15 +58,13 @@ App.Story.FIXTURES = [ {
 	description : "Story 1 Description",
 	setting : "Story 1 setting",
 	status : "Story 1 status",
-	chapters : [ 1 ],
-	cast : [ 1, 2, 3, 4 ]
+	chapters : [ 1 ]
 }, {
 	"id" : 2,
 	"name" : "Story 2",
 	"description" : "Story 2 Description",
 	"setting" : "Story 2 setting",
-	"status" : "Story 2 status",
-	cast : [ 5, 6, 7, 8 ]
+	"status" : "Story 2 status"
 }, ];
 
 App.Chapter.FIXTURES = [ {
@@ -117,25 +111,29 @@ App.Actor.FIXTURES = [ {
 	name : 'Actor 1',
 	role : 'Role',
 	highConcept : 'High Concept',
-	trouble : 'trouble'
+	trouble : 'trouble',
+	scene : 0
 }, {
 	id : 2,
 	name : 'Actor 2',
 	role : 'Role',
 	highConcept : 'High Concept',
-	trouble : 'trouble'
+	trouble : 'trouble',
+	scene : 0
 }, {
 	id : 3,
 	name : 'Actor 3',
 	role : 'Role',
 	highConcept : 'High Concept',
-	trouble : 'trouble'
+	trouble : 'trouble',
+	scene : 1
 }, {
 	id : 4,
 	name : 'Actor 4',
 	role : 'Role',
 	highConcept : 'High Concept',
-	trouble : 'trouble'
+	trouble : 'trouble',
+	scene : 1
 }, {
 	id : 5,
 	name : 'Actor 5',

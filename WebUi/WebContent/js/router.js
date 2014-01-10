@@ -47,6 +47,17 @@ App.Router.map(function() {
 					this.route('edit');
 					this.route('delete');
 				});
+
+				this.resource('actor.new', {
+					path : '/actor/new'
+				});
+
+				this.resource('actor', {
+					path : '/actor/:actor_id'
+				}, function() {
+					this.route('edit');
+					this.route('delete');
+				});
 			});
 
 		});
@@ -177,6 +188,38 @@ App.ClueDeleteRoute = Ember.Route.extend({
 		var scene = this.modelFor('scene');
 		resolvedModel.set('scene', null);
 		scene.get('clues').removeObject(resolvedModel);
+		resolvedModel.deleteRecord();
+		resolvedModel.save();
+		this.transitionTo('scene.edit', scene);
+	}
+});
+
+App.ActorNewRoute = Ember.Route.extend({
+
+	model : function(params) {
+		var actor = this.store.createRecord('actor');
+		var scene = this.modelFor('scene');
+		actor.set('scene', scene);
+		scene.get('cast').pushObject(actor);
+		return actor;
+	}
+});
+
+App.ActorEditRoute = Ember.Route.extend({
+	model : function(params) {
+		return this.modelFor('actor');
+	}
+});
+
+App.ActorDeleteRoute = Ember.Route.extend({
+
+	model : function(params) {
+		return this.modelFor('actor');
+	},
+	afterModel : function(resolvedModel, transition, queryParams) {
+		var scene = this.modelFor('scene');
+		resolvedModel.set('scene', null);
+		scene.get('cast').removeObject(resolvedModel);
 		resolvedModel.deleteRecord();
 		resolvedModel.save();
 		this.transitionTo('scene.edit', scene);
