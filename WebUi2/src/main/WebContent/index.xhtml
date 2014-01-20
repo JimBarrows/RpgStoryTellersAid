@@ -10,7 +10,7 @@
 
 	<ui:define name="content">
 		<h:form>
-			<p:dataTable var="story" value="#{storyList.carsSmall}">
+			<p:dataTable var="story" value="#{storyList.all}">
 				<p:column headerText="Name">
 					<h:outputText value="#{story.name}" />
 				</p:column>

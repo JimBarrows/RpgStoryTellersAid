@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
@@ -18,17 +19,39 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 public class Story implements Serializable{
 
+	public Story() {};
+	
+	
+	public Story(Long id, Long version, String name, String description) {
+		super();
+		this.id = id;
+		this.version = version;
+		this.name = name;
+		this.description = description;
+	}
+
+
+	public Story(Long id, Long version, String name, String description,
+			List<Chapter> chapters) {
+		super();
+		this.id = id;
+		this.version = version;
+		this.name = name;
+		this.description = description;
+		this.chapters = chapters;
+	}
+
+
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
 	@Version
-	private long version;
+	private Long version;
 
 	@NotEmpty
 	private String name;
 	
-	@Lob
 	private String description;
 	
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="story", orphanRemoval=true)
@@ -43,11 +66,11 @@ public class Story implements Serializable{
 		this.id = id;
 	}
 
-	public long getVersion() {
+	public Long getVersion() {
 		return version;
 	}
 
-	public void setVersion(long version) {
+	public void setVersion(Long version) {
 		this.version = version;
 	}
 
@@ -70,7 +93,7 @@ public class Story implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final Long serialVersionUID = 1L;
 
 	@Override
 	public int hashCode() {
