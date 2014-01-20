@@ -1,2 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<PROCESS model-entity="JSFProcess"/>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#index.xhtml" PATH="/index.xhtml"
+  SHAPE="196,172,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#index.xhtml:0" NAME="item"
+   PATH="/index.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="newStory::#newStory.xhtml" NAME="output"
+    PATH="/newStory.xhtml" TARGET="rules:#newStory.xhtml"
+    TITLE="newStory" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#newStory.xhtml" PATH="/newStory.xhtml"
+  SHAPE="368,127,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#newStory.xhtml:0" NAME="item"
+   PATH="/newStory.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="storyList::#index.xhtml" NAME="output"
+    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="storyList" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+</PROCESS>

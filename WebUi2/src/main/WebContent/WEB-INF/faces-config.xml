@@ -2,11 +2,29 @@
 <faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
-	
 	<managed-bean>
 		<managed-bean-name>storyList</managed-bean-name>
 		<managed-bean-class>storyTellersAide.ui.web.StoryList</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>storyForm</managed-bean-name>
+		<managed-bean-class>storyTellersAide.ui.web.StoryForm</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<navigation-rule>
+		<from-view-id>/index.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>newStory</from-outcome>
+			<to-view-id>/newStory.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/newStory.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>storyList</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 	<application />
 </faces-config>

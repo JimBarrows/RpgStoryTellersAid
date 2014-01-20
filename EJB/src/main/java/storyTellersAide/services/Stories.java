@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -17,7 +18,7 @@ public class Stories {
 
 	@PersistenceContext
 	EntityManager em;
-	
+
 	public List<Story> all() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Story> cq = cb.createQuery(Story.class);
@@ -26,5 +27,15 @@ public class Stories {
 		TypedQuery<Story> q = em.createQuery(cq);
 		List<Story> allStorys = q.getResultList();
 		return allStorys;
+	}
+
+	public void add(Story story) {
+
+		em.persist(story);
+
+	}
+
+	public Story findBy(Long id) {		
+		return em.find(Story.class, id);
 	}
 }

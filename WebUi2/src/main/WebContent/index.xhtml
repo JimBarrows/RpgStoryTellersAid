@@ -10,6 +10,7 @@
 
 	<ui:define name="content">
 		<h:form>
+			<p:commandButton action="newStory" value="New Story"/>
 			<p:dataTable var="story" value="#{storyList.all}">
 				<p:column headerText="Name">
 					<h:outputText value="#{story.name}" />
