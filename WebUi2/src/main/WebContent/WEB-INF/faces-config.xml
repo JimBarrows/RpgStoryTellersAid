@@ -12,11 +12,20 @@
 		<managed-bean-class>storyTellersAide.ui.web.StoryForm</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>storyView</managed-bean-name>
+		<managed-bean-class>storyTellersAide.ui.web.StoryView</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 	<navigation-rule>
 		<from-view-id>/index.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>newStory</from-outcome>
 			<to-view-id>/newStory.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>storyView</from-outcome>
+			<to-view-id>/storyView.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>

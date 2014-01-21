@@ -25,7 +25,10 @@
 						<f:setPropertyActionListener target="#{storyForm.id}"
 							value="#{story.id}" />
 					</p:commandButton>
-					<p:commandButton value="View" />
+					<p:commandButton value="View" action="storyView">
+						<f:setPropertyActionListener target="#{storyView.id}"
+							value="#{story.id}" />
+					</p:commandButton>
 					<p:commandButton value="Delete" />
 				</p:column>
 			</p:dataTable>
