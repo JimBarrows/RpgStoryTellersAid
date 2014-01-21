@@ -14,10 +14,16 @@ public class StoryForm {
 	@EJB
 	private Stories stories;
 
-	private Story story = new Story();
+	private Story story;
+
+	private Long id;
 
 	public String save() {
-		stories.add(story);
+		if (story.getId() == null) {
+			stories.add(story);
+		} else {
+			stories.update(story);
+		}
 		return "storyList";
 	}
 
@@ -25,17 +31,32 @@ public class StoryForm {
 		if (story.getId() == null) {
 			story = new Story();
 		} else {
-			story = stories.findBy( story.getId());
+			story = stories.findBy(story.getId());
 
 		}
 		return "storyList";
 	}
 
 	public Story getStory() {
+		if (id == null) {
+			if (story == null) {
+				story = new Story();
+			}
+		} else {
+			story = stories.findBy(getId());
+		}
 		return story;
 	}
 
 	public void setStory(Story story) {
 		this.story = story;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

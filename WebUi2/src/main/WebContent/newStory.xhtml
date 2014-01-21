@@ -19,6 +19,7 @@
 				<p:commandButton value="Save" action="#{storyForm.save}" />
 				<p:commandButton value="Cancel"  action="#{storyForm.cancel}"/>
 			</h:panelGrid>
+			<h:inputHidden value="#{storyForm.story.id}" />
 		</h:form>
 	</ui:define>
 </ui:composition>
