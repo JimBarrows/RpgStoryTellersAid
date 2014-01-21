@@ -20,4 +20,8 @@ public class StoryList {
 		
 		return stories.all();
 	}
+	
+	public void delete( Story story) {
+		stories.remove( story);
+	}
 }

@@ -19,13 +19,13 @@ public class StoryForm {
 	private Long id;
 
 	public String save() {
-		if (story.getId() == null) {
+		if ((story.getId() == null) || (story.getId() <= 0)){
 			stories.add(story);
 		} else {
 			stories.update(story);
 		}
 		return "storyList";
-	}
+	}	
 
 	public String cancel() {
 		if (story.getId() == null) {

@@ -39,7 +39,7 @@ public class Stories {
 
 	}
 
-	public Story findBy(Long id) {		
+	public Story findBy(Long id) {
 		return em.find(Story.class, id);
 	}
 
@@ -49,6 +49,12 @@ public class Stories {
 		oldStory.setDescription(updatedStory.getDescription());
 		oldStory.setName(updatedStory.getName());
 		return oldStory;
-		
+
+	}
+
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void remove(Story story) {
+		em.remove(findBy(story.getId()));
+
 	}
 }
