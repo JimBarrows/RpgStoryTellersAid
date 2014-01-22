@@ -17,8 +17,27 @@
 			</h:panelGrid>
 			<h:panelGrid columns="2">
 				<p:commandButton value="Save" action="#{storyForm.save}" />
-				<p:commandButton value="Cancel"  action="#{storyForm.cancel}"/>
+				<p:commandButton value="Cancel" action="#{storyForm.cancel}" />
 			</h:panelGrid>
+			<p:panel header="Chapters">
+				<p:commandButton value="Add" action="chapterForm">
+					<f:setPropertyActionListener target="#{chapterForm.storyId}"
+						value="#{storyForm.story.id}" />
+				</p:commandButton>
+				<p:dataTable var="chapter" value="#{storyForm.story.chapters}">
+					<p:column headerText="Number">
+						<h:outputText value="#{chapter.number}" />
+					</p:column>
+
+					<p:column headerText="Title">
+						<h:outputText value="#{chapter.title}" />
+					</p:column>
+
+					<p:column headerText="Description">
+						<h:outputText value="#{chapter.description}" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
 			<h:inputHidden value="#{storyForm.story.id}" />
 		</h:form>
 	</ui:define>

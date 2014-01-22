@@ -10,7 +10,7 @@
 
 	<ui:define name="content">
 		<h:form>
-			<p:commandButton action="newStory" value="New Story" />
+			<p:commandButton action="storyForm" value="New Story" />
 			
 			<p:dataTable id="storyListTable" var="story" value="#{storyList.all}">
 				<p:column headerText="Name">
@@ -22,7 +22,7 @@
 				</p:column>
 
 				<p:column>
-					<p:commandButton value="Edit" action="newStory">
+					<p:commandButton value="Edit" action="storyForm">
 						<f:setPropertyActionListener target="#{storyForm.id}"
 							value="#{story.id}" />
 					</p:commandButton>

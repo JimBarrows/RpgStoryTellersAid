@@ -8,7 +8,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
@@ -34,8 +33,7 @@ public class Chapter implements Serializable{
 		@NotNull
 		@Min(value=1)
 		private Long number;
-		
-		@Lob
+				
 		private String description="";
 		
 		@ManyToOne
@@ -136,5 +134,13 @@ public class Chapter implements Serializable{
 
 		public void setStory(Story story) {
 			this.story = story;
+		}
+
+		public List<Scene> getScenes() {
+			return scenes;
+		}
+
+		public void setScenes(List<Scene> scenes) {
+			this.scenes = scenes;
 		}
 }

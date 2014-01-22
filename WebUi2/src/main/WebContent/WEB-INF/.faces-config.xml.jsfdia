@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PROCESS model-entity="JSFProcess">
  <PROCESS-ITEM NAME="rules:#index.xhtml" PATH="/index.xhtml"
-  SHAPE="196,172,0,0" model-entity="JSFProcessGroup">
+  SHAPE="128,96,50,57" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:#index.xhtml:0" NAME="item"
    PATH="/index.xhtml" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT ID="newStory::#newStory.xhtml" NAME="output"
-    PATH="/newStory.xhtml" TARGET="rules:#newStory.xhtml"
-    TITLE="newStory" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="storyForm::#storyForm.xhtml" NAME="output"
+    PATH="/storyForm.xhtml" TARGET="rules:#storyForm.xhtml"
+    TITLE="storyForm" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT ID="storyView::#storyView.xhtml" NAME="output1"
     PATH="/storyView.xhtml" TARGET="rules:#storyView.xhtml"
     TITLE="storyView" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
- <PROCESS-ITEM NAME="rules:#newStory.xhtml" PATH="/newStory.xhtml"
-  SHAPE="368,127,0,0" model-entity="JSFProcessGroup">
-  <PROCESS-ITEM ID="rules:#newStory.xhtml:0" NAME="item"
-   PATH="/newStory.xhtml" model-entity="JSFProcessItem">
+ <PROCESS-ITEM NAME="rules:#storyForm.xhtml" PATH="/storyForm.xhtml"
+  SHAPE="304,88,50,57" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#storyForm.xhtml:0" NAME="item"
+   PATH="/storyForm.xhtml" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT ID="storyList::#index.xhtml" NAME="output"
     PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="storyList" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="chapterForm::#chapterForm.xhtml"
+    NAME="output1" PATH="/chapterForm.xhtml"
+    TARGET="rules:#chapterForm.xhtml" TITLE="chapterForm" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#storyView.xhtml" PATH="/storyView.xhtml"
   SHAPE="243,302,0,0" model-entity="JSFProcessGroup" persistent="true"/>
+ <PROCESS-ITEM NAME="rules:#chapterForm.xhtml" PATH="/chapterForm.xhtml"
+  SHAPE="568,120,50,25" model-entity="JSFProcessGroup" persistent="true"/>
 </PROCESS>

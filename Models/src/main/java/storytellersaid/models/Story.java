@@ -1,23 +1,26 @@
 package storytellersaid.models;
 
+import static fj.data.Option.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Version;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import fj.data.Option;
+
 @Entity
-public class Story implements Serializable{
+public class Story implements Serializable{	
 
 	public Story() {};
 	
@@ -54,9 +57,18 @@ public class Story implements Serializable{
 	
 	private String description;
 	
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="story", orphanRemoval=true)
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="story", orphanRemoval=true, fetch=FetchType.EAGER)
 	@OrderBy(value="number")
 	private List<Chapter> chapters = new ArrayList<Chapter>();
+	
+	public Option<Chapter> findChapterById( Long chapterId) {		
+		for (Chapter curChapter : getChapters()) {
+			if(curChapter.getId() == chapterId) {
+				return some(curChapter);
+			}
+		}
+		return none();
+	}
 	
 	public Long getId() {
 		return id;
@@ -90,10 +102,6 @@ public class Story implements Serializable{
 		this.description = description;
 	}	
 
-	/**
-	 * 
-	 */
-	private static final Long serialVersionUID = 1L;
 
 	@Override
 	public int hashCode() {
@@ -132,4 +140,19 @@ public class Story implements Serializable{
 						chapters != null ? chapters.subList(0,
 								Math.min(chapters.size(), maxLen)) : null);
 	}
+
+
+	public List<Chapter> getChapters() {
+		return chapters;
+	}
+
+
+	public void setChapters(List<Chapter> chapters) {
+		this.chapters = chapters;
+	}
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 }

@@ -31,7 +31,7 @@ public class StoryForm {
 		if (story.getId() == null) {
 			story = new Story();
 		} else {
-			story = stories.findBy(story.getId());
+			story = stories.findBy(story.getId()).toNull();
 
 		}
 		return "storyList";
@@ -43,7 +43,7 @@ public class StoryForm {
 				story = new Story();
 			}
 		} else {
-			story = stories.findBy(getId());
+			story = stories.findBy(getId()).toNull();
 		}
 		return story;
 	}

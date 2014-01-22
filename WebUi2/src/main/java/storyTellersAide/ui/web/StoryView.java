@@ -25,7 +25,7 @@ public class StoryView {
 	}
 
 	public Story getStory() {
-		return stories.findBy(getId());
+		return stories.findBy(getId()).toNull();
 	}
 	
 }

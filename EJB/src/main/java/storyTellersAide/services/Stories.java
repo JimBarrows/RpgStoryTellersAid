@@ -6,14 +6,17 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import storytellersaid.models.Chapter;
 import storytellersaid.models.Story;
+import fj.F;
+import fj.Unit;
+import fj.data.Option;
 
 @Stateless
 public class Stories {
@@ -39,22 +42,51 @@ public class Stories {
 
 	}
 
-	public Story findBy(Long id) {
-		return em.find(Story.class, id);
+	public Option<Story> findBy(Long id) {
+		return Option.fromNull(em.find(Story.class, id));
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Story update(Story updatedStory) {
-		Story oldStory = findBy(updatedStory.getId());
-		oldStory.setDescription(updatedStory.getDescription());
-		oldStory.setName(updatedStory.getName());
-		return oldStory;
+	public Option<Story> update(final Story updatedStory) {
+		return findBy(updatedStory.getId()).map(new F<Story, Story>() {
+
+			@Override
+			public Story f(Story oldStory) {
+				oldStory.setDescription(updatedStory.getDescription());
+				oldStory.setName(updatedStory.getName());
+				return oldStory;
+			}
+		});
 
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void remove(Story story) {
 		em.remove(findBy(story.getId()));
+
+	}
+
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void add(final Long storyId, final Chapter chapter) {
+		// We're adding a new chapter, and if this is 0 it screws with JPA. It's
+		// usually 0 coming from JSF.
+		chapter.setId(null);
+		findBy(storyId).map(new F<Story, Unit>() {
+
+			@Override
+			public Unit f(Story story) {
+				chapter.setStory(story);
+				// em.persist(chapter);
+				story.getChapters().add(chapter);
+				return Unit.unit();
+			}
+
+		});
+
+	}
+
+	public void update(Long storyId, Chapter chapter) {
+		// TODO Auto-generated method stub
 
 	}
 }
