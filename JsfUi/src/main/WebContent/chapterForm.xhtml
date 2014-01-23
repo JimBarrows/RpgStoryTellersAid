@@ -9,20 +9,23 @@
 	<ui:define name="content">
 		<h:form>
 			<h1>New Chapter</h1>
-			<h:panelGrid columns="2" >
+			<h:panelGrid columns="2">
 				<h:outputLabel value="Number" />
-				<p:spinner  
-                    value="#{chapterForm.chapter.number}"/> 
-				
+				<p:spinner value="#{chapterForm.chapter.number}" />
+
 				<h:outputLabel value="Name" />
 				<p:inputText value="#{chapterForm.chapter.title}" />
-				
-				<h:outputLabel value="Description" for="chapterDescription"/>
-				<p:editor id="chapterDescription" value="#{chapterForm.chapter.description}" width="600" />
+
+				<h:outputLabel value="Description" for="chapterDescription" />
+				<p:editor id="chapterDescription"
+					value="#{chapterForm.chapter.description}" width="600" />
 			</h:panelGrid>
 			<h:panelGrid columns="2">
 				<p:commandButton value="Save" action="#{chapterForm.save}" />
-				<p:commandButton value="Cancel" action="#{chapterForm.cancel}" />
+				<p:commandButton value="Cancel" action="#{chapterForm.cancel}">
+					<f:setPropertyActionListener target="#{storyForm.id}"
+						value="#{chapterForm.storyId}" />
+				</p:commandButton>
 			</h:panelGrid>
 			<p:panel header="Scenes">
 				<p:commandButton value="Add" action="sceneForm">

@@ -1,11 +1,13 @@
 package storyTellersAide.ui.web;
 
-import javax.annotation.ManagedBean;
+import javax.faces.bean.ManagedBean;
 import javax.ejb.EJB;
 import javax.faces.bean.RequestScoped;
 
 import storyTellersAide.services.Stories;
 import storytellersaid.models.Chapter;
+import storytellersaid.models.Story;
+import fj.F;
 
 @ManagedBean
 @RequestScoped
@@ -24,17 +26,26 @@ public class ChapterForm {
 		} else {
 			stories.update(storyId, chapter);
 		}
-		return "chapterList";
+		return "";
 	}	
 
 	public String cancel() {
-		if (chapter.getId() == null) {
+		if ((chapter.getId() == null) || (chapter.getId() <= 0)) {
 			chapter = new Chapter();
 		} else {
-			//chapter = stories.findBy(storyId).getChapters().;
+			final Long chapterId = getChapter().getId();
+			chapter = stories.findBy(storyId).map(new F<Story, Chapter>() {
+
+				@Override
+				public Chapter f(Story story) {
+					return story.findChapterById(chapterId).toNull();
+				}
+
+				
+			}).toNull();
 
 		}
-		return "chapterList";
+		return "storyForm";
 	}
 	
 	public Long getStoryId() {

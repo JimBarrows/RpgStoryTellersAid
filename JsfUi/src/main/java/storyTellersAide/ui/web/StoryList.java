@@ -2,8 +2,8 @@ package storyTellersAide.ui.web;
 
 import java.util.List;
 
-import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import storyTellersAide.services.Stories;

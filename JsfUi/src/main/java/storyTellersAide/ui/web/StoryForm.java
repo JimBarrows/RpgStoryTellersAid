@@ -1,10 +1,11 @@
 package storyTellersAide.ui.web;
 
-import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import storyTellersAide.services.Stories;
+import storytellersaid.models.Chapter;
 import storytellersaid.models.Story;
 
 @ManagedBean
@@ -13,7 +14,7 @@ public class StoryForm {
 
 	@EJB
 	private Stories stories;
-
+	
 	private Story story;
 
 	private Long id;
@@ -37,6 +38,11 @@ public class StoryForm {
 		return "storyList";
 	}
 
+	public String delete( Chapter chapter) {
+		stories.removeChapterFrom(story, chapter);
+		return null;
+	}
+	
 	public Story getStory() {
 		if (id == null) {
 			if (story == null) {

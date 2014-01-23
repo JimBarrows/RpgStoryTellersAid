@@ -89,4 +89,10 @@ public class Stories {
 		// TODO Auto-generated method stub
 
 	}
+
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void removeChapterFrom(Story story, Chapter chapter) {
+		story.getChapters().remove(chapter);
+		em.remove(chapter);
+	}
 }
