@@ -1,5 +1,6 @@
 package storyTellersAide.services;
 
+import static fj.Unit.unit;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -61,8 +62,16 @@ public class Stories {
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void remove(Story story) {
-		em.remove(findBy(story.getId()));
+	public void remove(final Story story) {
+		findBy(story.getId()).map(new F<Story, Unit>() {
+
+			@Override
+			public Unit f(Story story) {
+				em.remove( story);
+				return unit();
+			}
+		});
+		
 
 	}
 

@@ -1,7 +1,7 @@
 package storyTellersAide.ui.web;
 
-import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import storyTellersAide.services.Stories;
@@ -14,18 +14,14 @@ public class StoryView {
 	@EJB
 	private Stories stories;
 	
-	private Long id;	
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+	private Story story;
 
 	public Story getStory() {
-		return stories.findBy(getId()).toNull();
+		return story;
 	}
+
+	public void setStory(Story story) {
+		this.story = story;
+	}	
 	
 }

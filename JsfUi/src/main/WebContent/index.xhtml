@@ -23,12 +23,12 @@
 
 				<p:column>
 					<p:commandButton value="Edit" action="storyForm">
-						<f:setPropertyActionListener target="#{storyForm.id}"
-							value="#{story.id}" />
+						<f:setPropertyActionListener target="#{storyForm.story}"
+							value="#{story}" />
 					</p:commandButton>
 					<p:commandButton value="View" action="storyView">
-						<f:setPropertyActionListener target="#{storyView.id}"
-							value="#{story.id}" />
+						<f:setPropertyActionListener target="#{storyView.story}"
+							value="#{story}" />
 					</p:commandButton>
 					<p:commandButton value="Delete" action="#{storyList.delete( story)}" update="storyListTable"/>
 				</p:column>

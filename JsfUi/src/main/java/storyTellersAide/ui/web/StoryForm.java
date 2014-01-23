@@ -15,9 +15,7 @@ public class StoryForm {
 	@EJB
 	private Stories stories;
 	
-	private Story story;
-
-	private Long id;
+	private Story story;	
 
 	public String save() {
 		if ((story.getId() == null) || (story.getId() <= 0)){
@@ -44,12 +42,8 @@ public class StoryForm {
 	}
 	
 	public Story getStory() {
-		if (id == null) {
-			if (story == null) {
-				story = new Story();
-			}
-		} else {
-			story = stories.findBy(getId()).toNull();
+		if( story == null) {
+			story = new Story();
 		}
 		return story;
 	}
@@ -58,11 +52,4 @@ public class StoryForm {
 		this.story = story;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 }
