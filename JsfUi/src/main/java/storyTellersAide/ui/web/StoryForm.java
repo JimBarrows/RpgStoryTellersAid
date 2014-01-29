@@ -1,20 +1,33 @@
 package storyTellersAide.ui.web;
 
+import java.io.Serializable;
+
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 import storyTellersAide.services.Stories;
 import storytellersaid.models.Chapter;
 import storytellersaid.models.Story;
 
-@ManagedBean
-@RequestScoped
-public class StoryForm {
+@Named
+@ViewScoped
+public class StoryForm implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public StoryForm() {
+		super();
+		System.out.println("Creating new story form");
+	}
 
 	@EJB
 	private Stories stories;
 	
+	//@Inject
 	private Story story;	
 
 	public String save() {
@@ -45,10 +58,12 @@ public class StoryForm {
 		if( story == null) {
 			story = new Story();
 		}
+		System.out.println("Getting story: " + story.toString());
 		return story;
 	}
 
 	public void setStory(Story story) {
+		System.out.println("Setting story: " + story.toString());
 		this.story = story;
 	}
 

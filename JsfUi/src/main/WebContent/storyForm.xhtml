@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/templates/master.xhtml">
-	<ui:define name="content">
+	<ui:define name="content">		
 		<h:form>
 			<h1>New Story</h1>
 			<h:panelGrid columns="2">
@@ -17,34 +17,32 @@
 			</h:panelGrid>
 			<h:panelGrid columns="2">
 				<p:commandButton value="Save" action="#{storyForm.save}" />
-				<p:commandButton value="Cancel" action="#{storyForm.cancel}" />
+				<p:commandButton value="Cancel" action="storyList" immediate="true"/>
 			</h:panelGrid>
 			<p:panel header="Chapters">
 				<p:commandButton value="Add" action="chapterForm">
-					<f:setPropertyActionListener target="#{chapterForm.storyId}"
-						value="#{storyForm.story.id}" />
 				</p:commandButton>
-				<p:dataTable id="chapterListTable" var="chapter"
+				<p:dataTable id="chapterListTable" var="c"
 					value="#{storyForm.story.chapters}">
 					<p:column headerText="Number">
-						<h:outputText value="#{chapter.number}" />
+						<h:outputText value="#{c.number}" />
 					</p:column>
 
 					<p:column headerText="Title">
-						<h:outputText value="#{chapter.title}" />
+						<h:outputText value="#{c.title}" />
 					</p:column>
 
 					<p:column headerText="Description">
-						<h:outputText value="#{chapter.description}" />
+						<h:outputText value="#{c.description}" />
 					</p:column>
 
 					<p:column>
-						<p:commandButton value="Edit" action="chapterForm">
-							<f:setPropertyActionListener target="#{chapterForm.chapterId}"
-								value="#{chapter.id}" />
+						<p:commandButton value="Edit" action="chapterForm">							
+							<f:setPropertyActionListener target="#{storyEditConversation.chapter}"
+								value="#{c}" />
 						</p:commandButton>
 						<p:commandButton value="Delete"
-							action="#{storyForm.delete( chapter)}" update="chapterListTable" />
+							action="#{storyForm.delete( c)}" update="chapterListTable" />
 					</p:column>
 				</p:dataTable>
 			</p:panel>

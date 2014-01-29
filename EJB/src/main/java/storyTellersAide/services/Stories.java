@@ -1,13 +1,15 @@
 package storyTellersAide.services;
 
 import static fj.Unit.unit;
+
 import java.util.List;
 
-import javax.ejb.Stateless;
+import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -19,10 +21,10 @@ import fj.F;
 import fj.Unit;
 import fj.data.Option;
 
-@Stateless
+@Stateful
 public class Stories {
 
-	@PersistenceContext
+	@PersistenceContext(type=PersistenceContextType.EXTENDED)
 	EntityManager em;
 
 	public List<Story> all() {
@@ -67,11 +69,10 @@ public class Stories {
 
 			@Override
 			public Unit f(Story story) {
-				em.remove( story);
+				em.remove(story);
 				return unit();
 			}
 		});
-		
 
 	}
 
@@ -84,7 +85,7 @@ public class Stories {
 
 			@Override
 			public Unit f(Story story) {
-				chapter.setStory(story);
+				// chapter.setStory(story);
 				// em.persist(chapter);
 				story.getChapters().add(chapter);
 				return Unit.unit();

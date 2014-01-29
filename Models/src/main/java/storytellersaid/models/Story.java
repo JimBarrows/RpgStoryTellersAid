@@ -1,18 +1,20 @@
 package storytellersaid.models;
 
-import static fj.data.Option.*;
+import static fj.data.Option.none;
+import static fj.data.Option.some;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
+import javax.persistence.OrderColumn;
 import javax.persistence.Version;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -20,11 +22,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 import fj.data.Option;
 
 @Entity
-public class Story implements Serializable{	
+public class Story implements Serializable {
 
-	public Story() {};
-	
-	
+	public Story() {
+	};
+
 	public Story(Long id, Long version, String name, String description) {
 		super();
 		this.id = id;
@@ -32,7 +34,6 @@ public class Story implements Serializable{
 		this.name = name;
 		this.description = description;
 	}
-
 
 	public Story(Long id, Long version, String name, String description,
 			List<Chapter> chapters) {
@@ -44,32 +45,31 @@ public class Story implements Serializable{
 		this.chapters = chapters;
 	}
 
-
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	@Version
 	private Long version;
 
 	@NotEmpty
 	private String name;
-	
+
 	private String description;
-	
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="story", orphanRemoval=true, fetch=FetchType.EAGER)
-	@OrderBy(value="number")
+
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OrderColumn(name = "number")
 	private List<Chapter> chapters = new ArrayList<Chapter>();
-	
-	public Option<Chapter> findChapterById( Long chapterId) {		
+
+	public Option<Chapter> findChapterById(Long chapterId) {
 		for (Chapter curChapter : getChapters()) {
-			if(curChapter.getId() == chapterId) {
+			if (curChapter.getId() == chapterId) {
 				return some(curChapter);
 			}
 		}
 		return none();
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -100,8 +100,7 @@ public class Story implements Serializable{
 
 	public void setDescription(String description) {
 		this.description = description;
-	}	
-
+	}
 
 	@Override
 	public int hashCode() {
@@ -137,20 +136,18 @@ public class Story implements Serializable{
 						version,
 						name,
 						description,
-						chapters != null ? chapters.subList(0,
+						chapters != null ? Arrays.asList( chapters.toArray()).subList(0,
 								Math.min(chapters.size(), maxLen)) : null);
 	}
-
 
 	public List<Chapter> getChapters() {
 		return chapters;
 	}
 
-
 	public void setChapters(List<Chapter> chapters) {
 		this.chapters = chapters;
 	}
-	
+
 	/**
 	 * 
 	 */

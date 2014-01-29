@@ -1,62 +1,47 @@
 package storyTellersAide.ui.web;
 
-import javax.faces.bean.ManagedBean;
+import java.io.Serializable;
+
 import javax.ejb.EJB;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
 
 import storyTellersAide.services.Stories;
 import storytellersaid.models.Chapter;
 import storytellersaid.models.Story;
-import fj.F;
 
 @ManagedBean
-@RequestScoped
-public class ChapterForm {
+@ViewScoped
+public class ChapterForm implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@EJB
 	private Stories stories;
-	
-	private Long storyId;
-	
-	private Chapter chapter = new Chapter();
+
+	@Inject
+	private Story story;
+
+	@Inject
+	private Chapter chapter;
 
 	public String save() {
-		if ((chapter.getId() == null) || (chapter.getId() <= 0)){			
-			stories.add(storyId, chapter);
+		if ((chapter.getId() == null) || (chapter.getId() <= 0)) {
+			stories.add(story.getId(), chapter);
 		} else {
-			stories.update(storyId, chapter);
+			stories.update(story.getId(), chapter);
 		}
 		return "";
-	}	
-
-	public String cancel() {
-		if ((chapter.getId() == null) || (chapter.getId() <= 0)) {
-			chapter = new Chapter();
-		} else {
-			final Long chapterId = getChapter().getId();
-			chapter = stories.findBy(storyId).map(new F<Story, Chapter>() {
-
-				@Override
-				public Chapter f(Story story) {
-					return story.findChapterById(chapterId).toNull();
-				}
-
-				
-			}).toNull();
-
-		}
-		return "storyForm";
-	}
-	
-	public Long getStoryId() {
-		return storyId;
-	}
-
-	public void setStoryId(Long storyId) {
-		this.storyId = storyId;
 	}
 
 	public Chapter getChapter() {
+		if (chapter == null) {
+			chapter = new Chapter();
+		}
 		return chapter;
 	}
 
@@ -64,6 +49,12 @@ public class ChapterForm {
 		this.chapter = chapter;
 	}
 
-	
-	
+	public Story getStory() {
+		return story;
+	}
+
+	public void setStory(Story story) {
+		this.story = story;
+	}
+
 }

@@ -1,27 +1,33 @@
 package storyTellersAide.ui.web;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 import storyTellersAide.services.Stories;
 import storytellersaid.models.Story;
 
-@ManagedBean
-@RequestScoped
-public class StoryList {
+@Named
+@ViewScoped
+public class StoryList implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@EJB
 	private Stories stories;
-	
+
 	public List<Story> getAll() {
-		
+
 		return stories.all();
 	}
-	
-	public void delete( Story story) {
-		stories.remove( story);
+
+	public void delete(Story story) {
+		stories.remove(story);
 	}
 }

@@ -11,10 +11,11 @@
 			<h1>New Chapter</h1>
 			<h:panelGrid columns="2">
 				<h:outputLabel value="Number" />
-				<p:spinner value="#{chapterForm.chapter.number}" />
+				<p:spinner id="chapterNumber" value="#{chapterForm.chapter.number}"
+					min="1" required="true" />
 
 				<h:outputLabel value="Name" />
-				<p:inputText value="#{chapterForm.chapter.title}" />
+				<p:inputText value="#{chapterForm.chapter.title}" required="true" />
 
 				<h:outputLabel value="Description" for="chapterDescription" />
 				<p:editor id="chapterDescription"
@@ -22,15 +23,15 @@
 			</h:panelGrid>
 			<h:panelGrid columns="2">
 				<p:commandButton value="Save" action="#{chapterForm.save}" />
-				<p:commandButton value="Cancel" action="#{chapterForm.cancel}">
-					<f:setPropertyActionListener target="#{storyForm.id}"
-						value="#{chapterForm.storyId}" />
-				</p:commandButton>
+				<p:commandButton value="Cancel" action="cancel" immediate="true">
+					<f:setPropertyActionListener target="#{storyForm.story}"
+						value="#{chapterForm.story}" />
+				</p:commandButton>				
 			</h:panelGrid>
 			<p:panel header="Scenes">
 				<p:commandButton value="Add" action="sceneForm">
-					<f:setPropertyActionListener target="#{sceneForm.chapterId}"
-						value="#{chapterForm.chapter.id}" />
+					<f:setPropertyActionListener target="#{sceneForm.chapter}"
+						value="#{chapterForm.chapter}" />
 				</p:commandButton>
 				<p:dataTable var="scene" value="#{chapterForm.chapter.scenes}">
 					<p:column headerText="Number">
@@ -54,8 +55,7 @@
 					</p:column>
 				</p:dataTable>
 			</p:panel>
-			<h:inputHidden value="#{chapterForm.chapter.id}" />
-			<h:inputHidden value="#{chapterForm.storyId}" />
+			<h:inputHidden value="#{chapterForm.chapter.id}" />			
 		</h:form>
 	</ui:define>
 </ui:composition>

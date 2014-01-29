@@ -41,8 +41,8 @@ public class Scene implements Serializable{
 		@Lob
 		private String playerDescription="";
 		
-		@ManyToOne
-		private Chapter chapter;
+//		@ManyToOne
+//		private Chapter chapter;
 		
 		@OneToMany(cascade=CascadeType.ALL, mappedBy="scene", orphanRemoval=true)		
 		private List<Clue> clues = new ArrayList<Clue>();
@@ -118,12 +118,12 @@ public class Scene implements Serializable{
 		}
 
 
-		public Chapter getChapter() {
-			return chapter;
-		}
-
-
-		public void setChapter(Chapter chapter) {
-			this.chapter = chapter;
-		}
+//		public Chapter getChapter() {
+//			return chapter;
+//		}
+//
+//
+//		public void setChapter(Chapter chapter) {
+//			this.chapter = chapter;
+//		}
 }

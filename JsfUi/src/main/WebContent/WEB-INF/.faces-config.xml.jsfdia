@@ -1,30 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PROCESS model-entity="JSFProcess">
  <PROCESS-ITEM NAME="rules:#index.xhtml" PATH="/index.xhtml"
-  SHAPE="128,96,50,57" model-entity="JSFProcessGroup">
+  SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:#index.xhtml:0" NAME="item"
    PATH="/index.xhtml" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT ID="storyForm::#storyForm.xhtml" NAME="output"
-    PATH="/storyForm.xhtml" TARGET="rules:#storyForm.xhtml"
-    TITLE="storyForm" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="editStory::#storyForm.xhtml" NAME="output"
+    PATH="/storyForm.xhtml" SHAPE="-1,16"
+    TARGET="rules:#storyForm.xhtml" TITLE="editStory" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT ID="storyView::#storyView.xhtml" NAME="output1"
-    PATH="/storyView.xhtml" TARGET="rules:#storyView.xhtml"
-    TITLE="storyView" model-entity="JSFProcessItemOutput"/>
+    PATH="/storyView.xhtml" SHAPE="-1,24"
+    TARGET="rules:#storyView.xhtml" TITLE="storyView" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#storyForm.xhtml" PATH="/storyForm.xhtml"
-  SHAPE="304,88,50,57" model-entity="JSFProcessGroup">
+  SHAPE="256,33,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:#storyForm.xhtml:0" NAME="item"
    PATH="/storyForm.xhtml" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT ID="storyList::#index.xhtml" NAME="output"
-    PATH="/index.xhtml" TARGET="rules:#index.xhtml" TITLE="storyList" model-entity="JSFProcessItemOutput"/>
+    PATH="/index.xhtml" SHAPE="305,64,310,64,310,96,16,96,16,24,31,24"
+    TARGET="rules:#index.xhtml" TITLE="storyList" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT ID="chapterForm::#chapterForm.xhtml"
-    NAME="output1" PATH="/chapterForm.xhtml"
+    NAME="output1" PATH="/chapterForm.xhtml" SHAPE="-1,16"
     TARGET="rules:#chapterForm.xhtml" TITLE="chapterForm" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#storyView.xhtml" PATH="/storyView.xhtml"
-  SHAPE="243,302,0,0" model-entity="JSFProcessGroup" persistent="true"/>
+  SHAPE="256,177,0,0" model-entity="JSFProcessGroup" persistent="true"/>
  <PROCESS-ITEM NAME="rules:#chapterForm.xhtml" PATH="/chapterForm.xhtml"
-  SHAPE="568,120,50,25" model-entity="JSFProcessGroup" persistent="true"/>
+  SHAPE="480,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#chapterForm.xhtml:0" NAME="item"
+   PATH="/chapterForm.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="cancel::#storyForm.xhtml" NAME="output"
+    PATH="/storyForm.xhtml" SHAPE="-1,16"
+    TARGET="rules:#storyForm.xhtml" TITLE="cancel" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
 </PROCESS>

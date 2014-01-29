@@ -10,27 +10,29 @@
 
 	<ui:define name="content">
 		<h:form>
-			<p:commandButton action="storyForm" value="New Story" />
-			
-			<p:dataTable id="storyListTable" var="story" value="#{storyList.all}">
+			<p:commandButton action="storyForm" value="New Story"
+				actionListener="#{storyEditConversation.start}" />
+
+			<p:dataTable id="storyListTable" var="s" value="#{storyList.all}">
 				<p:column headerText="Name">
-					<h:outputText value="#{story.name}" />
+					<h:outputText value="#{s.name}" />
 				</p:column>
 
 				<p:column headerText="Description">
-					<h:outputText value="#{story.description}" />
+					<h:outputText value="#{s.description}" />
 				</p:column>
 
 				<p:column>
-					<p:commandButton value="Edit" action="storyForm">
-						<f:setPropertyActionListener target="#{storyForm.story}"
-							value="#{story}" />
+					<p:commandButton value="Edit" action="editStory">
+						<f:setPropertyActionListener
+							target="#{storyForm.story}" value="#{s}" />
 					</p:commandButton>
 					<p:commandButton value="View" action="storyView">
 						<f:setPropertyActionListener target="#{storyView.story}"
-							value="#{story}" />
+							value="#{s}" />
 					</p:commandButton>
-					<p:commandButton value="Delete" action="#{storyList.delete( story)}" update="storyListTable"/>
+					<p:commandButton value="Delete" action="#{storyList.delete( s)}"
+						update="storyListTable" />
 				</p:column>
 			</p:dataTable>
 		</h:form>
