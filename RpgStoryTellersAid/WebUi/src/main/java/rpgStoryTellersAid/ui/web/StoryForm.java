@@ -52,7 +52,7 @@ public class StoryForm implements Serializable{
 		} else {
 			stories.update(story);
 		}
-		return "storyList";
+		return "index";
 	}	
 
 	public String cancel() {
