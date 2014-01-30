@@ -1,0 +1,122 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>Barrows</groupId>
+	<artifactId>RpgStoryTellersAid</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>RPG Story Tellers Aid</name>
+	<modules>
+		<module>WebUi</module>
+		<module>Models</module>
+		<module>Repository</module>
+		<module>Requirements</module>
+	</modules>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<!-- JBoss dependency versions -->
+		<version.org.jboss.as.plugins.maven.plugin>7.1.1.Final</version.org.jboss.as.plugins.maven.plugin>
+		<version.org.jboss.spec.jboss.javaee.6.0>3.0.0.Final</version.org.jboss.spec.jboss.javaee.6.0>
+
+		<!-- other plugin versions -->
+		<version.compiler.plugin>2.3.1</version.compiler.plugin>
+		<version.ejb.plugin>2.3</version.ejb.plugin>
+
+		<version.picketlink.javaee.bom>2.6.0.Beta2</version.picketlink.javaee.bom>
+
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>org.functionaljava</groupId>
+			<artifactId>functionaljava</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+
+	</dependencies>
+	<repositories>
+		<repository>
+			<url>http://repository.primefaces.org/</url>
+			<id>PrimeFaces-maven-lib</id>
+			<layout>default</layout>
+			<name>Repository for library PrimeFaces-maven-lib</name>
+		</repository>
+	</repositories>
+	<inceptionYear>2013</inceptionYear>
+	<organization>
+		<name>Jim Barrows</name>
+	</organization>
+	<scm>
+		<url>https://github.com/JimBarrows/RpgStoryTellersAid</url>
+		<connection>scm:git:git://github.com/JimBarrows/RpgStoryTellersAid.git</connection>
+		<developerConnection>scm:git:git@github.com:JimBarrows/RpgStoryTellersAid.git</developerConnection>
+	</scm>
+	<issueManagement>
+		<url>https://github.com/JimBarrows/RpgStoryTellersAid/issues</url>
+		<system>Github Issues</system>
+	</issueManagement>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.functionaljava</groupId>
+				<artifactId>functionaljava</artifactId>
+				<version>3.1</version>
+			</dependency>
+			<dependency>
+				<groupId>joda-time</groupId>
+				<artifactId>joda-time</artifactId>
+				<version>2.3</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.2.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.spec</groupId>
+				<artifactId>jboss-javaee-6.0</artifactId>
+				<version>${version.org.jboss.spec.jboss.javaee.6.0}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.picketlink</groupId>
+				<artifactId>picketlink-javaee-6.0</artifactId>
+				<version>${version.picketlink.javaee.bom}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<developers>
+		<developer>
+			<email>Jim.Barrows@gmail.com</email>
+			<name>Jim Barrows</name>
+			<url>https://github.com/JimBarrows/</url>
+			<id>JimBarrows</id>
+		</developer>
+	</developers>
+
+</project>

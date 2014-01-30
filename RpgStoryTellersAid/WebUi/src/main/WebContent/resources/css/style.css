@@ -1,0 +1,33 @@
+@CHARSET "ISO-8859-1";
+
+.ui-widget {
+	font-size: 12px !important;
+}
+
+.ui-widget-content {
+	border: none !important;
+}
+
+#header {
+	background-color: #fafafa !important;
+	background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);
+}
+
+#logo > div{
+	background-color: #fafafa !important;
+	background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);
+}
+
+#menuBarSection {
+
+	background-color: #fafafa !important;
+	background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);
+
+}
+
+#menuBarSection > div{
+
+	background-color: #fafafa !important;
+	background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);
+
+}
