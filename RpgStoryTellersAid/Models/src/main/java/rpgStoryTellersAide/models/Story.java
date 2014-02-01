@@ -1,8 +1,5 @@
 package rpgStoryTellersAide.models;
 
-import static fj.data.Option.none;
-import static fj.data.Option.some;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,6 +16,8 @@ import javax.persistence.Version;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import fj.F;
+import fj.data.Java;
 import fj.data.Option;
 
 @Entity
@@ -61,15 +60,26 @@ public class Story implements Serializable {
 	@OrderColumn(name = "number")
 	private List<Chapter> chapters = new ArrayList<Chapter>();
 
-	public Option<Chapter> findChapterById(Long chapterId) {
-		for (Chapter curChapter : getChapters()) {
-			if (curChapter.getId() == chapterId) {
-				return some(curChapter);
+	public Option<Chapter> findChapterById(final Long chapterId) {
+		return chapters().find(new F<Chapter, Boolean>() {
+
+			@Override
+			public Boolean f(Chapter curChapter) { 
+				return curChapter.getId() == chapterId;
 			}
-		}
-		return none();
+		});
+		
+	}
+	
+	public fj.data.List<Chapter> chapters() {
+		F<ArrayList<Chapter>, fj.data.List<Chapter>> arrayList_List = Java.ArrayList_List();
+		return arrayList_List.f((ArrayList<Chapter>) chapters);
 	}
 
+	public boolean isNew() {
+		return (id==null) || ( id <= 0);
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -152,4 +162,9 @@ public class Story implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+	public void add(Chapter chapter) {
+		chapter.setStory(this);
+		chapters.add(chapter);
+	}
 }

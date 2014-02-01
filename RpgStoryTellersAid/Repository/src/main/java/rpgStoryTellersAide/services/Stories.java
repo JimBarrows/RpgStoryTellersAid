@@ -69,25 +69,7 @@ public class Stories {
 			}
 		});
 
-	}
-
-	public void add(final Long storyId, final Chapter chapter) {
-		// We're adding a new chapter, and if this is 0 it screws with JPA. It's
-		// usually 0 coming from JSF.
-		chapter.setId(null);
-		findBy(storyId).map(new F<Story, Unit>() {
-
-			@Override
-			public Unit f(Story story) {
-				// chapter.setStory(story);
-				// em.persist(chapter);
-				story.getChapters().add(chapter);
-				return Unit.unit();
-			}
-
-		});
-
-	}
+	}	
 
 	public void update(Long storyId, Chapter chapter) {
 		// TODO Auto-generated method stub
@@ -97,5 +79,12 @@ public class Stories {
 	public void removeChapterFrom(Story story, Chapter chapter) {
 		story.getChapters().remove(chapter);
 		em.remove(chapter);
+	}
+
+	public void add(Story story, Chapter chapter) {
+//		story = em.merge(story);
+		story.add( chapter);
+		em.persist(chapter);
+		
 	}
 }

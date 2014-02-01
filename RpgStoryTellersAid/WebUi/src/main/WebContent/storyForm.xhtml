@@ -20,8 +20,9 @@
 				<p:commandButton value="Cancel" action="index" immediate="true"/>
 			</h:panelGrid>
 			<p:panel header="Chapters">
-				<p:commandButton value="Add" action="chapterForm">
-				</p:commandButton>
+				<p:button value="Add" outcome="chapterForm">
+							<f:param name="storyId" value="#{storyForm.story.id}"/>
+						</p:button>
 				<p:dataTable id="chapterListTable" var="c"
 					value="#{storyForm.story.chapters}">
 					<p:column headerText="Number">

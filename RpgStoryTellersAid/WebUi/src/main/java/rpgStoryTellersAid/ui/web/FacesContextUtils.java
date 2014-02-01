@@ -15,6 +15,11 @@ public class FacesContextUtils {
 		FacesContext.getCurrentInstance().addMessage(id,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null));
 	}
+	
+	public static void successMessage(String message) {
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, message, null));
+	}
 
 	public static void return404() {
 		FacesContext.getCurrentInstance().getExternalContext()

@@ -1,40 +1,148 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <ui:composition template="/templates/master.xhtml">
 
 
 	<ui:define name="content">
+		<h:form id="storyEditForm">
+			<pe:masterDetail id="storyEditMasterDetail" level="#{index.currentLevel}" showAllBreadcrumbItems="true">
 
-		<h:form>
-			<p:commandButton action="storyForm" value="New Story" ajax="false" />
-			<p:fragment autoUpdate="true">
-				<p:dataTable id="storyListTable" var="s" value="#{index.allStories}">
-					<p:column headerText="Name">
-						<h:outputText value="#{s.name}" />
-					</p:column>
+				<pe:masterDetailLevel level="1" levelLabel="Stories">
 
-					<p:column headerText="Description">
-						<h:outputText value="#{s.description}" />
-					</p:column>
+					<p:commandButton value="Add" update=":storyEditForm:storyEditMasterDetail" >
+						<pe:selectDetailLevel listener="${index.createStory}"/>
+					</p:commandButton>
 
-					<p:column>						
-						<p:button value="Edit" outcome="storyForm">
-							<f:param name="storyId" value="#{s.id}"/>
+					<p:dataTable id="storyListTable" var="s" value="#{index.allStories}">
+
+						<p:column headerText="Name">
+							<h:outputText value="#{s.name}" />
+						</p:column>
+
+						<p:column headerText="Description">
+							<h:outputText value="#{s.description}" />
+						</p:column>
+
+						<p:column>
+							<p:commandButton value="Edit" update=":storyEditForm:storyEditMasterDetail">
+								<pe:selectDetailLevel contextValue="#{s}" />
+							</p:commandButton>
+							<p:button value="View" outcome="storyView">
+								<f:param name="storyId" value="#{s.id}" />
+							</p:button>
+						</p:column>
+					</p:dataTable>
+
+				</pe:masterDetailLevel>
+				<pe:masterDetailLevel level="2" levelLabel="Story" contextVar="story">
+					<h:panelGrid columns="3">
+						<h:outputLabel for="storyName" value="Name" />
+						<p:inputText id="storyName" value="#{story.name}" />
+						<p:message for="storyName" />
+						<h:outputLabel for="storyDescription" value="Description" />
+						<p:editor id="storyDescription" value="#{story.description}" width="600" />
+						<p:message for="storyName" />
+					</h:panelGrid>
+					<h:panelGrid columns="3">
+						<p:commandButton value="Save" update=":storyEditForm:storyEditMasterDetail" action="#{index.save(story)}">
+							<pe:selectDetailLevel level="1" />
+						</p:commandButton>
+						<p:commandButton value="Cancel" update=":storyEditForm:storyEditMasterDetail" type="">
+							<pe:selectDetailLevel level="1" />
+						</p:commandButton>
+						<p:commandButton value="Delete" action="#{index.delete( story)}" update=":storyEditForm:storyEditMasterDetail">
+							<pe:selectDetailLevel level="1" />
+						</p:commandButton>
+					</h:panelGrid>
+					<p:panel header="Chapters">
+						<p:button value="Add" outcome="chapterForm">
+							<f:param name="storyId" value="#{story.id}" />
 						</p:button>
-						<p:button value="View" outcome="storyView" >
-							<f:param name="storyId" value="#{s.id}"/>
-						</p:button>
-						<p:commandButton value="Delete" action="#{index.delete( s)}"/>
-					</p:column>
-				</p:dataTable>
-			</p:fragment>
+						<p:dataTable id="chapterListTable" var="c" value="#{story.chapters}">
+							<p:column headerText="Number">
+								<h:outputText value="#{c.number}" />
+							</p:column>
+
+							<p:column headerText="Title">
+								<h:outputText value="#{c.title}" />
+							</p:column>
+
+							<p:column headerText="Description">
+								<h:outputText value="#{c.description}" />
+							</p:column>
+
+							<p:column>
+								<p:commandButton value="Edit" update=":storyEditForm:storyEditMasterDetail">
+									<pe:selectDetailLevel contextValue="#{c}" />
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+				</pe:masterDetailLevel>
+				<pe:masterDetailLevel level="3" levelLabel="Chapter" contextVar="chapter">
+					<h:panelGrid columns="2">
+						<h:outputLabel value="Number" />
+						<p:spinner id="chapterNumber" value="#{chapter.number}" min="1" required="true" />
+
+						<h:outputLabel value="Name" />
+						<p:inputText value="#{chapter.title}" required="true" />
+
+						<h:outputLabel value="Description" for="chapterDescription" />
+						<p:editor id="chapterDescription" value="#{chapter.description}" width="600" />
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:commandButton value="Save" action="#{chapterForm.save}" />
+					</h:panelGrid>
+					<p:panel header="Scenes">
+						<p:dataTable var="scene" value="#{chapter.scenes}">
+							<p:column headerText="Number">
+								<h:outputText value="#{scene.number}" />
+							</p:column>
+
+							<p:column headerText="Title">
+								<h:outputText value="#{scene.title}" />
+							</p:column>
+
+							<p:column headerText="Location">
+								<h:outputText value="#{scene.location}" />
+							</p:column>
+
+							<p:column headerText="GM Description">
+								<h:outputText value="#{scene.gmDescription}" />
+							</p:column>
+
+							<p:column headerText="Player Description">
+								<h:outputText value="#{scene.playerDescription}" />
+							</p:column>
+
+							<p:column>
+								<p:commandButton value="Edit" update=":storyEditForm:storyEditMasterDetail">
+									<pe:selectDetailLevel contextValue="#{scene}" />
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+				</pe:masterDetailLevel>
+				<pe:masterDetailLevel level="4" levelLabel="Scene" contextVar="scene">
+					<h:panelGrid columns="2">
+						<h:outputLabel value="Number" />
+						<p:spinner value="#{scene.number}" min="1" required="true" />
+
+						<h:outputLabel value="Name" />
+						<p:inputText value="#{scene.title}" required="true" />
+
+						<h:outputLabel value="GM Description" for="gmDescription" />
+						<p:editor value="#{scene.gmDescription}" width="600" />
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:commandButton value="Save" action="#{chapterForm.save}" />
+					</h:panelGrid>
+				</pe:masterDetailLevel>
+			</pe:masterDetail>
 		</h:form>
-
 	</ui:define>
 
 </ui:composition>
