@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition>
+	<h:panelGrid columns="2">
+		<h:outputLabel value="Number" />
+		<p:spinner value="#{scene.number}" min="1" required="true" />
+
+		<h:outputLabel value="Name" />
+		<p:inputText value="#{scene.title}" required="true" />
+
+		<h:outputLabel value="GM Description" for="gmDescription" />
+		<p:editor value="#{scene.gmDescription}" width="600" />
+
+		<h:outputLabel value="Player Description" for="playerDescription" />
+		<p:editor value="#{scene.playerDescription}" width="600" />
+	</h:panelGrid>
+	<h:panelGrid columns="2">
+		<p:commandButton value="Save" action="#{chapterForm.save}" />
+	</h:panelGrid>
+	<p:commandButton value="Add" update=":storyEditForm:storyEditMasterDetail">
+		<pe:selectDetailLevel listener="${index.createScene(chapter)}" />
+	</p:commandButton>
+	<p:dataTable var="actor" value="#{scene.actors}">
+		<p:column headerText="Name">
+			<h:outputText value="#{actor.name}" />
+		</p:column>
+		<p:column headerText="Physical Description">
+			<h:outputText value="#{actor.physicalDescription}" />
+		</p:column>
+	</p:dataTable>
+</ui:composition>
+</html>

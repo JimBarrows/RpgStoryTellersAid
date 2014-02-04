@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition>
+	<h:panelGrid columns="3">
+		<h:outputLabel for="storyName" value="Name" />
+		<p:inputText id="storyName" value="#{story.name}" />
+		<p:message for="storyName" />
+		<h:outputLabel for="storyDescription" value="Description" />
+		<p:editor id="storyDescription" value="#{story.description}" width="600" />
+		<p:message for="storyName" />
+	</h:panelGrid>
+	<h:panelGrid columns="3">
+		<p:commandButton value="Save" update=":storyEditForm:storyEditMasterDetail" action="#{index.save(story)}">
+			<pe:selectDetailLevel level="1" />
+		</p:commandButton>
+		<p:commandButton value="Cancel" update=":storyEditForm:storyEditMasterDetail">
+			<pe:selectDetailLevel level="1" />
+		</p:commandButton>
+		<p:commandButton value="Delete" action="#{index.delete( story)}" update=":storyEditForm:storyEditMasterDetail">
+			<pe:selectDetailLevel level="1" />
+		</p:commandButton>
+	</h:panelGrid>
+	<p:panel header="Chapters">
+		<p:commandButton value="Add" update=":storyEditForm:storyEditMasterDetail">
+			<pe:selectDetailLevel listener="${index.createChapter(story)}" />
+		</p:commandButton>
+		<p:dataTable id="chapterListTable" var="c" value="#{story.chapters}">
+			<p:column headerText="Number">
+				<h:outputText value="#{c.number}" />
+			</p:column>
+
+			<p:column headerText="Title">
+				<h:outputText value="#{c.title}" />
+			</p:column>
+
+			<p:column headerText="Description">
+				<h:outputText value="#{c.description}" />
+			</p:column>
+
+			<p:column>
+				<p:commandButton value="Edit" update=":storyEditForm:storyEditMasterDetail">
+					<pe:selectDetailLevel contextValue="#{c}" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+	</p:panel>
+</ui:composition>
+</html>
