@@ -1,5 +1,6 @@
 package rpgStoryTellersAide.models;
 
+import static java.lang.String.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,8 +35,7 @@ public class Story implements Serializable {
 		this.description = description;
 	}
 
-	public Story(Long id, Long version, String name, String description,
-			List<Chapter> chapters) {
+	public Story(Long id, Long version, String name, String description, List<Chapter> chapters) {
 		super();
 		this.id = id;
 		this.version = version;
@@ -64,22 +64,22 @@ public class Story implements Serializable {
 		return chapters().find(new F<Chapter, Boolean>() {
 
 			@Override
-			public Boolean f(Chapter curChapter) { 
+			public Boolean f(Chapter curChapter) {
 				return curChapter.getId() == chapterId;
 			}
 		});
-		
+
 	}
-	
+
 	public fj.data.List<Chapter> chapters() {
 		F<ArrayList<Chapter>, fj.data.List<Chapter>> arrayList_List = Java.ArrayList_List();
 		return arrayList_List.f((ArrayList<Chapter>) chapters);
 	}
 
 	public boolean isNew() {
-		return (id==null) || ( id <= 0);
+		return (id == null) || (id <= 0);
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -140,14 +140,10 @@ public class Story implements Serializable {
 	@Override
 	public String toString() {
 		final int maxLen = 10;
-		return String
-				.format("Story [id=%s, version=%s, name=%s, description=%s, chapters=%s]",
-						id,
-						version,
-						name,
-						description,
-						chapters != null ? Arrays.asList( chapters.toArray()).subList(0,
-								Math.min(chapters.size(), maxLen)) : null);
+		return String.format("Story [id=%s, version=%s, name=%s, description=%s, chapters=%s]", id, version, name,
+				description,
+				chapters != null ? Arrays.asList(chapters.toArray()).subList(0, Math.min(chapters.size(), maxLen))
+						: null);
 	}
 
 	public List<Chapter> getChapters() {
@@ -166,5 +162,7 @@ public class Story implements Serializable {
 	public void add(Chapter chapter) {
 		chapter.setStory(this);
 		chapters.add(chapter);
+		chapter.setNumber((long) chapters.size());
+		chapter.setTitle(format("Chapter %d", chapter.getNumber()));
 	}
 }

@@ -1,18 +1,17 @@
 package rpgStoryTellersAide.models;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.OrderColumn;
 import javax.persistence.Version;
 import javax.validation.constraints.Min;
@@ -43,8 +42,24 @@ public class Chapter implements Serializable {
 	private Story story;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@OrderColumn(name="number")
+	@OrderColumn(name = "number")
 	private List<Scene> scenes = new ArrayList<Scene>();
+
+	public void add(Scene scene) {
+		scene.setChapter(this);
+		scenes.add(scene);
+		if (scene.getNumber() == null || scene.getNumber() <= 0) {
+			scene.setNumber( (long) scenes.size());
+		}
+		if( isBlank( scene.getTitle())) {
+			scene.setTitle( "Scene " + scene.getNumber());
+		}
+
+	}
+
+	public boolean isNew() {
+		return (id == null) || (id <= 0);
+	}
 
 	/**
 		 * 
@@ -119,16 +134,9 @@ public class Chapter implements Serializable {
 	@Override
 	public String toString() {
 		final int maxLen = 10;
-		return String
-				.format("Chapter [id=%s, version=%s, title=%s, number=%s, description=%s, story=%s, scenes=%s]",
-						id,
-						version,
-						title,
-						number,
-						description,
-						"story",
-						scenes != null ? scenes.subList(0,
-								Math.min(scenes.size(), maxLen)) : null);
+		return String.format("Chapter [id=%s, version=%s, title=%s, number=%s, description=%s, story=%s, scenes=%s]",
+				id, version, title, number, description, "story",
+				scenes != null ? scenes.subList(0, Math.min(scenes.size(), maxLen)) : null);
 	}
 
 	public Story getStory() {
@@ -146,4 +154,5 @@ public class Chapter implements Serializable {
 	public void setScenes(List<Scene> scenes) {
 		this.scenes = scenes;
 	}
+
 }

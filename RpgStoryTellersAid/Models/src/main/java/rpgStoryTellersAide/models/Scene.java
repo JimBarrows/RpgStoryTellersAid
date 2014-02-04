@@ -102,12 +102,16 @@ public class Scene implements Serializable {
 		this.playerDescription = playerDescription;
 	}
 
-	// public Chapter getChapter() {
-	// return chapter;
-	// }
-	//
-	//
-	// public void setChapter(Chapter chapter) {
-	// this.chapter = chapter;
-	// }
+	public boolean isNew() {
+		return (id == null) || (id <= 0);
+	}
+
+	 public Chapter getChapter() {
+	 return chapter;
+	 }
+	
+	
+	 public void setChapter(Chapter chapter) {
+	 this.chapter = chapter;
+	 }
 }

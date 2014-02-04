@@ -14,6 +14,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import rpgStoryTellersAide.models.Chapter;
+import rpgStoryTellersAide.models.Scene;
 import rpgStoryTellersAide.models.Story;
 import fj.F;
 import fj.Unit;
@@ -36,15 +37,19 @@ public class Stories {
 		return allStorys;
 	}
 	
-	public void add(Story story) {
+	public void save(Story story) {
+		if(story.isNew()) {
+			create( story);
+		}else {
+			update( story);
+		}
+	}
+	public void create(Story story) {
 
 		em.persist(story);
 
 	}
-
-	public Option<Story> findBy(Long id) {
-		return Option.fromNull(em.find(Story.class, id));
-	}
+	
 
 	public Option<Story> update(final Story updatedStory) {
 		return findBy(updatedStory.getId()).map(new F<Story, Story>() {
@@ -59,7 +64,11 @@ public class Stories {
 
 	}
 
-	public void remove(final Story story) {
+	public Option<Story> findBy(Long id) {
+		return Option.fromNull(em.find(Story.class, id));
+	}
+	
+	public void delete(final Story story) {
 		findBy(story.getId()).map(new F<Story, Unit>() {
 
 			@Override
@@ -71,20 +80,21 @@ public class Stories {
 
 	}	
 
-	public void update(Long storyId, Chapter chapter) {
-		// TODO Auto-generated method stub
-
-	}
-
 	public void removeChapterFrom(Story story, Chapter chapter) {
 		story.getChapters().remove(chapter);
 		em.remove(chapter);
 	}
 
 	public void add(Story story, Chapter chapter) {
-//		story = em.merge(story);
+
 		story.add( chapter);
 		em.persist(chapter);
+		
+	}
+
+	public void add(Chapter chapter, Scene scene) {
+		chapter.add(scene);
+		em.persist(scene);
 		
 	}
 }
