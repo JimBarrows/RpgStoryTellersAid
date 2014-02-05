@@ -31,11 +31,11 @@ public class Index implements Serializable {
 	private Story story;
 
 	private Chapter chapter;
-	
+
 	private Scene scene;
 
 	private Actor actor;
-	
+
 	@PostConstruct
 	public void init() {
 		allStories = stories.all();
@@ -48,50 +48,38 @@ public class Index implements Serializable {
 
 	public Chapter createChapter(Story story) {
 		chapter = new Chapter();
-		if( story.isNew()) {
-			story.add(chapter);
-		} else {
-			stories.add(story, chapter);
-		}
+		story.add(chapter);
 		return chapter;
 	}
-	
+
 	public Scene createScene(Chapter chapter) {
 		scene = new Scene();
-		if( chapter.isNew()) {
-			chapter.add(scene);
-		} else {
-			stories.add(chapter, scene);
-		}
+		chapter.add(scene);
 		return scene;
 	}
-	
+
 	public Actor createActor(Scene scene) {
 		actor = new Actor();
-//		if( scene.isNew()) {
-			scene.add(actor);
-//		} else {
-//			stories.add(scene, actor);
-//		}
+		scene.add(actor);
 		return actor;
 	}
 
 	public String save(Story story) {
 
 		stories.save(story);
-
+		allStories = stories.all();
 		successMessage(format("%s was succcesfully saved!", story.getName()));
 		return null;
 	}
 
 	public String save(Chapter chapter) {
-		stories.save( chapter.getStory());
+		stories.save(chapter.getStory());
 		successMessage(format("%s was succcesfully saved!", chapter.getTitle()));
 		return null;
 	}
-	
+
 	public String save(Scene scene) {
-		stories.save( scene.getChapter().getStory());
+		stories.save(scene.getChapter().getStory());
 		successMessage(format("%s was succcesfully saved!", scene.getTitle()));
 		return null;
 	}
@@ -105,14 +93,15 @@ public class Index implements Serializable {
 
 	public String delete(Chapter chapter) {
 		Story story = chapter.getStory();
-		stories.removeChapterFrom(story, chapter);
+		story.remove( chapter);
+		stories.update( story);
 		successMessage(format("%s was succcesfully removed from %s!", chapter.getTitle(), story.getName()));
 		return "";
 	}
-	
+
 	public String delete(Scene scene) {
 		Chapter chapter = scene.getChapter();
-		chapter.remove( scene);
+		chapter.remove(scene);
 		stories.update(chapter.getStory());
 		successMessage(format("%s was succcesfully removed from %s!", scene.getTitle(), chapter.getTitle()));
 		return "";
@@ -122,7 +111,6 @@ public class Index implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
 
 	public List<Story> getAllStories() {
 		return allStories;

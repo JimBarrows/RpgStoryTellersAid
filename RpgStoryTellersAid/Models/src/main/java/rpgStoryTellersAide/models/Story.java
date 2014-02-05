@@ -165,4 +165,10 @@ public class Story implements Serializable {
 		chapter.setNumber((long) chapters.size());
 		chapter.setTitle(format("Chapter %d", chapter.getNumber()));
 	}
+
+	public void remove(Chapter chapter) {
+		chapter.setStory(null);
+		chapters.remove(chapter);
+
+	}
 }
