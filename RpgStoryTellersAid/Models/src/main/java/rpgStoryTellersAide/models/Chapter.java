@@ -155,4 +155,10 @@ public class Chapter implements Serializable {
 		this.scenes = scenes;
 	}
 
+	public void remove(Scene scene) {
+		scene.setChapter(null);
+		scenes.remove(scene);
+		
+	}
+
 }

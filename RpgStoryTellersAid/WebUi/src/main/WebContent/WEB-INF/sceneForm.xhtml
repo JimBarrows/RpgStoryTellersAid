@@ -3,24 +3,30 @@
 	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <ui:composition>
-	<h:panelGrid columns="2">
-		<h:outputLabel value="Number" />
-		<p:spinner value="#{scene.number}" min="1" required="true" />
 
-		<h:outputLabel value="Name" />
-		<p:inputText value="#{scene.title}" required="true" />
+	<h:panelGrid columns="2">
+		<h:outputLabel for="sceneNumber" value="Number" />
+		<p:spinner id="sceneNumber" value="#{scene.number}" min="1" required="true" />
+
+		<h:outputLabel value="Name" for="name" />
+		<p:inputText id="name" value="#{scene.title}" required="true" />
 
 		<h:outputLabel value="GM Description" for="gmDescription" />
-		<p:editor value="#{scene.gmDescription}" width="600" />
+		<p:editor id="gmDescription" value="#{scene.gmDescription}" width="600" />
 
 		<h:outputLabel value="Player Description" for="playerDescription" />
-		<p:editor value="#{scene.playerDescription}" width="600" />
+		<p:editor id="playerDescription" value="#{scene.playerDescription}" width="600" />
 	</h:panelGrid>
 	<h:panelGrid columns="2">
-		<p:commandButton value="Save" action="#{chapterForm.save}" />
+		<p:commandButton value="Save" update=":storyEditForm:storyEditMasterDetail" action="#{index.save(scene)}">
+			<pe:selectDetailLevel level="3" />
+		</p:commandButton>
+		<p:commandButton value="Delete" update=":storyEditForm:storyEditMasterDetail" action="#{index.delete( scene)}">
+			<pe:selectDetailLevel level="3" />
+		</p:commandButton>
 	</h:panelGrid>
 	<p:commandButton value="Add" update=":storyEditForm:storyEditMasterDetail">
-		<pe:selectDetailLevel listener="${index.createScene(chapter)}" />
+		<pe:selectDetailLevel listener="${index.createActor(scene)}" />
 	</p:commandButton>
 	<p:dataTable var="actor" value="#{scene.actors}">
 		<p:column headerText="Name">
@@ -30,5 +36,6 @@
 			<h:outputText value="#{actor.physicalDescription}" />
 		</p:column>
 	</p:dataTable>
+
 </ui:composition>
 </html>

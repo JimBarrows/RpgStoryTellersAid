@@ -11,6 +11,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import rpgStoryTellersAide.models.Actor;
 import rpgStoryTellersAide.models.Chapter;
 import rpgStoryTellersAide.models.Scene;
 import rpgStoryTellersAide.models.Story;
@@ -32,6 +33,8 @@ public class Index implements Serializable {
 	private Chapter chapter;
 	
 	private Scene scene;
+
+	private Actor actor;
 	
 	@PostConstruct
 	public void init() {
@@ -55,12 +58,22 @@ public class Index implements Serializable {
 	
 	public Scene createScene(Chapter chapter) {
 		scene = new Scene();
-		if( scene.isNew()) {
+		if( chapter.isNew()) {
 			chapter.add(scene);
 		} else {
 			stories.add(chapter, scene);
 		}
 		return scene;
+	}
+	
+	public Actor createActor(Scene scene) {
+		actor = new Actor();
+//		if( scene.isNew()) {
+			scene.add(actor);
+//		} else {
+//			stories.add(scene, actor);
+//		}
+		return actor;
 	}
 
 	public String save(Story story) {
@@ -76,6 +89,12 @@ public class Index implements Serializable {
 		successMessage(format("%s was succcesfully saved!", chapter.getTitle()));
 		return null;
 	}
+	
+	public String save(Scene scene) {
+		stories.save( scene.getChapter().getStory());
+		successMessage(format("%s was succcesfully saved!", scene.getTitle()));
+		return null;
+	}
 
 	public String delete(Story story) {
 		stories.delete(story);
@@ -88,6 +107,14 @@ public class Index implements Serializable {
 		Story story = chapter.getStory();
 		stories.removeChapterFrom(story, chapter);
 		successMessage(format("%s was succcesfully removed from %s!", chapter.getTitle(), story.getName()));
+		return "";
+	}
+	
+	public String delete(Scene scene) {
+		Chapter chapter = scene.getChapter();
+		chapter.remove( scene);
+		stories.update(chapter.getStory());
+		successMessage(format("%s was succcesfully removed from %s!", scene.getTitle(), chapter.getTitle()));
 		return "";
 	}
 
@@ -115,6 +142,14 @@ public class Index implements Serializable {
 
 	public Chapter getChapter() {
 		return chapter;
+	}
+
+	public Scene getScene() {
+		return scene;
+	}
+
+	public Actor getActor() {
+		return actor;
 	}
 
 }

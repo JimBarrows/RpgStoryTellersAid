@@ -14,7 +14,7 @@
 		<p:editor id="chapterDescription" value="#{chapter.description}" width="600" />
 
 	</h:panelGrid>
-	<h:panelGrid columns="2">
+	<h:panelGrid columns="3">
 		<p:commandButton value="Save" update=":storyEditForm:storyEditMasterDetail" action="#{index.save(chapter)}">
 			<pe:selectDetailLevel level="2" />
 		</p:commandButton>
@@ -29,26 +29,26 @@
 		<p:commandButton value="Add" update=":storyEditForm:storyEditMasterDetail">
 			<pe:selectDetailLevel listener="${index.createScene(chapter)}" />
 		</p:commandButton>
-		<p:dataTable var="scene" value="#{chapter.scenes}">
+		<p:dataTable var="curScene" value="#{chapter.scenes}">
 			<p:column headerText="Number">
-				<h:outputText value="#{scene.number}" />
+				<h:outputText value="#{curScene.number}" />
 			</p:column>
 
 			<p:column headerText="Title">
-				<h:outputText value="#{scene.title}" />
+				<h:outputText value="#{curScene.title}" />
 			</p:column>
 
 			<p:column headerText="Location">
-				<h:outputText value="#{scene.location}" />
+				<h:outputText value="#{curScene.location}" />
 			</p:column>
 
 			<p:column headerText="GM Description">
-				<h:outputText value="#{scene.gmDescription}" />
+				<h:outputText value="#{curScene.gmDescription}" />
 			</p:column>
 
 			<p:column>
 				<p:commandButton value="Edit" update=":storyEditForm:storyEditMasterDetail">
-					<pe:selectDetailLevel contextValue="#{scene}" />
+					<pe:selectDetailLevel contextValue="#{curScene}" />
 				</p:commandButton>
 			</p:column>
 		</p:dataTable>
