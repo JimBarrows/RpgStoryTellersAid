@@ -19,6 +19,9 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import fj.F;
+import fj.data.Java;
+
 @Entity
 public class Chapter implements Serializable {
 
@@ -49,10 +52,10 @@ public class Chapter implements Serializable {
 		scene.setChapter(this);
 		scenes.add(scene);
 		if (scene.getNumber() == null || scene.getNumber() <= 0) {
-			scene.setNumber( (long) scenes.size());
+			scene.setNumber((long) scenes.size());
 		}
-		if( isBlank( scene.getTitle())) {
-			scene.setTitle( "Scene " + scene.getNumber());
+		if (isBlank(scene.getTitle())) {
+			scene.setTitle("Scene " + scene.getNumber());
 		}
 
 	}
@@ -158,7 +161,14 @@ public class Chapter implements Serializable {
 	public void remove(Scene scene) {
 		scene.setChapter(null);
 		scenes.remove(scene);
-		
+
+	}
+
+	public fj.data.List<Scene> scenes() {
+
+		F<ArrayList<Scene>, fj.data.List<Scene>> arrayList_List = Java.ArrayList_List();
+		return arrayList_List.f( new ArrayList<Scene>( scenes));
+
 	}
 
 }

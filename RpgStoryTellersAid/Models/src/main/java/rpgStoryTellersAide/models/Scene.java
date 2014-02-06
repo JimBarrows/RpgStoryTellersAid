@@ -17,6 +17,9 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import fj.F;
+import fj.data.Java;
+
 @Entity
 public class Scene implements Serializable {
 
@@ -49,6 +52,11 @@ public class Scene implements Serializable {
 
 	@ManyToMany
 	private List<Actor> actors = new ArrayList<Actor>();
+	
+	public fj.data.List<Actor> actors() {
+		F<ArrayList<Actor>, fj.data.List<Actor>> arrayList_List = Java.ArrayList_List();
+		return arrayList_List.f((ArrayList<Actor>) actors);
+	}
 	/**
 		 * 
 		 */

@@ -14,6 +14,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import rpgStoryTellersAide.models.Chapter;
+import rpgStoryTellersAide.models.Location;
 import rpgStoryTellersAide.models.Scene;
 import rpgStoryTellersAide.models.Story;
 import fj.F;
@@ -95,6 +96,11 @@ public class Stories {
 	public void add(Chapter chapter, Scene scene) {
 		chapter.add(scene);
 		em.persist(scene);
+		
+	}
+
+	public Option<Location> findLocationBy(long id) {
+		return Option.fromNull(em.find(Location.class, id));
 		
 	}
 }

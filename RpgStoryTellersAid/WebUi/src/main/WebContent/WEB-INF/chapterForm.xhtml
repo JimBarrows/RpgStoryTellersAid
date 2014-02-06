@@ -39,7 +39,7 @@
 			</p:column>
 
 			<p:column headerText="Location">
-				<h:outputText value="#{curScene.location}" />
+				<h:outputText value="#{curScene.location.name}" />
 			</p:column>
 
 			<p:column headerText="GM Description">
@@ -49,6 +49,7 @@
 			<p:column>
 				<p:commandButton value="Edit" update=":storyEditForm:storyEditMasterDetail">
 					<pe:selectDetailLevel contextValue="#{curScene}" />
+					<f:setPropertyActionListener target="#{index.scene}" value="#{curScene}" />
 				</p:commandButton>
 			</p:column>
 		</p:dataTable>

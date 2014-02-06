@@ -1,10 +1,13 @@
 package rpgStoryTellersAid.ui.web;
 
+import static org.apache.commons.lang3.StringUtils.*;
 import static java.lang.String.format;
 import static rpgStoryTellersAid.ui.web.FacesContextUtils.successMessage;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -13,6 +16,7 @@ import javax.faces.bean.ViewScoped;
 
 import rpgStoryTellersAide.models.Actor;
 import rpgStoryTellersAide.models.Chapter;
+import rpgStoryTellersAide.models.Location;
 import rpgStoryTellersAide.models.Scene;
 import rpgStoryTellersAide.models.Story;
 import rpgStoryTellersAide.services.Stories;
@@ -34,11 +38,24 @@ public class Index implements Serializable {
 
 	private Scene scene;
 
-	private Actor actor;
+	private Actor actor;	
 
 	@PostConstruct
 	public void init() {
 		allStories = stories.all();
+	}
+
+	public List<Location> locationComplete(String query) {
+		List<Location> results = new ArrayList<Location>();
+		ListIterator<Location> listIterator = scene.getChapter().getStory().getLocations().listIterator();
+		while (listIterator.hasNext()) {
+			Location next = listIterator.next();
+			if (isBlank(query) || next.getName().startsWith(query)) {
+				results.add(next);
+			}
+		}
+
+		return results;
 	}
 
 	public Story createStory(Object context) {
@@ -93,8 +110,8 @@ public class Index implements Serializable {
 
 	public String delete(Chapter chapter) {
 		Story story = chapter.getStory();
-		story.remove( chapter);
-		stories.update( story);
+		story.remove(chapter);
+		stories.update(story);
 		successMessage(format("%s was succcesfully removed from %s!", chapter.getTitle(), story.getName()));
 		return "";
 	}
@@ -138,6 +155,10 @@ public class Index implements Serializable {
 
 	public Actor getActor() {
 		return actor;
+	}
+
+	public void setScene(Scene scene) {
+		this.scene = scene;
 	}
 
 }

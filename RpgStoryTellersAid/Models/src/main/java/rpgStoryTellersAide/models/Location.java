@@ -7,7 +7,6 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
@@ -26,12 +25,19 @@ public class Location implements Serializable{
 	@NotEmpty
 	private String name = "New Location";
 	
-	@Lob
 	private String description="";
 	
 	@OneToMany(mappedBy="location")
 	private List<Scene> scenes = new ArrayList<Scene>();
 	
+	public Location() {
+		
+	}
+	
+	public Location( String name, String description) {
+		this.name = name;
+		this.description = description;
+	}
 	/**
 	 * 
 	 */

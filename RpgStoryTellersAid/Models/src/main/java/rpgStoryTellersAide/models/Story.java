@@ -1,9 +1,12 @@
 package rpgStoryTellersAide.models;
 
+import static fj.Unit.*;
 import static java.lang.String.*;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -18,6 +21,7 @@ import javax.persistence.Version;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import fj.F;
+import fj.Unit;
 import fj.data.Java;
 import fj.data.Option;
 
@@ -73,9 +77,25 @@ public class Story implements Serializable {
 
 	public fj.data.List<Chapter> chapters() {
 		F<ArrayList<Chapter>, fj.data.List<Chapter>> arrayList_List = Java.ArrayList_List();
-		return arrayList_List.f((ArrayList<Chapter>) chapters);
+		return arrayList_List.f( new ArrayList<Chapter>( chapters));
 	}
 
+	public List<Location> getLocations() {
+		final List<Location > locations = new ArrayList<Location>();
+		Iterator<Chapter> chapterIterator = chapters.iterator();
+		while( chapterIterator.hasNext()){
+			Chapter chapter = chapterIterator.next();
+			Iterator<Scene> sceneIterator = chapter.getScenes().iterator();
+			while( sceneIterator.hasNext()) {
+				Scene scene = sceneIterator.next();
+				if( scene.getLocation() != null) {
+					locations.add(scene.getLocation());
+				}
+			}
+		}
+		return locations;
+	}
+	
 	public boolean isNew() {
 		return (id == null) || (id <= 0);
 	}

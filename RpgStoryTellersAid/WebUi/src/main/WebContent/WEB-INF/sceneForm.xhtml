@@ -11,6 +11,10 @@
 		<h:outputLabel value="Name" for="name" />
 		<p:inputText id="name" value="#{scene.title}" required="true" />
 
+		<h:outputLabel value="Location" for="location" />
+		<p:autoComplete id="location" dropdown="true" value="#{scene.location}" completeMethod="#{index.locationComplete}"
+			var="p" itemLabel="#{p.name}" itemValue="#{p}" converter="location" forceSelection="true" />
+
 		<h:outputLabel value="GM Description" for="gmDescription" />
 		<p:editor id="gmDescription" value="#{scene.gmDescription}" width="600" />
 
