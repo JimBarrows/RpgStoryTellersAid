@@ -1,13 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>Barrows</groupId>
+	<groupId>StoryTellersAid</groupId>
 	<artifactId>RpgStoryTellersAid</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>RPG Story Tellers Aid</name>
+	<name>Story Tellers Aid</name>
 	<modules>
-		<module>WebUi</module>
+		<module>RpgUi</module>
 		<module>Models</module>
 		<module>Repository</module>
 		<module>Requirements</module>
