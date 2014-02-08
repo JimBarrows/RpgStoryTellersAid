@@ -12,6 +12,9 @@ import javax.persistence.Version;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import fj.F;
+import fj.data.Java;
+
 @Entity
 public class Location implements Serializable{	
 
@@ -38,6 +41,12 @@ public class Location implements Serializable{
 		this.name = name;
 		this.description = description;
 	}
+	
+	public fj.data.List<Scene> scenes() {
+		F<ArrayList<Scene>, fj.data.List<Scene>> arrayList_List = Java.ArrayList_List();
+		return arrayList_List.f((ArrayList<Scene>) scenes);
+	}
+	
 	/**
 	 * 
 	 */

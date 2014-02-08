@@ -47,20 +47,28 @@ public class Scene implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "scene", orphanRemoval = true)
 	private List<Clue> clues = new ArrayList<Clue>();
 
-	@ManyToOne(targetEntity = Location.class)
+	@ManyToOne(targetEntity = Location.class, cascade={CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REFRESH})
 	private Location location = null;
 
-	@ManyToMany
+	@ManyToMany(targetEntity = Actor.class, cascade={CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REFRESH})
 	private List<Actor> actors = new ArrayList<Actor>();
-	
+
 	public fj.data.List<Actor> actors() {
 		F<ArrayList<Actor>, fj.data.List<Actor>> arrayList_List = Java.ArrayList_List();
 		return arrayList_List.f((ArrayList<Actor>) actors);
 	}
-	/**
-		 * 
-		 */
-	private static final long serialVersionUID = 1L;
+
+	public void add(Actor actor) {
+		actor.getScenes().add(this);
+		actors.add(actor);
+
+	}
+
+	public void add(Location location) {
+		location.getScenes().add(this);
+		this.location = location;
+
+	}
 
 	public Long getId() {
 		return id;
@@ -146,12 +154,6 @@ public class Scene implements Serializable {
 		this.actors = actors;
 	}
 
-	public void add(Actor actor) {
-		actor.getScenes().add(this);
-		actors.add(actor);
-		
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -198,4 +200,9 @@ public class Scene implements Serializable {
 						clues != null ? clues.subList(0, Math.min(clues.size(), maxLen)) : null, location,
 						actors != null ? actors.subList(0, Math.min(actors.size(), maxLen)) : null);
 	}
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 }

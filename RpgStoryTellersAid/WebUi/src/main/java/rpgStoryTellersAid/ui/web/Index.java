@@ -37,6 +37,8 @@ public class Index implements Serializable {
 	private Chapter chapter;
 
 	private Scene scene;
+	
+	private Location location;
 
 	private Actor actor;	
 
@@ -74,6 +76,12 @@ public class Index implements Serializable {
 		chapter.add(scene);
 		return scene;
 	}
+	
+	public Location createLocation(Scene scene) {
+		location = new Location();
+		scene.add( location);
+		return location;
+	}
 
 	public Actor createActor(Scene scene) {
 		actor = new Actor();
@@ -82,7 +90,6 @@ public class Index implements Serializable {
 	}
 
 	public String save(Story story) {
-
 		stories.save(story);
 		allStories = stories.all();
 		successMessage(format("%s was succcesfully saved!", story.getName()));
@@ -98,6 +105,12 @@ public class Index implements Serializable {
 	public String save(Scene scene) {
 		stories.save(scene.getChapter().getStory());
 		successMessage(format("%s was succcesfully saved!", scene.getTitle()));
+		return null;
+	}
+	
+	public String save(Location location) {
+		stories.save(location.scenes().last().getChapter().getStory());
+		successMessage(format("%s was succcesfully saved!", location.getName()));
 		return null;
 	}
 
@@ -159,6 +172,26 @@ public class Index implements Serializable {
 
 	public void setScene(Scene scene) {
 		this.scene = scene;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setStory(Story story) {
+		this.story = story;
+	}
+
+	public void setChapter(Chapter chapter) {
+		this.chapter = chapter;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	public void setActor(Actor actor) {
+		this.actor = actor;
 	}
 
 }
