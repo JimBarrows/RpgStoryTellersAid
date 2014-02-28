@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition>
+	<h:panelGrid columns="2">
+		<h:outputLabel value="Number" />
+		<p:spinner value="#{chapter.number}" min="1" required="true" />
+
+		<h:outputLabel value="Name" />
+		<p:inputText value="#{chapter.title}" required="true" />
+
+		<h:outputLabel value="Description" for="chapterDescription" />
+		<p:editor id="chapterDescription" value="#{chapter.description}" width="600" />
+
+	</h:panelGrid>
+	<h:panelGrid columns="3">
+		<p:commandButton value="Save" update=":storyEditForm:storyEditMasterDetail" action="#{index.save(chapter)}">
+			<pe:selectDetailLevel level="2" />
+		</p:commandButton>
+		<p:commandButton value="Cancel" update=":storyEditForm:storyEditMasterDetail">
+			<pe:selectDetailLevel level="2" />
+		</p:commandButton>
+		<p:commandButton value="Delete" action="#{index.delete( chapter)}" update=":storyEditForm:storyEditMasterDetail">
+			<pe:selectDetailLevel level="2" />
+		</p:commandButton>
+	</h:panelGrid>
+	<p:panel header="Scenes">
+		<p:commandButton value="Add" update=":storyEditForm:storyEditMasterDetail">
+			<pe:selectDetailLevel listener="${index.createScene(chapter)}" />
+		</p:commandButton>
+		<p:dataTable var="curScene" value="#{chapter.scenes}">
+			<p:column headerText="Number">
+				<h:outputText value="#{curScene.number}" />
+			</p:column>
+
+			<p:column headerText="Title">
+				<h:outputText value="#{curScene.title}" />
+			</p:column>
+
+			<p:column headerText="Location">
+				<h:outputText value="#{curScene.location.name}" />
+			</p:column>
+
+			<p:column headerText="GM Description">
+				<h:outputText value="#{curScene.gmDescription}" />
+			</p:column>
+
+			<p:column>
+				<p:commandButton value="Edit" update=":storyEditForm:storyEditMasterDetail">
+					<pe:selectDetailLevel contextValue="#{curScene}" />
+					<f:setPropertyActionListener target="#{index.scene}" value="#{curScene}" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+	</p:panel>
+</ui:composition>
+</html>

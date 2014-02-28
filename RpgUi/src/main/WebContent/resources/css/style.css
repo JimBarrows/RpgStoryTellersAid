@@ -1,0 +1,8 @@
+@CHARSET "ISO-8859-1";
+
+.ui-widget {
+	font-size: 12px !important;
+}
+.ui-layout-pane {
+    border: 0;
+}

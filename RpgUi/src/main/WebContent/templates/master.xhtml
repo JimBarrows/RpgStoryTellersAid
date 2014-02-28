@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<f:view contentType="text/html">
+	<h:head>
+		<f:facet name="first">
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			<meta http-equiv="pragma" content="no-cache" />
+			<meta http-equiv="cache-control" content="no-cache" />
+			<meta http-equiv="expires" content="0" />
+		</f:facet>
+		<ui:insert name="head" />
+	</h:head>
+	<h:body>
+		<h:outputStylesheet library="css" name="style.css" />
+		<p:layout fullPage="true">
+
+			<p:layoutUnit id="header" position="north" size="80">
+				<h:form>
+					<p:menubar autoDisplay="true">
+						<p:menuitem immediate="true" outcome="index" icon="ui-icon-home"
+							value="Home" />
+						<p:menuitem value="Manage Wanted List" immediate="true"
+							outcome="manageWantedList" rendered="#{identity.loggedIn}" />
+						<f:facet name="options">
+							<ui:fragment rendered="#{identity.loggedIn}">
+								<h:form>	
+									Congratulations! You are currently logged in as: <b>#{identity.account.loginName}</b>
+
+									<p:commandButton id="logout" value="Log out"
+										action="#{identity.logout}" ajax="false" />
+								</h:form>
+							</ui:fragment>
+							<h:form id="loginForm" rendered="#{not identity.loggedIn}">
+								<p:outputLabel for="name" value="Username" />
+								<h:inputText id="name" value="#{loginCredentials.userId}" />
+
+								<p:outputLabel for="password" value="Password" />
+								<p:password id="password" value="#{loginCredentials.password}"
+									redisplay="true" />
+
+								<p:commandButton id="login" value="Login"
+									action="#{identity.login}" ajax="false" />
+							</h:form>
+						</f:facet>
+					</p:menubar>
+				</h:form>
+
+			</p:layoutUnit>
+
+			<p:layoutUnit position="center">
+				<p:messages globalOnly="true" autoUpdate="true" closable="true" />
+				<ui:insert name="content">            
+            		insert at master
+       			</ui:insert>
+			</p:layoutUnit>
+
+		</p:layout>
+
+	</h:body>
+</f:view>
+</html>

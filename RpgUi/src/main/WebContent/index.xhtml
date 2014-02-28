@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/templates/master.xhtml">
+
+
+	<ui:define name="content">
+		<h:form id="storyEditForm">
+			<pe:masterDetail id="storyEditMasterDetail" level="#{index.currentLevel}">
+
+				<pe:masterDetailLevel level="1" levelLabel="Stories">
+
+					<ui:include src="WEB-INF/storyList.xhtml" />
+
+				</pe:masterDetailLevel>
+				<pe:masterDetailLevel level="2" levelLabel="Story" contextVar="story">
+					<ui:include src="WEB-INF/storyForm.xhtml" />
+				</pe:masterDetailLevel>
+				<pe:masterDetailLevel level="3" levelLabel="Chapter" contextVar="chapter">
+					<ui:include src="WEB-INF/chapterForm.xhtml" />
+				</pe:masterDetailLevel>
+				<pe:masterDetailLevel level="4" levelLabel="Scene" contextVar="scene">
+					<ui:include src="WEB-INF/sceneForm.xhtml" />
+				</pe:masterDetailLevel>
+				<pe:masterDetailLevel level="5" levelLabel="Location" contextVar="location">
+					<ui:include src="WEB-INF/locationForm.xhtml" />
+				</pe:masterDetailLevel>
+			</pe:masterDetail>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+</html>
