@@ -5,8 +5,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'RpgStoryTellersAidB.views.home', name='home'),
+    # url(r'^$', 'RpgStoryTellersAid.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-
+	url(r'^stories/', include('stories.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )

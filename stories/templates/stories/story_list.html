@@ -1,0 +1,8 @@
+<h1>Stories</h1>
+<ul>
+{% for story in object_list %}
+	<li><a href="{% url 'story-detail' story.id %}">{{ story.name }} </a>
+		<a href="{% url 'story-edit' story.id %}">Edit</a>
+		<a href="{% url 'story-delete' story.id %}">Delete</a></li>
+{% endfor %}
+</ul>
