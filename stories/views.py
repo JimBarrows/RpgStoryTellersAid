@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse_lazy
 
 from stories.models import Story
 
-class StoryListView(ListView):
+class StoryList(ListView):
 	model = Story
 
 class StoryCreate(CreateView):

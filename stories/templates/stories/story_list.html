@@ -1,4 +1,5 @@
 <h1>Stories</h1>
+<a href="{% url 'story-create' %}">Create Story </a>
 <ul>
 {% for story in object_list %}
 	<li><a href="{% url 'story-detail' story.id %}">{{ story.name }} </a>
