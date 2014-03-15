@@ -9,11 +9,13 @@ class Story( models.Model):
 		return reverse('story-detail', kwargs={'pk': self.pk})
 
 class Chapter( models.Model):
+	number = models.IntegerField()
 	title = models.CharField(max_length=200)
 	description = models.TextField()
 	story = models.ForeignKey('Story')
 
 class Scene( models.Model):
+	number = models.IntegerField()
 	title = models.CharField(max_length=200)
 	description = models.TextField()
 	chapter = models.ForeignKey('Chapter')
