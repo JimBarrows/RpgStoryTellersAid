@@ -1,4 +1,29 @@
-<form action="" method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Create" />
-</form>
+<html>
+<head>
+	<script src="{{ STATIC_URL }}js/jquery-2.1.0.min.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery.formset.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $(".inline.{{ chapter_formset.prefix }}").formset({
+                prefix: "{{ chapter_formset.prefix }}",
+            })
+        })
+    </script>
+</head>
+<body>
+	<form action="" method="post">{% csrf_token %}
+		<div>
+	    {{ form.as_p }}
+		</div>
+	    
+    		{{chapter_formset.management_form}}
+    		{{chapter_formset.non_form_errors}}    	
+    		{% for chapter_form in chapter_formset %}    			
+    			<div class="chapter">
+    			{{chapter_form}}    
+    			</div>		    			
+    		{% endfor %}    	
+    	<input type="submit" value="Create" />
+	</form>
+</body>
+</html>
