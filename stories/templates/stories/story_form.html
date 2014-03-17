@@ -1,13 +1,13 @@
-<html>
-<head>
-	<script src="{{ STATIC_URL }}js/jquery-2.1.0.min.js"></script>
-</head>
-<body>
+{% extends "base.html" %} 
+{% block content %} 
 	<form id="story_form" action="" method="post">{% csrf_token %}
-		<h1>Story</h1>
+		<div class="page-header">
+			<h1>Story</h1>
+		</div>
 		<div>
 	    {{ form.as_p }}
 		</div>
+		<h2>Chapters</h2>
     	{{chapter_formset.management_form}}
     	{{chapter_formset.non_form_errors.as_ul}}    	
     	<table>
@@ -38,5 +38,4 @@
     	</table>		    			
     	<input type="submit" value="Create" />
 	</form>
-</body>
-</html>
+{% endblock %}

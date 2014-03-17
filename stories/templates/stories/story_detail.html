@@ -1,3 +1,5 @@
+{% extends "base.html" %} 
+{% block content %} 
 <h1>{{ object.name }}</h1>
 {{ object.description }}
 {% for chapter in object.chapter_set.all %}
@@ -6,3 +8,4 @@
 {% endfor %}
 <br>
 <a href="{% url 'story-list' %}">Back to Story List</a>
+{% endblock %}
