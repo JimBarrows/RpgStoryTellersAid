@@ -1,14 +1,6 @@
 <html>
 <head>
 	<script src="{{ STATIC_URL }}js/jquery-2.1.0.min.js"></script>
-	<script src="{{ STATIC_URL }}js/jquery.formset.min.js"></script>
-	 <script type="text/javascript">
-		$(function() {
-			$('.chapter').formset({
-				prefix: '{{ formset.prefix }}'
-			});
-		})
-      </script>
 </head>
 <body>
 	<form id="story_form" action="" method="post">{% csrf_token %}
@@ -17,12 +9,33 @@
 	    {{ form.as_p }}
 		</div>
     	{{chapter_formset.management_form}}
-    	{{chapter_formset.non_form_errors}}    	
-    	{% for chapter_form in chapter_formset %}    			
-    		<div class="chapter">
-    			{{chapter_form.as_p}}
-    		</div>		    			
-    	{% endfor %}    	
+    	{{chapter_formset.non_form_errors.as_ul}}    	
+    	<table>
+    		{% for chapter_form in chapter_formset.forms %}    			
+    			{% if forloop.first %}
+    				<thead>
+    					<tr>
+    						{% for field in chapter_form.visible_fields %}
+    							<th> {{field.label|capfirst}}</th>
+    						{% endfor %}
+    					</tr>
+    				</thead>
+    			{% endif %}    			
+    			<tr>
+    				{% for field in chapter_form.visible_fields  %}
+    					<td>
+	    					{% if forloop.first %}
+	    						{% for hidden in form.hidden_fields %}
+	    							{{ hidden}}
+	    						{% endfor %}
+	    					{% endif %}
+	    					{{ field.errors.as_ul }}
+	    					{{ field }}
+    					</td>
+    				{% endfor %}
+    			</tr>    			
+    		{% endfor %}    	
+    	</table>		    			
     	<input type="submit" value="Create" />
 	</form>
 </body>
