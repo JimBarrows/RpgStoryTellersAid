@@ -1,12 +1,12 @@
 {% extends "base.html" %} 
+{% load bootstrap3 %}
 {% block content %} 
-	<form id="story_form" action="" method="post">{% csrf_token %}
+	<form id="story_form" action="" method="post" class="form">
+		{% csrf_token %}
 		<div class="page-header">
 			<h1>Story</h1>
 		</div>
-		<div>
-	    {{ form.as_p }}
-		</div>
+	    {% bootstrap_form form %}
 		<h2>Chapters</h2>
     	{{chapter_formset.management_form}}
     	{{chapter_formset.non_form_errors.as_ul}}    	
@@ -29,13 +29,17 @@
 	    							{{ hidden}}
 	    						{% endfor %}
 	    					{% endif %}
-	    					{{ field.errors.as_ul }}
-	    					{{ field }}
+	    					{% bootstrap_messages field.errors %}
+	    					{% bootstrap_field field show_label=false %}
     					</td>
     				{% endfor %}
     			</tr>    			
     		{% endfor %}    	
-    	</table>		    			
-    	<input type="submit" value="Create" />
+    	</table>
+    	{% buttons %}
+        	<button type="submit" class="btn btn-primary">
+            	{% bootstrap_icon "star" %} Save
+        	</button>
+    	{% endbuttons %}		    			    	
 	</form>
 {% endblock %}
