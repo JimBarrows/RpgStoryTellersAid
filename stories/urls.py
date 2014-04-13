@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 
-from stories.views import StoryList, StoryCreate, StoryEdit, StoryDelete, StoryDetail, ChapterCreate, ChapterEdit,ChapterDetail,ChapterDelete, SceneCreate, SceneEdit, SceneDetail, SceneDelete
+from stories.views import StoryList, StoryCreate, StoryEdit, StoryDelete, StoryDetail, ChapterCreate, ChapterEdit,ChapterDetail,ChapterDelete, SceneCreate, SceneEdit, SceneDetail, SceneDelete, ClueCreate, ClueEdit, ClueDetail, ClueDelete, CastMemberCreate, CastMemberEdit, CastMemberDetail, CastMemberDelete
 
 urlpatterns = patterns('',
   url(r'^$',                                StoryList.as_view(),      name='story-list'),
@@ -16,5 +16,13 @@ urlpatterns = patterns('',
   url(r"""^scene/(?P<pk>\d+)/edit$""",      SceneEdit.as_view(),      name='scene-edit'),
   url(r"""^scene/(?P<pk>\d+)$""",           SceneDetail.as_view(),    name='scene-detail'),
   url(r"""^scene/(?P<pk>\d+)/delete$""",    SceneDelete.as_view(),    name='scene-delete'),
+  url(r"""^clue/create$""",                 ClueCreate.as_view(),     name='clue-create'),
+  url(r"""^clue/(?P<pk>\d+)/edit$""",       ClueEdit.as_view(),       name='clue-edit'),
+  url(r"""^clue/(?P<pk>\d+)$""",            ClueDetail.as_view(),     name='clue-detail'),
+  url(r"""^clue/(?P<pk>\d+)/delete$""",     ClueDelete.as_view(),     name='clue-delete'),
+  url(r"""^castmember/create$""",           CastMemberCreate.as_view(),     name='castmember-create'),
+  url(r"""^castmember/(?P<pk>\d+)/edit$""",   CastMemberEdit.as_view(),       name='castmember-edit'),
+  url(r"""^castmember/(?P<pk>\d+)$""",        CastMemberDetail.as_view(),     name='castmember-detail'),
+  url(r"""^castmember/(?P<pk>\d+)/delete$""", CastMemberDelete.as_view(),     name='castmember-delete'),
 
 )

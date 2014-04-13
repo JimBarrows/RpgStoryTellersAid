@@ -61,7 +61,7 @@ class CastMember(models.Model):
 	description = models.TextField()
 	scene = models.ForeignKey('Scene')
 	def get_absolute_url(self):
-		return reverse('cast-detail', kwargs={'pk': self.pk})
+		return reverse('castmember-detail', kwargs={'pk': self.pk})
 	def __str__(self):
 		return self.title
 

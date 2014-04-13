@@ -5,7 +5,7 @@ from django.views.generic.edit import UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 
 
-from stories.models import Story, Chapter, Scene
+from stories.models import Story, Chapter, Scene, Clue, CastMember
 
 class StoryList(ListView):
 	model = Story
@@ -51,4 +51,29 @@ class SceneDelete(DeleteView):
 	model = Scene
 	success_url = reverse_lazy('story-list')
 	
+class ClueCreate(CreateView):
+	model = Clue	
+
+class ClueDetail(DetailView):
+	model = Clue
+			
+class ClueEdit(UpdateView):
+	model = Clue
+
+class ClueDelete(DeleteView):
+	model = Clue
+	success_url = reverse_lazy('story-list')
 	
+class CastMemberCreate(CreateView):
+	model = CastMember	
+
+class CastMemberDetail(DetailView):
+	model = CastMember
+			
+class CastMemberEdit(UpdateView):
+	model = CastMember
+
+class CastMemberDelete(DeleteView):
+	model = CastMember
+	success_url = reverse_lazy('story-list')
+
