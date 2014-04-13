@@ -1,9 +1,11 @@
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
 from django.db import models
 
 class Story(models.Model):
 	name = models.CharField(max_length=200)
 	description = models.TextField()
+	created_by = models.ForeignKey(User)
 	
 	def get_absolute_url(self):
 		return reverse('story-detail', kwargs={'pk': self.pk})

@@ -8,5 +8,6 @@ urlpatterns = patterns('',
     # url(r'^$', 'RpgStoryTellersAid.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 	url(r'^stories/', include('stories.urls')),
-    url(r'^admin/', include(admin.site.urls)),
+  url(r'^admin/', include(admin.site.urls)),
+  url(r'^accounts/login/$', 'django.contrib.auth.views.login')
 )
