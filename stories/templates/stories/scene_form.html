@@ -1,0 +1,18 @@
+{% extends "base.html" %} 
+{% load bootstrap3 %}
+
+{% block content %} 
+	<form id="scene_form" action="" method="post" class="form">
+		{% csrf_token %}
+		<div class="page-header">
+			<h1>Scene</h1>
+		</div>
+		{% bootstrap_form form %}
+		
+		{% buttons %}
+			<button type="submit" class="btn btn-primary">
+				{% bootstrap_icon "save" %} Save
+			</button>
+		{% endbuttons %}				    			    
+	</form>
+{% endblock %}
