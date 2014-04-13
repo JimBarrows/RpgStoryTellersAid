@@ -1,12 +1,26 @@
-{% extends "base.html" %} 
-{% block content %} 
-<h1>Stories</h1>
+{% extends "base.html" %} {% load bootstrap3 %} {% block content %}
+<div class="page-header">
+	<h1>Stories</h1>
+</div>
 <a href="{% url 'story-create' %}">Create Story </a>
-<ul>
-{% for story in object_list %}
-	<li><a href="{% url 'story-detail' story.id %}">{{ story.name }} </a>
-		<a href="{% url 'story-edit' story.id %}">Edit</a>
-		<a href="{% url 'story-delete' story.id %}">Delete</a></li>
-{% endfor %}
-</ul>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Title</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for story in object_list %}
+		<tr>
+			<td width="80%">{{ story.name }}</td>
+			<td><a href="{% url 'story-detail' story.id %}" class="btn btn-default  btn-xs">{%bootstrap_icon "eye-open"%}View</a></td> 
+			<td><a href="{% url 'story-edit' story.id %}" class="btn btn-default  btn-xs">{%bootstrap_icon "pencil"%}Edit</a></td>
+			<td><a href="{% url 'story-delete' story.id %}" class="btn btn-default  btn-xs">{%bootstrap_icon "remove-circle"%}Delete</a></td>
+		</tr> 
+		{% endfor %}
+	</tbody>
+</table>
+
+
 {% endblock %}

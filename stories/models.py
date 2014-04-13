@@ -19,8 +19,7 @@ class Chapter(models.Model):
 	story = models.ForeignKey('Story')
 	
 	def get_absolute_url (self):
-		return reverse('chapter-detail', kwargs={'storypk' : self.story.pk,
-																						'pk': self.pk})
+		return reverse('chapter-detail', kwargs={'pk': self.pk})
 	def __str__(self):
 		return self.title
 

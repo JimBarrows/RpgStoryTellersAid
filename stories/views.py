@@ -35,5 +35,9 @@ class ChapterDetail(DetailView):
 			
 class ChapterEdit(UpdateView):
 	model = Chapter
+
+class ChapterDelete(DeleteView):
+	model = Chapter
+	success_url = reverse_lazy('story-list')
 	
 	
