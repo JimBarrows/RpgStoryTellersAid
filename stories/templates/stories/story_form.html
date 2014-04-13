@@ -1,62 +1,32 @@
 {% extends "base.html" %} 
 {% load bootstrap3 %}
-{% block head %}
-<script>
-function addRow( table_id, prefix) {	
-	var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
-	var selector = table_id +" > tbody > tr:nth-child(" + total +")"
-	var newElement = $(selector).clone(true);	
-	newElement.find(':input').each(function() {
-		var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
-		var id = 'id_' + name;
-		$(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
-	});
-	
-	total++;
-	$('#id_' + prefix + '-TOTAL_FORMS').val(total);
-	$(selector).after(newElement);
-}
- </script>
-{% endblock %}
 
 {% block content %} 
 	<form id="story_form" action="" method="post" class="form">
 		{% csrf_token %}
 		<div class="page-header">
 			<h1>Story</h1>
-		</div>
-		{% bootstrap_form form %}
-		<h2>Chapters</h2>
-		{{chapter_formset.management_form}}
-		{{chapter_formset.non_form_errors.as_ul}}  
-		{% buttons %}  
-			<button id="add-chapter-button" class="btn btn-primary">
-				{% bootstrap_icon "plus" %} Add
-			</button>
+		</div>		
+		
+		{{ form.as_p }}
+		<h2>Chapters</h2>  
+		{% buttons %}  			
+			<a id="add-chapter-button" class="btn btn-primary" href="{% url 'chapter-create' %}">{% bootstrap_icon "plus" %} Add</a>
 		{% endbuttons %}
 		<table id="chapter-table">
-			{% for chapter_form in chapter_formset.forms %}    			
-				{% if forloop.first %}
-					<thead>
-						<tr>
-							{% for field in chapter_form.visible_fields %}
-								<th> {{field.label|capfirst}}</th>
-							{% endfor %}
-						</tr>
-					</thead>
-				{% endif %}    			
+			<thead>
 				<tr>
-					{% for field in chapter_form.visible_fields  %}
-						<td>
-							{% if forloop.first %}
-								{% for hidden in form.hidden_fields %}
-									{{ hidden}}
-								{% endfor %}
-							{% endif %}
-							{% bootstrap_messages field.errors %}
-							{% bootstrap_field field show_label=false %}
-						</td>
-					{% endfor %}
+					<th>Number</th>
+					<th>Title</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			{% for chapter in form.instance.chapter_set.all %}    						    		
+				<tr>					
+						<td>{{chapter.number}}</td>						                    						
+						<td>{{chapter.title}}</td>
+						<td>{{chapter.description}}</td>
+						<td><a href="{% url 'chapter-edit' pk=chapter.pk %}">Edit</a></td>
 				</tr>    			
 			{% endfor %}    	
 		</table>
@@ -64,12 +34,6 @@ function addRow( table_id, prefix) {
 			<button type="submit" class="btn btn-primary">
 				{% bootstrap_icon "save" %} Save
 			</button>
-		{% endbuttons %}	
-		<script>		
-			$('#add-chapter-button').click(function() {
-				addRow('#chapter-table', '{{chapter_formset.prefix}}');
-				return false;
-			});
-		</script>	    			    	
+		{% endbuttons %}				    			    
 	</form>
 {% endblock %}
