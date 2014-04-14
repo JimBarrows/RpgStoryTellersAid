@@ -12,6 +12,9 @@ from stories.models import Story, Chapter, Scene, Clue, CastMember
 class StoryList(ListView):
 	model = Story
 	
+	def get_queryset(self):
+		return Story.objects.filter(created_by=self.request.user)
+	
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
 		return super(StoryList, self).dispatch(*args, **kwargs)	

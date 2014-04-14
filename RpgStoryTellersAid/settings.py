@@ -38,7 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap3',
-    'stories'
+    'stories',
+    'accounts',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -90,6 +91,7 @@ STATICFILES_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(PROJECT_DIR, 'RpgStoryTellersAid/static'),
     os.path.join(PROJECT_DIR, 'stories/static'),
+    os.path.join(PROJECT_DIR, 'accounts/static'),
 )
 
 # List of finder classes that know how to find static files in
@@ -120,5 +122,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_DIR, 'RpgStoryTellersAid/templates'),
     os.path.join(PROJECT_DIR, 'stories/templates'),
+    os.path.join(PROJECT_DIR, 'accounts/templates'),
 )
 
