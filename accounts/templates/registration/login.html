@@ -11,6 +11,6 @@
 				{% bootstrap_icon "login" %} Login
 			</button>
 	{% endbuttons %}		
-	<input type="hidden" name="next" value="{{ next }}" />
+	<input type="hidden" name="next" value="{{ next|default:'/stories' }}" />	 
 </form>
 {% endblock %}
