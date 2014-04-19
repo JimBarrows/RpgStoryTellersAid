@@ -1,0 +1,25 @@
+{% extends "base.html" %} 
+{% block content %} 
+<h1>{{ object.name }}</h1>
+{{ object.description }}
+{% for chapter in object.chapter_set.all %}
+<h2>Chapter {{chapter.number}} - {{chapter.title}}</h2>
+	{{chapter.description}}
+	{% for scene in chapter.scene_set.all %}
+		<h3>{{scene.title}}</h3>
+		{{scene.description}}
+		<h4>Clues</h4>
+		{% for clue in scene.clue_set.all %}
+			<h5>{{clue.title}}</h5>
+			{{clue.description}}
+		{% endfor %}
+		<h4>Cast Members</h4>
+		{% for cast in scene.castmember_set.all %}
+			<h5>{{cast.title}}</h5>
+			{{cast.description}}
+		{% endfor %}
+	{% endfor %}
+{% endfor %}
+<br>
+<a href="{% url 'story-list' %}">Back to Story List</a>
+{% endblock %}

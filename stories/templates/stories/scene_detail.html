@@ -1,0 +1,10 @@
+{% extends "base.html" %} 
+{% block content %} 
+<div class="page-header">
+<h1>{{object.number}} - {{ object.title }}</h1>
+</div>
+{{ object.description }}
+
+<br>
+<a href="{% url 'story-list' %}">Back to Story List</a>
+{% endblock %}

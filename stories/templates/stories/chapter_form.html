@@ -1,0 +1,41 @@
+{% extends "base.html" %} 
+{% load bootstrap3 %}
+
+{% block content %} 
+	<form id="story_form" action="" method="post" class="form">
+		{% csrf_token %}
+		<div class="page-header">
+			<h1>Chapter</h1>
+		</div>
+		{% bootstrap_form form %}
+		
+		{% buttons %}  			
+			<a id="add-scene-button" class="btn btn-primary" href="{% url 'scene-create' %}">{% bootstrap_icon "plus" %} Add</a>
+		{% endbuttons %}
+		
+		<table id="scene-table" class='table table-striped'>
+			<thead>
+				<tr>
+					<th>Number</th>
+					<th>Title</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			{% for scene in form.instance.scene_set.all %}    						    		
+				<tr>					
+						<td width="10%">{{scene.number}}</td>						                    						
+						<td width="20%">{{scene.title}}</td>
+						<td width="60%">{{scene.description}}</td>
+						<td width="10%"><a href="{% url 'scene-edit' pk=scene.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon "pencil"%} Edit</a>
+						<a href="{% url 'scene-delete' pk=scene.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon "remove-circle"%} Delete</a></td>
+				</tr>    			
+			{% endfor %}    	
+		</table>
+		
+		{% buttons %}
+			<button type="submit" class="btn btn-primary">
+				{% bootstrap_icon "save" %} Save
+			</button>
+		{% endbuttons %}				    			    
+	</form>
+{% endblock %}

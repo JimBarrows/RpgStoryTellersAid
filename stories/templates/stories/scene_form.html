@@ -1,0 +1,69 @@
+{% extends "base.html" %} 
+{% load bootstrap3 %}
+
+{% block content %} 
+	<form id="scene_form" action="" method="post" class="form">
+		{% csrf_token %}
+		<div class="page-header">
+			<h1>Scene</h1>
+		</div>
+		{% bootstrap_form form %}
+		
+		<ul class="nav nav-tabs">
+  		<li class="active"><a href="#clues" data-toggle="tab">Clues</a></li>
+  		<li><a href="#castmembers" data-toggle="tab">Cast Members</a></li>
+		</ul>
+		<div class="tab-content">
+  		<div class="tab-pane active" id="clues">
+  			{% buttons %}  			
+					<a id="add-clue-button" class="btn btn-primary" href="{% url 'clue-create' %}">{% bootstrap_icon "plus" %} Add</a>
+				{% endbuttons %}
+		
+				<table id="clue-table" class='table table-striped'>
+					<thead>
+						<tr>
+							<th>Title</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					{% for clue in form.instance.clue_set.all %}    						    		
+						<tr>											                    						
+							<td width="20%">{{clue.title}}</td>
+							<td width="70%">{{clue.description}}</td>
+							<td width="10%"><a href="{% url 'clue-edit' pk=clue.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon "pencil"%} Edit</a>
+							<a href="{% url 'clue-delete' pk=clue.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon "remove-circle"%} Delete</a></td>
+						</tr>    			
+					{% endfor %}    	
+				</table>
+			</div>
+			<div class="tab-pane" id="castmembers">
+				{% buttons %}  			
+					<a id="add-castmember-button" class="btn btn-primary" href="{% url 'castmember-create' %}">{% bootstrap_icon "plus" %} Add</a>
+				{% endbuttons %}
+		
+				<table id="castmember-table" class='table table-striped'>
+					<thead>
+						<tr>
+							<th>Title</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					{% for castmember in form.instance.castmember_set.all %}    						    		
+						<tr>											                    						
+							<td width="20%">{{castmember.title}}</td>
+							<td width="70%">{{castmember.description}}</td>
+							<td width="10%"><a href="{% url 'castmember-edit' pk=castmember.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon "pencil"%} Edit</a>
+							<a href="{% url 'castmember-delete' pk=castmember.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon "remove-circle"%} Delete</a></td>
+						</tr>    			
+					{% endfor %}    	
+				</table>
+			</div>	
+  	</div>
+	
+		{% buttons %}
+			<button type="submit" class="btn btn-primary">
+				{% bootstrap_icon "save" %} Save
+			</button>
+		{% endbuttons %}				    			    
+	</form>
+{% endblock %}
