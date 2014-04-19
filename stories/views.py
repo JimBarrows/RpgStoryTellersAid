@@ -56,10 +56,23 @@ class StoryDelete(DeleteView):
 	
 class ChapterCreate(CreateView):
 	model = Chapter	
+	fields = ['number', 'title', 'description']
 	
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
 		return super(ChapterCreate, self).dispatch(*args, **kwargs)
+	
+	def get_initial(self):
+		initial = super(ChapterCreate, self).get_initial()
+		story_pk = int( self.kwargs['story_pk'])
+		parent_story = Story.objects.get( pk=story_pk)
+		initial['number'] = parent_story.chapter_set.count() + 1
+		initial['story'] = parent_story		
+		return initial
+
+	def form_valid(self, form):
+		form.instance.story = form.initial['story']
+		return super(ChapterCreate, self).form_valid(form)
 
 class ChapterDetail(DetailView):
 	model = Chapter
@@ -70,10 +83,11 @@ class ChapterDetail(DetailView):
 			
 class ChapterEdit(UpdateView):
 	model = Chapter
+	fields = ['number', 'title', 'description']
 	
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
-		return super(ChapterEdit, self).dispatch(*args, **kwargs)
+		return super(ChapterEdit, self).dispatch(*args, **kwargs)	
 
 class ChapterDelete(DeleteView):
 	model = Chapter

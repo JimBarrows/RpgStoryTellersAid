@@ -1,43 +1,40 @@
-{% extends "base.html" %} 
-{% load bootstrap3 %}
+{% extends "base.html" %} {% load bootstrap3 %} {% block content %}
+<form id="story_form" action="" method="post" class="form">
+	{% csrf_token %}
+	<div class="page-header">
+		<h1>Story</h1>
+	</div>
 
-{% block content %} 
-	<form id="story_form" action="" method="post" class="form">
-		{% csrf_token %}
-		<div class="page-header">
-			<h1>Story</h1>
-		</div>		
-		
-		{% bootstrap_form form %}
-		
-		<h2>Chapters</h2>  
-		
-		{% buttons %}  			
-			<a id="add-chapter-button" class="btn btn-primary" href="{% url 'chapter-create' %}">{% bootstrap_icon "plus" %} Add</a>
-		{% endbuttons %}
-		
-		<table id="chapter-table" class='table table-striped'>
-			<thead>
-				<tr>
-					<th>Number</th>
-					<th>Title</th>
-					<th>Description</th>
-				</tr>
-			</thead>
-			{% for chapter in form.instance.chapter_set.all %}    						    		
-				<tr>					
-						<td width="10%">{{chapter.number}}</td>						                    						
-						<td width="20%">{{chapter.title}}</td>
-						<td width="60%">{{chapter.description}}</td>
-						<td width="10%"><a href="{% url 'chapter-edit' pk=chapter.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon "pencil"%} Edit</a>
-						<a href="{% url 'chapter-delete' pk=chapter.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon "remove-circle"%} Delete</a></td>
-				</tr>    			
-			{% endfor %}    	
-		</table>
-		{% buttons %}
-			<button type="submit" class="btn btn-primary">
-				{% bootstrap_icon "save" %} Save
-			</button>
-		{% endbuttons %}				    			    
-	</form>
+	{% bootstrap_form form %}
+
+	<h2>Chapters</h2>
+
+	{% buttons %} 
+		<a id="add-chapter-button" class="btn btn-primary" href="{% url 'chapter-create' story_pk=form.instance.id %}">	{% bootstrap_icon "plus" %} Add</a> 
+	{% endbuttons %}
+
+	<table id="chapter-table" class='table table-striped'>
+		<thead>
+			<tr>
+				<th>Number</th>
+				<th>Title</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		{% for chapter in form.instance.chapter_set.all %}
+		<tr>
+			<td width="10%">{{chapter.number}}</td>
+			<td width="20%">{{chapter.title}}</td>
+			<td width="60%">{{chapter.description}}</td>
+			<td width="10%">
+				<a href="{% url 'chapter-edit' pk=chapter.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon	"pencil"%} Edit</a> 
+				<a href="{% url 'chapter-delete' pk=chapter.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon	"remove-circle"%} Delete</a>
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+	{% buttons %}
+	<button type="submit" class="btn btn-primary">{% bootstrap_icon "save" %} Save</button>
+	{% endbuttons %}
+</form>
 {% endblock %}
