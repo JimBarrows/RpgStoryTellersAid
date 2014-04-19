@@ -4,7 +4,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse, reverse_lazy
 
 
 from stories.models import Story, Chapter, Scene, Clue, CastMember
@@ -57,6 +57,9 @@ class StoryDelete(DeleteView):
 class ChapterCreate(CreateView):
 	model = Chapter	
 	fields = ['number', 'title', 'description']
+	
+	def get_success_url(self):
+		return reverse( 'story-edit', kwargs={ 'pk' : self.object.story_id})
 	
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
