@@ -103,6 +103,9 @@ class ChapterDelete(DeleteView):
 	def dispatch(self, *args, **kwargs):
 		return super(ChapterDelete, self).dispatch(*args, **kwargs)
 	
+	def get_success_url(self):
+		return reverse( 'story-edit', kwargs={ 'pk' : self.object.story_id})
+	
 class SceneCreate(CreateView):
 	model = Scene	
 	
