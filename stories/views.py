@@ -152,7 +152,10 @@ class SceneEdit(UpdateView):
 
 class SceneDelete(DeleteView):
 	model = Scene
-	success_url = reverse_lazy('story-list')
+	
+	def get_success_url(self):
+		return reverse('chapter-edit', kwargs={ 'story_pk' : self.object.chapter.story.id,
+																							'pk' : self.object.chapter_id})
 	
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
