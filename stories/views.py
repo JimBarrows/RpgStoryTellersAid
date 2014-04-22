@@ -130,7 +130,6 @@ class SceneCreate(CreateView):
 		form.instance.chapter = form.initial['chapter']
 		return super(SceneCreate, self).form_valid(form)
 		
-
 class SceneDetail(DetailView):
 	model = Scene
 	
@@ -162,11 +161,28 @@ class SceneDelete(DeleteView):
 		return super(SceneDelete, self).dispatch(*args, **kwargs)
 	
 class ClueCreate(CreateView):
-	model = Clue	
+	model = Clue		
+	fields = ['title', 'description']
 	
+	def get_success_url(self):
+		return reverse('scene-edit', kwargs={ 'story_pk' : self.object.scene.chapter.story.id,
+																					'chapter_pk' : self.object.scene.chapter.story.id,
+																					'pk' : self.object.scene_id})
+		
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
 		return super(ClueCreate, self).dispatch(*args, **kwargs)
+	
+	def get_initial(self):
+		initial = super(ClueCreate, self).get_initial()
+		scene_pk = int(self.kwargs['scene_pk'])
+		parent_scene = Scene.objects.get(pk=scene_pk)		
+		initial['scene'] = parent_scene
+		return initial
+	
+	def form_valid(self, form):
+		form.instance.scene = form.initial['scene']
+		return super(ClueCreate, self).form_valid(form)	
 
 class ClueDetail(DetailView):
 	model = Clue
@@ -177,6 +193,12 @@ class ClueDetail(DetailView):
 			
 class ClueEdit(UpdateView):
 	model = Clue
+	fields = ['title', 'description']
+	
+	def get_success_url(self):
+		return reverse('scene-edit', kwargs={ 'story_pk' : self.object.scene.chapter.story.id,
+																					'chapter_pk' : self.object.scene.chapter.story.id,
+																					'pk' : self.object.scene_id})
 	
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):

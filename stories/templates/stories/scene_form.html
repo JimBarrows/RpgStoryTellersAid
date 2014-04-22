@@ -16,7 +16,7 @@
 		<div class="tab-content">
   		<div class="tab-pane active" id="clues">
   			{% buttons %}  			
-					<a id="add-clue-button" class="btn btn-primary" href="{% url 'clue-create' %}">{% bootstrap_icon "plus" %} Add</a>
+					<a id="add-clue-button" class="btn btn-primary" href="{% url 'clue-create'  story_pk=form.instance.chapter.story.id chapter_pk=form.instance.chapter.id scene_pk=form.instance.id %}">{% bootstrap_icon "plus" %} Add</a>
 				{% endbuttons %}
 		
 				<table id="clue-table" class='table table-striped'>
@@ -30,8 +30,8 @@
 						<tr>											                    						
 							<td width="20%">{{clue.title}}</td>
 							<td width="70%">{{clue.description}}</td>
-							<td width="10%"><a href="{% url 'clue-edit' pk=clue.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon "pencil"%} Edit</a>
-							<a href="{% url 'clue-delete' pk=clue.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon "remove-circle"%} Delete</a></td>
+							<td width="10%"><a href="{% url 'clue-edit' story_pk=form.instance.chapter.story.id chapter_pk=form.instance.chapter.id scene_pk=form.instance.id pk=clue.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon "pencil"%} Edit</a>
+							<a href="{% url 'clue-delete' story_pk=form.instance.chapter.story.id chapter_pk=form.instance.chapter.id scene_pk=form.instance.id pk=clue.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon "remove-circle"%} Delete</a></td>
 						</tr>    			
 					{% endfor %}    	
 				</table>
