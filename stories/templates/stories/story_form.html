@@ -9,6 +9,7 @@
 
 	<h2>Chapters</h2>
 
+	{% if form.instance.id %}
 	{% buttons %} 
 		<a id="add-chapter-button" class="btn btn-primary" href="{% url 'chapter-create' story_pk=form.instance.id %}">	{% bootstrap_icon "plus" %} Add</a> 
 	{% endbuttons %}
@@ -27,12 +28,13 @@
 			<td width="20%">{{chapter.title}}</td>
 			<td width="60%">{{chapter.description}}</td>
 			<td width="10%">
-				<a href="{% url 'chapter-edit' pk=chapter.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon	"pencil"%} Edit</a> 
-				<a href="{% url 'chapter-delete' pk=chapter.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon	"remove-circle"%} Delete</a>
+				<a href="{% url 'chapter-edit' story_pk=form.instance.id pk=chapter.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon	"pencil"%} Edit</a> 
+				<a href="{% url 'chapter-delete' story_pk=form.instance.id pk=chapter.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon	"remove-circle"%} Delete</a>
 			</td>
 		</tr>
 		{% endfor %}
 	</table>
+	{% endif %}
 	{% buttons %}
 	<button type="submit" class="btn btn-primary">{% bootstrap_icon "save" %} Save</button>
 	{% endbuttons %}

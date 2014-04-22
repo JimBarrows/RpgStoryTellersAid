@@ -59,7 +59,7 @@ class ChapterCreate(CreateView):
 	fields = ['number', 'title', 'description']
 	
 	def get_success_url(self):
-		return reverse( 'story-edit', kwargs={ 'pk' : self.object.story_id})
+		return reverse('story-edit', kwargs={ 'pk' : self.object.story_id})
 	
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
@@ -67,8 +67,8 @@ class ChapterCreate(CreateView):
 	
 	def get_initial(self):
 		initial = super(ChapterCreate, self).get_initial()
-		story_pk = int( self.kwargs['story_pk'])
-		parent_story = Story.objects.get( pk=story_pk)
+		story_pk = int(self.kwargs['story_pk'])
+		parent_story = Story.objects.get(pk=story_pk)
 		initial['number'] = parent_story.chapter_set.count() + 1
 		initial['story'] = parent_story		
 		return initial
@@ -76,7 +76,7 @@ class ChapterCreate(CreateView):
 	def form_valid(self, form):
 		form.instance.story = form.initial['story']
 		return super(ChapterCreate, self).form_valid(form)
-
+	
 class ChapterDetail(DetailView):
 	model = Chapter
 	
@@ -93,7 +93,7 @@ class ChapterEdit(UpdateView):
 		return super(ChapterEdit, self).dispatch(*args, **kwargs)	
 	
 	def get_success_url(self):
-		return reverse( 'story-edit', kwargs={ 'pk' : self.object.story_id})
+		return reverse('story-edit', kwargs={ 'pk' : self.object.story_id})
 
 class ChapterDelete(DeleteView):
 	model = Chapter
@@ -104,14 +104,32 @@ class ChapterDelete(DeleteView):
 		return super(ChapterDelete, self).dispatch(*args, **kwargs)
 	
 	def get_success_url(self):
-		return reverse( 'story-edit', kwargs={ 'pk' : self.object.story_id})
-	
+		return reverse('story-edit', kwargs={ 'pk' : self.object.story_id})
+		
 class SceneCreate(CreateView):
 	model = Scene	
+	fields = ['number', 'title', 'description']
 	
+	def get_success_url(self):
+		return reverse('chapter-edit', kwargs={ 'story_pk' : self.object.chapter.story.id,
+																							'pk' : self.object.chapter_id})
+		
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
 		return super(SceneCreate, self).dispatch(*args, **kwargs)
+	
+	def get_initial(self):
+		initial = super(SceneCreate, self).get_initial()
+		chapter_pk = int(self.kwargs['chapter_pk'])
+		parent_chapter = Chapter.objects.get(pk=chapter_pk)
+		initial['number'] = parent_chapter.scene_set.count() + 1
+		initial['chapter'] = parent_chapter
+		return initial
+	
+	def form_valid(self, form):
+		form.instance.chapter = form.initial['chapter']
+		return super(SceneCreate, self).form_valid(form)
+		
 
 class SceneDetail(DetailView):
 	model = Scene
@@ -122,10 +140,15 @@ class SceneDetail(DetailView):
 			
 class SceneEdit(UpdateView):
 	model = Scene
+	fields = ['number', 'title', 'description']
 	
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
 		return super(SceneEdit, self).dispatch(*args, **kwargs)
+	
+	def get_success_url(self):
+		return reverse('chapter-edit', kwargs={ 'story_pk' : self.object.chapter.story.id,
+																							'pk' : self.object.chapter_id})
 
 class SceneDelete(DeleteView):
 	model = Scene

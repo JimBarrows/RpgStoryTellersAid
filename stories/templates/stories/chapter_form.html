@@ -9,8 +9,9 @@
 		</div>
 		{% bootstrap_form form %}
 		
+		{% if form.instance.id %}
 		{% buttons %}  			
-			<a id="add-scene-button" class="btn btn-primary" href="{% url 'scene-create' %}">{% bootstrap_icon "plus" %} Add</a>
+			<a id="add-scene-button" class="btn btn-primary" href="{% url 'scene-create' story_pk=form.instance.story.id chapter_pk=form.instance.id%}">{% bootstrap_icon "plus" %} Add</a>
 		{% endbuttons %}
 		
 		<table id="scene-table" class='table table-striped'>
@@ -26,12 +27,12 @@
 						<td width="10%">{{scene.number}}</td>						                    						
 						<td width="20%">{{scene.title}}</td>
 						<td width="60%">{{scene.description}}</td>
-						<td width="10%"><a href="{% url 'scene-edit' pk=scene.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon "pencil"%} Edit</a>
-						<a href="{% url 'scene-delete' pk=scene.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon "remove-circle"%} Delete</a></td>
+						<td width="10%"><a href="{% url 'scene-edit' story_pk=form.instance.story.id chapter_pk=form.instance.id pk=scene.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon "pencil"%} Edit</a>
+						<a href="{% url 'scene-delete' story_pk=form.instance.story.id chapter_pk=form.instance.id pk=scene.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon "remove-circle"%} Delete</a></td>
 				</tr>    			
 			{% endfor %}    	
 		</table>
-		
+		{% endif %}
 		{% buttons %}
 			<button type="submit" class="btn btn-primary">
 				{% bootstrap_icon "save" %} Save
