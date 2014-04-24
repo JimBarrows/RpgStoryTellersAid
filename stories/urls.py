@@ -20,9 +20,9 @@ urlpatterns = patterns('',
   url(r"""^(?P<story_pk>\d+)/(?P<chapter_pk>\d+)/(?P<scene_pk>\d+)/clue/(?P<pk>\d+)/edit$""",       ClueEdit.as_view(),       name='clue-edit'),
   url(r"""^(?P<story_pk>\d+)/(?P<chapter_pk>\d+)/(?P<scene_pk>\d+)/clue/(?P<pk>\d+)$""",            ClueDetail.as_view(),     name='clue-detail'),
   url(r"""^(?P<story_pk>\d+)/(?P<chapter_pk>\d+)/(?P<scene_pk>\d+)/clue/(?P<pk>\d+)/delete$""",     ClueDelete.as_view(),     name='clue-delete'),
-  url(r"""^castmember/create$""",           CastMemberCreate.as_view(),     name='castmember-create'),
-  url(r"""^castmember/(?P<pk>\d+)/edit$""",   CastMemberEdit.as_view(),       name='castmember-edit'),
-  url(r"""^castmember/(?P<pk>\d+)$""",        CastMemberDetail.as_view(),     name='castmember-detail'),
-  url(r"""^castmember/(?P<pk>\d+)/delete$""", CastMemberDelete.as_view(),     name='castmember-delete'),
+  url(r"""^(?P<story_pk>\d+)/(?P<chapter_pk>\d+)/(?P<scene_pk>\d+)/castmember/create$""",           CastMemberCreate.as_view(),     name='castmember-create'),
+  url(r"""^(?P<story_pk>\d+)/(?P<chapter_pk>\d+)/(?P<scene_pk>\d+)/castmember/(?P<pk>\d+)/edit$""",   CastMemberEdit.as_view(),       name='castmember-edit'),
+  url(r"""^(?P<story_pk>\d+)/(?P<chapter_pk>\d+)/(?P<scene_pk>\d+)/castmember/(?P<pk>\d+)$""",        CastMemberDetail.as_view(),     name='castmember-detail'),
+  url(r"""^(?P<story_pk>\d+)/(?P<chapter_pk>\d+)/(?P<scene_pk>\d+)/castmember/(?P<pk>\d+)/delete$""", CastMemberDelete.as_view(),     name='castmember-delete'),
 
 )

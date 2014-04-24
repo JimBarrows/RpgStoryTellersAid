@@ -38,7 +38,7 @@
 			</div>
 			<div class="tab-pane" id="castmembers">
 				{% buttons %}  			
-					<a id="add-castmember-button" class="btn btn-primary" href="{% url 'castmember-create' %}">{% bootstrap_icon "plus" %} Add</a>
+					<a id="add-castmember-button" class="btn btn-primary" href="{% url 'castmember-create' story_pk=form.instance.chapter.story.id chapter_pk=form.instance.chapter.id scene_pk=form.instance.id %}">{% bootstrap_icon "plus" %} Add</a>
 				{% endbuttons %}
 		
 				<table id="castmember-table" class='table table-striped'>
@@ -52,8 +52,8 @@
 						<tr>											                    						
 							<td width="20%">{{castmember.title}}</td>
 							<td width="70%">{{castmember.description}}</td>
-							<td width="10%"><a href="{% url 'castmember-edit' pk=castmember.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon "pencil"%} Edit</a>
-							<a href="{% url 'castmember-delete' pk=castmember.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon "remove-circle"%} Delete</a></td>
+							<td width="10%"><a href="{% url 'castmember-edit' story_pk=form.instance.chapter.story.id chapter_pk=form.instance.chapter.id scene_pk=form.instance.id  pk=castmember.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon "pencil"%} Edit</a>
+							<a href="{% url 'castmember-delete' story_pk=form.instance.chapter.story.id chapter_pk=form.instance.chapter.id scene_pk=form.instance.id  pk=castmember.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon "remove-circle"%} Delete</a></td>
 						</tr>    			
 					{% endfor %}    	
 				</table>
