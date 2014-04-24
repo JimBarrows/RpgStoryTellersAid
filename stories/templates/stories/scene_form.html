@@ -38,7 +38,7 @@
 			</div>
 			<div class="tab-pane" id="castmembers">
 				{% buttons %}  			
-					<a id="add-castmember-button" class="btn btn-primary" href="{% url 'castmember-create' %}">{% bootstrap_icon "plus" %} Add</a>
+					<a id="add-castmember-button" class="btn btn-primary" href="{% url 'castmember-create' story_pk=form.instance.chapter.story.id chapter_pk=form.instance.chapter.id scene_pk=form.instance.id %}">{% bootstrap_icon "plus" %} Add</a>
 				{% endbuttons %}
 		
 				<table id="castmember-table" class='table table-striped'>

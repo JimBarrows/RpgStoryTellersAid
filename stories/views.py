@@ -217,11 +217,27 @@ class ClueDelete(DeleteView):
 		return super(ClueDelete, self).dispatch(*args, **kwargs)
 	
 class CastMemberCreate(CreateView):
-	model = CastMember	
+	model = CastMember		
 	
+	def get_success_url(self):
+		return reverse('castmember-edit', kwargs={'story_pk' : self.object.chapter.story.id,																						
+																							'chapter_pk' : self.object.scene.chapter.story.id,
+																							'pk' : self.object.chapter_id})
+		
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
 		return super(CastMemberCreate, self).dispatch(*args, **kwargs)
+	
+	def get_initial(self):
+		initial = super(CastMemberCreate, self).get_initial()
+		scene_pk = int(self.kwargs['scene_pk'])
+		parent_scene = Chapter.objects.get(pk=scene_pk)		
+		initial['scene'] = parent_scene
+		return initial
+	
+	def form_valid(self, form):
+		form.instance.scene = form.initial['scene']
+		return super(CastMemberCreate, self).form_valid(form)
 
 class CastMemberDetail(DetailView):
 	model = CastMember
