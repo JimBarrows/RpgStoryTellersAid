@@ -263,7 +263,11 @@ class CastMemberEdit(UpdateView):
 
 class CastMemberDelete(DeleteView):
 	model = CastMember
-	success_url = reverse_lazy('story-list')
+	
+	def get_success_url(self):
+		return reverse('scene-edit', kwargs={ 'story_pk' : self.object.scene.chapter.story.id,
+																					'chapter_pk' : self.object.scene.chapter.story.id,
+																					'pk' : self.object.scene_id})
 	
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
