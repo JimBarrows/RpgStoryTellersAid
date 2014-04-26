@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 
-from stories.views import StoryList, StoryCreate, StoryEdit, StoryDelete, StoryDetail, ChapterCreate, ChapterEdit,ChapterDetail,ChapterDelete, SceneCreate, SceneEdit, SceneDetail, SceneDelete, ClueCreate, ClueEdit, ClueDetail, ClueDelete, CastMemberCreate, CastMemberEdit, CastMemberDetail, CastMemberDelete
+from stories.views import *
 
 urlpatterns = patterns('',
   url(r'^$',                                       StoryList.as_view(),      name='story-list'),
@@ -24,5 +24,9 @@ urlpatterns = patterns('',
   url(r"""^(?P<story_pk>\d+)/chapters/(?P<chapter_pk>\d+)/scenes/(?P<scene_pk>\d+)/castmembers/(?P<pk>\d+)/edit$""",   CastMemberEdit.as_view(),       name='castmember-edit'),
   url(r"""^(?P<story_pk>\d+)/chapters/(?P<chapter_pk>\d+)/scenes/(?P<scene_pk>\d+)/castmembers/(?P<pk>\d+)$""",        CastMemberDetail.as_view(),     name='castmember-detail'),
   url(r"""^(?P<story_pk>\d+)/chapters/(?P<chapter_pk>\d+)/scenes/(?P<scene_pk>\d+)/castmembers/(?P<pk>\d+)/delete$""", CastMemberDelete.as_view(),     name='castmember-delete'),
+  url(r"""^(?P<story_pk>\d+)/chapters/(?P<chapter_pk>\d+)/scenes/(?P<scene_pk>\d+)/locations/create$""",           LocationCreate.as_view(),     name='location-create'),
+  url(r"""^(?P<story_pk>\d+)/chapters/(?P<chapter_pk>\d+)/scenes/(?P<scene_pk>\d+)/locations/(?P<pk>\d+)/edit$""",   LocationEdit.as_view(),       name='location-edit'),
+  url(r"""^(?P<story_pk>\d+)/chapters/(?P<chapter_pk>\d+)/scenes/(?P<scene_pk>\d+)/locations/(?P<pk>\d+)$""",        LocationDetail.as_view(),     name='location-detail'),
+  url(r"""^(?P<story_pk>\d+)/chapters/(?P<chapter_pk>\d+)/scenes/(?P<scene_pk>\d+)/locations/(?P<pk>\d+)/delete$""", LocationDelete.as_view(),     name='location-delete'),
 
 )

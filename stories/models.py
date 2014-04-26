@@ -63,10 +63,28 @@ class CastMember(models.Model):
 	title = models.CharField(max_length=200)
 	description = models.TextField()
 	scene = models.ForeignKey('Scene')
+	
 	def get_absolute_url(self):
 		return reverse('castmember-detail', kwargs={'pk': self.pk})
+	
 	def __str__(self):
 		return self.title
 
 	class Meta:
 		ordering = ['title', ]
+
+
+class Location(models.Model):
+	name = models.CharField(max_length=200)
+	description = models.TextField()
+	scene = models.ForeignKey('Scene')
+	map  = models.FileField(blank=True, upload_to="location_maps")
+	
+	def get_absolute_url(self):
+		return reverse('location-detail', kwargs={'pk': self.pk})
+	
+	def __str__(self):
+		return self.name
+
+	class Meta:
+		ordering = ['name', ]

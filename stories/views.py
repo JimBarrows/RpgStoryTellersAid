@@ -7,7 +7,7 @@ from django.utils.decorators import method_decorator
 from django.core.urlresolvers import reverse, reverse_lazy
 
 
-from stories.models import Story, Chapter, Scene, Clue, CastMember
+from stories.models import Story, Chapter, Scene, Clue, CastMember, Location
 
 class StoryList(ListView):
 	model = Story
@@ -272,4 +272,64 @@ class CastMemberDelete(DeleteView):
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
 		return super(CastMemberDelete, self).dispatch(*args, **kwargs)
+
+class LocationCreate(CreateView):
+	model = Location		
+	fields = ['name', 'description']
+	def get_success_url(self):		
+		return reverse('scene-edit', kwargs={ 'story_pk' : self.object.scene.chapter.story.id,
+																					'chapter_pk' : self.object.scene.chapter.story.id,
+																					'pk' : self.object.scene_id})
+		
+		
+	@method_decorator(login_required)
+	def dispatch(self, *args, **kwargs):
+		return super(LocationCreate, self).dispatch(*args, **kwargs)
+	
+	def get_initial(self):
+		initial = super(LocationCreate, self).get_initial()
+		scene_pk = int(self.kwargs['scene_pk'])
+		parent_scene = Scene.objects.get(pk=scene_pk)		
+		initial['scene'] = parent_scene
+		return initial
+	
+	def form_valid(self, form):
+		form.instance.scene = form.initial['scene']
+		return super(LocationCreate, self).form_valid(form)
+
+
+class LocationDetail(DetailView):
+	model = Location
+	
+	@method_decorator(login_required)
+	def dispatch(self, *args, **kwargs):
+		return super(LocationDetail, self).dispatch(*args, **kwargs)
+			
+			
+class LocationEdit(UpdateView):
+	model = Location
+	
+	fields = ['name', 'description']
+	
+	def get_success_url(self):		
+		return reverse('scene-edit', kwargs={ 'story_pk' : self.object.scene.chapter.story.id,
+																					'chapter_pk' : self.object.scene.chapter.story.id,
+																					'pk' : self.object.scene_id})
+		
+	@method_decorator(login_required)
+	def dispatch(self, *args, **kwargs):
+		return super(LocationEdit, self).dispatch(*args, **kwargs)
+
+
+class LocationDelete(DeleteView):
+	model = Location
+	
+	def get_success_url(self):
+		return reverse('scene-edit', kwargs={ 'story_pk' : self.object.scene.chapter.story.id,
+																					'chapter_pk' : self.object.scene.chapter.story.id,
+																					'pk' : self.object.scene_id})
+	
+	@method_decorator(login_required)
+	def dispatch(self, *args, **kwargs):
+		return super(LocationDelete, self).dispatch(*args, **kwargs)
 

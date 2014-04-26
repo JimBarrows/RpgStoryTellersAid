@@ -12,6 +12,7 @@
 		<ul class="nav nav-tabs">
   		<li class="active"><a href="#clues" data-toggle="tab">Clues</a></li>
   		<li><a href="#castmembers" data-toggle="tab">Cast Members</a></li>
+  		<li><a href="#locations" data-toggle="tab">Locations</a></li>
 		</ul>
 		<div class="tab-content">
   		<div class="tab-pane active" id="clues">
@@ -58,6 +59,28 @@
 					{% endfor %}    	
 				</table>
 			</div>	
+			<div class="tab-pane" id="locations">
+  			{% buttons %}  			
+					<a id="add-location-button" class="btn btn-primary" href="{% url 'location-create'  story_pk=form.instance.chapter.story.id chapter_pk=form.instance.chapter.id scene_pk=form.instance.id %}">{% bootstrap_icon "plus" %} Add</a>
+				{% endbuttons %}
+		
+				<table id="location-table" class='table table-striped'>
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					{% for location in form.instance.location_set.all %}    						    		
+						<tr>											                    						
+							<td width="20%">{{location.name}}</td>
+							<td width="70%">{{location.description}}</td>
+							<td width="10%"><a href="{% url 'location-edit' story_pk=form.instance.chapter.story.id chapter_pk=form.instance.chapter.id scene_pk=form.instance.id pk=location.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon "pencil"%} Edit</a>
+							<a href="{% url 'location-delete' story_pk=form.instance.chapter.story.id chapter_pk=form.instance.chapter.id scene_pk=form.instance.id pk=location.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon "remove-circle"%} Delete</a></td>
+						</tr>    			
+					{% endfor %}    	
+				</table>
+			</div>
   	</div>
 	
 		{% buttons %}
