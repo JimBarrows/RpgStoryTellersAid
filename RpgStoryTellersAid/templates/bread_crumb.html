@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% load bootstrap3 %} {% block base_content %}
+<!--  bread_crumb begin -->
+{% block bread_crumb %} {% endblock %}
+<!--  bread_crumb end-->
+
+<div class="page-header">
+	<h1>
+		<!-- bread_crumb_page_header begin -->
+		{% block bread_crumb_page_header %}
+		<!-- bread_crumb_page_header begin -->
+		{% endblock %}
+	</h1>
+</div>
+<!--  bread_crumb_content begin -->
+{% block bread_crumb_content %} {% endblock %}
+<!--  bread_crumb_content end -->
+{% endblock %}

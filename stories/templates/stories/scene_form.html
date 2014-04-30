@@ -1,23 +1,29 @@
-{% extends "base.html" %} 
-{% load bootstrap3 %}
+{% extends "bread_crumb.html" %} 
+{% load bootstrap3 %} 
 
-{% block content %} 
+{% block bread_crumb %}
+	<a href="{% url 'story-list' %}">Stories</a> / <a href="{% url 'story-edit' pk=story.id %}">{{story.name}}</a> / <a href="{% url 'chapter-edit' story_pk=story.id pk=chapter.id %}">Chapter {{chapter.number}}: {{ chapter.title }} </a>
+{% endblock %} 
+
+{% block bread_crumb_page_header %}Scene{% endblock %}
+
+{% block bread_crumb_content %} 
 	<form id="scene_form" action="" method="post" class="form">
 		{% csrf_token %}
-		<div class="page-header">
-			<h1>Scene</h1>
-		</div>
-		{% bootstrap_form form %}
 		
+		{% bootstrap_form form %}
+
+		{% if form.instance.id %}		
 		<ul class="nav nav-tabs">
   		<li class="active"><a href="#clues" data-toggle="tab">Clues</a></li>
   		<li><a href="#castmembers" data-toggle="tab">Cast Members</a></li>
   		<li><a href="#locations" data-toggle="tab">Locations</a></li>
 		</ul>
+
 		<div class="tab-content">
   		<div class="tab-pane active" id="clues">
   			{% buttons %}  			
-					<a id="add-clue-button" class="btn btn-primary" href="{% url 'clue-create'  story_pk=form.instance.chapter.story.id chapter_pk=form.instance.chapter.id scene_pk=form.instance.id %}">{% bootstrap_icon "plus" %} Add</a>
+					<a id="add-clue-button" class="btn btn-primary" href="{% url 'clue-create'  story_pk=story.id chapter_pk=chapter.id scene_pk=form.instance.id %}">{% bootstrap_icon "plus" %} Add</a>
 				{% endbuttons %}
 		
 				<table id="clue-table" class='table table-striped'>
@@ -82,7 +88,7 @@
 				</table>
 			</div>
   	</div>
-	
+		{% endif %}
 		{% buttons %}
 			<button type="submit" class="btn btn-primary">
 				{% bootstrap_icon "save" %} Save

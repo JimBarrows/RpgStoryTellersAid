@@ -1,9 +1,17 @@
-{% extends "base.html" %} {% load bootstrap3 %} {% block content %}
+{% extends "bread_crumb.html" %} 
+{% load bootstrap3 %} 
+
+{% block bread_crumb %}
+	<a href="{% url 'story-list' %}">Stories</a> / <a href="{% url 'story-edit' pk=story.id %}">{{story.name}}</a> / <a href="{% url 'chapter-edit' story_pk=story.id pk=chapter.id %}">Chapter {{chapter.number}}: {{ chapter.title }} </a>
+{% endblock %} 
+
+{% block bread_crumb_page_header %}Confirm Deleting a Scene{% endblock %}
+
+{% block bread_crumb_content %} 
+
 <form action="" method="post">
 	{% csrf_token %}
-	<div class="page-header">
-		<h1>Confirm Deleting a Scene</h1>
-	</div>
+	
 	<p>Are you sure you want to delete Scene {{object.number}} - {{ object.title }}?</p>
 	<input type="submit" value="Confirm" />
 </form>

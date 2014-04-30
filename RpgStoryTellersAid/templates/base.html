@@ -15,8 +15,10 @@
 {% bootstrap_javascript %}
 <link href="{% static 'css/rpg-story-tellers-aide.css' %}" " rel="stylesheet">
 
-{% block head %}
+<!-- base_head begin-->
+{% block base_head %}
 {% endblock %}
+<!-- base_head end-->
 </head>
 
 <body>
@@ -51,7 +53,8 @@
 
 	<div class="container">
 		{% bootstrap_messages %}
-		{% block content %}
+		<!-- base_content begin -->
+		{% block base_content %}
 		<!-- Main jumbotron for a primary marketing message or call to action -->
 		<div class="jumbotron">
 			<div class="container">
@@ -106,6 +109,7 @@
 				</div>
 			</div>
 			{% endblock %}
+			<!-- base_content end -->
 		</div>
 		<hr>
 

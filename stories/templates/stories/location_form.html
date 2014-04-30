@@ -1,12 +1,17 @@
-{% extends "base.html" %} 
-{% load bootstrap3 %}
+{% extends "bread_crumb.html" %} 
+{% load bootstrap3 %} 
 
-{% block content %} 
+{% block bread_crumb %}	
+	<a href="{% url 'story-list' %}">Stories</a> / <a href="{% url 'story-edit' pk=story.id %}">{{story.name}}</a> / <a href="{% url 'chapter-edit' story_pk=story.id pk=chapter.id %}">Chapter {{chapter.number}}: {{ chapter.title }} </a>
+	/ <a href="{% url 'scene-edit' story_pk=story.id chapter_pk=chapter.id pk=scene.id%}">Scene {{scene.number}}: {{ scene.title }} </a> 
+{% endblock %} 
+
+{% block bread_crumb_page_header %}Location{% endblock %}
+
+{% block bread_crumb_content %}
 	<form id="location_form" action="" method="post" class="form">
 		{% csrf_token %}
-		<div class="page-header">
-			<h1>Location</h1>
-		</div>
+		
 		{% bootstrap_form form %}
 		
 		{% buttons %}

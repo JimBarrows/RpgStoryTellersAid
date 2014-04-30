@@ -1,37 +1,42 @@
-{% extends "base.html" %} 
-{% load bootstrap3 %}
+{% extends "bread_crumb.html" %} 
+{% load bootstrap3 %} 
 
-{% block content %} 
+{% block bread_crumb %}
+	<a href="{% url 'story-list' %}">Stories</a> / <a href="{% url 'story-edit' pk=story.id %}">{{story.name}}</a>
+{% endblock %} 
+
+{% block bread_crumb_page_header %}Chapter{% endblock %}
+
+{% block bread_crumb_content %} 
 	<form id="story_form" action="" method="post" class="form">
+	
 		{% csrf_token %}
-		<div class="page-header">
-			<h1>Chapter</h1>
-		</div>
+	
 		{% bootstrap_form form %}
 		
 		{% if form.instance.id %}
-		{% buttons %}  			
-			<a id="add-scene-button" class="btn btn-primary" href="{% url 'scene-create' story_pk=form.instance.story.id chapter_pk=form.instance.id%}">{% bootstrap_icon "plus" %} Add</a>
-		{% endbuttons %}
+			{% buttons %}  			
+				<a id="add-scene-button" class="btn btn-primary" href="{% url 'scene-create' story_pk=form.instance.story.id chapter_pk=form.instance.id%}">{% bootstrap_icon "plus" %} Add</a>
+			{% endbuttons %}
 		
-		<table id="scene-table" class='table table-striped'>
-			<thead>
-				<tr>
-					<th>Number</th>
-					<th>Title</th>
-					<th>Description</th>
-				</tr>
-			</thead>
-			{% for scene in form.instance.scene_set.all %}    						    		
-				<tr>					
+			<table id="scene-table" class='table table-striped'>
+				<thead>
+					<tr>
+						<th>Number</th>
+						<th>Title</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+				{% for scene in form.instance.scene_set.all %}    						    		
+					<tr>					
 						<td width="10%">{{scene.number}}</td>						                    						
 						<td width="20%">{{scene.title}}</td>
 						<td width="60%">{{scene.description}}</td>
 						<td width="10%"><a href="{% url 'scene-edit' story_pk=form.instance.story.id chapter_pk=form.instance.id pk=scene.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon "pencil"%} Edit</a>
 						<a href="{% url 'scene-delete' story_pk=form.instance.story.id chapter_pk=form.instance.id pk=scene.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon "remove-circle"%} Delete</a></td>
-				</tr>    			
-			{% endfor %}    	
-		</table>
+					</tr>    			
+				{% endfor %}    	
+			</table>
 		{% endif %}
 		{% buttons %}
 			<button type="submit" class="btn btn-primary">

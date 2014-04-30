@@ -69,13 +69,20 @@ class ChapterCreate(CreateView):
 		initial = super(ChapterCreate, self).get_initial()
 		story_pk = int(self.kwargs['story_pk'])
 		parent_story = Story.objects.get(pk=story_pk)
-		initial['number'] = parent_story.chapter_set.count() + 1
-		initial['story'] = parent_story		
+		initial['number'] = parent_story.chapter_set.count() + 1			
 		return initial
+	
+	def get_context_data(self, **kwargs) :
+		context = super(ChapterCreate, self).get_context_data(**kwargs)
+		story_pk = int(self.kwargs['story_pk'])
+		parent_story = Story.objects.get(pk=story_pk)
+		context['story'] = parent_story
+		return context
 
 	def form_valid(self, form):
 		form.instance.story = form.initial['story']
 		return super(ChapterCreate, self).form_valid(form)
+	
 	
 class ChapterDetail(DetailView):
 	model = Chapter
@@ -83,6 +90,8 @@ class ChapterDetail(DetailView):
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
 		return super(ChapterDetail, self).dispatch(*args, **kwargs)
+
+			
 			
 class ChapterEdit(UpdateView):
 	model = Chapter
@@ -94,6 +103,14 @@ class ChapterEdit(UpdateView):
 	
 	def get_success_url(self):
 		return reverse('story-edit', kwargs={ 'pk' : self.object.story_id})
+	
+	def get_context_data(self, **kwargs) :
+		context = super(ChapterEdit, self).get_context_data(**kwargs)		
+		story_pk = int(self.kwargs['story_pk'])
+		parent_story = Story.objects.get(pk=story_pk)
+		context['story'] = parent_story
+		return context	
+		
 
 class ChapterDelete(DeleteView):
 	model = Chapter
@@ -105,6 +122,14 @@ class ChapterDelete(DeleteView):
 	
 	def get_success_url(self):
 		return reverse('story-edit', kwargs={ 'pk' : self.object.story_id})
+	
+	def get_context_data(self, **kwargs) :
+		context = super(ChapterDelete, self).get_context_data(**kwargs)
+		story_pk = int(self.kwargs['story_pk'])
+		parent_story = Story.objects.get(pk=story_pk)
+		context['story'] = parent_story
+		return context
+		
 		
 class SceneCreate(CreateView):
 	model = Scene	
@@ -122,13 +147,20 @@ class SceneCreate(CreateView):
 		initial = super(SceneCreate, self).get_initial()
 		chapter_pk = int(self.kwargs['chapter_pk'])
 		parent_chapter = Chapter.objects.get(pk=chapter_pk)
-		initial['number'] = parent_chapter.scene_set.count() + 1
-		initial['chapter'] = parent_chapter
+		initial['number'] = parent_chapter.scene_set.count() + 1		
 		return initial
 	
 	def form_valid(self, form):
 		form.instance.chapter = form.initial['chapter']
 		return super(SceneCreate, self).form_valid(form)
+	
+	def get_context_data(self, **kwargs) :
+		context = super(SceneCreate, self).get_context_data(**kwargs)		
+		chapter_pk = int(self.kwargs['chapter_pk'])
+		chapter = Chapter.objects.get(pk=chapter_pk)
+		context['chapter'] = chapter
+		context['story'] = chapter.story
+		return context
 		
 class SceneDetail(DetailView):
 	model = Scene
@@ -149,6 +181,15 @@ class SceneEdit(UpdateView):
 		return reverse('chapter-edit', kwargs={ 'story_pk' : self.object.chapter.story.id,
 																							'pk' : self.object.chapter_id})
 
+	def get_context_data(self, **kwargs) :
+		context = super(SceneEdit, self).get_context_data(**kwargs)		
+		chapter_pk = int(self.kwargs['chapter_pk'])
+		chapter = Chapter.objects.get(pk=chapter_pk)
+		context['chapter'] = chapter
+		context['story'] = chapter.story
+		return context
+	
+	
 class SceneDelete(DeleteView):
 	model = Scene
 	
@@ -159,6 +200,14 @@ class SceneDelete(DeleteView):
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
 		return super(SceneDelete, self).dispatch(*args, **kwargs)
+	
+	def get_context_data(self, **kwargs) :
+		context = super(SceneDelete, self).get_context_data(**kwargs)		
+		chapter_pk = int(self.kwargs['chapter_pk'])
+		chapter = Chapter.objects.get(pk=chapter_pk)
+		context['chapter'] = chapter
+		context['story'] = chapter.story
+		return context
 	
 class ClueCreate(CreateView):
 	model = Clue		
@@ -172,17 +221,20 @@ class ClueCreate(CreateView):
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
 		return super(ClueCreate, self).dispatch(*args, **kwargs)
-	
-	def get_initial(self):
-		initial = super(ClueCreate, self).get_initial()
-		scene_pk = int(self.kwargs['scene_pk'])
-		parent_scene = Scene.objects.get(pk=scene_pk)		
-		initial['scene'] = parent_scene
-		return initial
-	
+		
 	def form_valid(self, form):
 		form.instance.scene = form.initial['scene']
 		return super(ClueCreate, self).form_valid(form)	
+
+	def get_context_data(self, **kwargs) :
+		context = super(ClueCreate, self).get_context_data(**kwargs)		
+		scene_pk = int(self.kwargs['scene_pk'])
+		scene = Scene.objects.get(pk=scene_pk)
+		context['scene'] = scene
+		context['chapter'] = scene.chapter
+		context['story'] = scene.chapter.story
+		return context
+
 
 class ClueDetail(DetailView):
 	model = Clue
@@ -190,6 +242,7 @@ class ClueDetail(DetailView):
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
 		return super(ClueDetail, self).dispatch(*args, **kwargs)
+
 			
 class ClueEdit(UpdateView):
 	model = Clue
@@ -204,6 +257,16 @@ class ClueEdit(UpdateView):
 	def dispatch(self, *args, **kwargs):
 		return super(ClueEdit, self).dispatch(*args, **kwargs)
 
+
+	def get_context_data(self, **kwargs) :
+		context = super(ClueEdit, self).get_context_data(**kwargs)		
+		scene_pk = int(self.kwargs['scene_pk'])
+		scene = Scene.objects.get(pk=scene_pk)
+		context['scene'] = scene
+		context['chapter'] = scene.chapter
+		context['story'] = scene.chapter.story
+		return context
+
 class ClueDelete(DeleteView):
 	model = Clue
 	
@@ -215,6 +278,15 @@ class ClueDelete(DeleteView):
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
 		return super(ClueDelete, self).dispatch(*args, **kwargs)
+	
+	def get_context_data(self, **kwargs) :
+		context = super(ClueDelete, self).get_context_data(**kwargs)		
+		scene_pk = int(self.kwargs['scene_pk'])
+		scene = Scene.objects.get(pk=scene_pk)
+		context['scene'] = scene
+		context['chapter'] = scene.chapter
+		context['story'] = scene.chapter.story
+		return context
 	
 class CastMemberCreate(CreateView):
 	model = CastMember		
@@ -239,6 +311,16 @@ class CastMemberCreate(CreateView):
 	def form_valid(self, form):
 		form.instance.scene = form.initial['scene']
 		return super(CastMemberCreate, self).form_valid(form)
+	
+	def get_context_data(self, **kwargs) :
+		context = super(CastMemberCreate, self).get_context_data(**kwargs)		
+		scene_pk = int(self.kwargs['scene_pk'])
+		scene = Scene.objects.get(pk=scene_pk)
+		context['scene'] = scene
+		context['chapter'] = scene.chapter
+		context['story'] = scene.chapter.story
+		return context
+
 
 class CastMemberDetail(DetailView):
 	model = CastMember
@@ -260,6 +342,15 @@ class CastMemberEdit(UpdateView):
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
 		return super(CastMemberEdit, self).dispatch(*args, **kwargs)
+	
+	def get_context_data(self, **kwargs) :
+		context = super(CastMemberEdit, self).get_context_data(**kwargs)		
+		scene_pk = int(self.kwargs['scene_pk'])
+		scene = Scene.objects.get(pk=scene_pk)
+		context['scene'] = scene
+		context['chapter'] = scene.chapter
+		context['story'] = scene.chapter.story
+		return context
 
 class CastMemberDelete(DeleteView):
 	model = CastMember
@@ -272,7 +363,17 @@ class CastMemberDelete(DeleteView):
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
 		return super(CastMemberDelete, self).dispatch(*args, **kwargs)
-
+	
+	def get_context_data(self, **kwargs) :
+		context = super(CastMemberDelete, self).get_context_data(**kwargs)		
+		scene_pk = int(self.kwargs['scene_pk'])
+		scene = Scene.objects.get(pk=scene_pk)
+		context['scene'] = scene
+		context['chapter'] = scene.chapter
+		context['story'] = scene.chapter.story
+		return context
+	
+	
 class LocationCreate(CreateView):
 	model = Location		
 	fields = ['name', 'description']
@@ -296,6 +397,15 @@ class LocationCreate(CreateView):
 	def form_valid(self, form):
 		form.instance.scene = form.initial['scene']
 		return super(LocationCreate, self).form_valid(form)
+	
+	def get_context_data(self, **kwargs) :
+		context = super(LocationCreate, self).get_context_data(**kwargs)		
+		scene_pk = int(self.kwargs['scene_pk'])
+		scene = Scene.objects.get(pk=scene_pk)
+		context['scene'] = scene
+		context['chapter'] = scene.chapter
+		context['story'] = scene.chapter.story
+		return context
 
 
 class LocationDetail(DetailView):
@@ -319,6 +429,15 @@ class LocationEdit(UpdateView):
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
 		return super(LocationEdit, self).dispatch(*args, **kwargs)
+	
+	def get_context_data(self, **kwargs) :
+		context = super(LocationEdit, self).get_context_data(**kwargs)		
+		scene_pk = int(self.kwargs['scene_pk'])
+		scene = Scene.objects.get(pk=scene_pk)
+		context['scene'] = scene
+		context['chapter'] = scene.chapter
+		context['story'] = scene.chapter.story
+		return context
 
 
 class LocationDelete(DeleteView):
@@ -332,4 +451,13 @@ class LocationDelete(DeleteView):
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
 		return super(LocationDelete, self).dispatch(*args, **kwargs)
+	
+	def get_context_data(self, **kwargs) :
+		context = super(LocationDelete, self).get_context_data(**kwargs)		
+		scene_pk = int(self.kwargs['scene_pk'])
+		scene = Scene.objects.get(pk=scene_pk)
+		context['scene'] = scene
+		context['chapter'] = scene.chapter
+		context['story'] = scene.chapter.story
+		return context
 
