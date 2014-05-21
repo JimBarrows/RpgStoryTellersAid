@@ -5,9 +5,10 @@ from django.views.generic.edit import UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.core.urlresolvers import reverse, reverse_lazy
-
+from django.http import HttpResponseRedirect
 
 from stories.models import Story, Chapter, Scene, Clue, CastMember, Location
+from stories.forms import SceneCastMemberFormset
 
 class StoryList(ListView):
 	model = Story
@@ -18,6 +19,7 @@ class StoryList(ListView):
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
 		return super(StoryList, self).dispatch(*args, **kwargs)	
+
 
 class StoryCreate(CreateView):
 	model = Story
@@ -30,6 +32,7 @@ class StoryCreate(CreateView):
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
 		return super(StoryCreate, self).dispatch(*args, **kwargs)
+
 
 class StoryDetail(DetailView):
 	model = Story
@@ -80,7 +83,7 @@ class ChapterCreate(CreateView):
 		return context
 
 	def form_valid(self, form):
-		form.instance.story = form.initial['story']
+		form.instance.story = self.get_context_data()['story']
 		return super(ChapterCreate, self).form_valid(form)
 	
 	
@@ -151,7 +154,7 @@ class SceneCreate(CreateView):
 		return initial
 	
 	def form_valid(self, form):
-		form.instance.chapter = form.initial['chapter']
+		form.instance.chapter = self.get_context_data()['chapter']
 		return super(SceneCreate, self).form_valid(form)
 	
 	def get_context_data(self, **kwargs) :
@@ -188,6 +191,42 @@ class SceneEdit(UpdateView):
 		context['chapter'] = chapter
 		context['story'] = chapter.story
 		return context
+	
+	def get(self, request, *args, **kwargs):
+		scene_pk = int(self.kwargs['pk'])
+		self.object = Scene.objects.get(pk=scene_pk)
+		form_class = self.get_form_class()
+		form = self.get_form(form_class)
+		scene_cast_members = self.object.scenecastmember_set.all().values()
+		scenecastmember_formset = SceneCastMemberFormset(initial= scene_cast_members, instance=self.object)
+		return self.render_to_response(
+            self.get_context_data(form=form,
+                                  scenecastmember_formset=scenecastmember_formset))
+
+	def post(self, request, *args, **kwargs):		
+		self.object = None
+		form_class = self.get_form_class()
+		form = self.get_form(form_class)
+		scenecastmember_formset = SceneCastMemberFormset(request.POST,)
+		if (form.is_valid() and scenecastmember_formset.is_valid() ):
+			return self.form_valid(form, scenecastmember_formset)
+		else:
+			return self.form_invalid(form, scenecastmember_formset)
+	
+	def form_valid(self, form, scenecastmember_formset):        
+		self.object = form.save( commit=False)
+		self.object.pk = self.kwargs['pk']
+		self.object.chapter = self.get_context_data()['chapter'] 
+		self.object.save()		
+		scenecastmember_formset.instance = self.object
+		scenecastmember_formset.save()		
+		return HttpResponseRedirect(self.get_success_url())
+
+	def form_invalid(self, form, scenecastmember_formset):
+		return self.render_to_response(
+																	self.get_context_data(form=form,
+																											scenecastmember_formset=scenecastmember_formset))
+
 	
 	
 class SceneDelete(DeleteView):
@@ -291,12 +330,12 @@ class ClueDelete(DeleteView):
 class CastMemberCreate(CreateView):
 	model = CastMember		
 	fields = ['title', 'description']
+	
 	def get_success_url(self):		
 		return reverse('scene-edit', kwargs={ 'story_pk' : self.object.scene.chapter.story.id,
 																					'chapter_pk' : self.object.scene.chapter.story.id,
-																					'pk' : self.object.scene_id})
-		
-		
+																					'pk' : self.object.id})
+			
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
 		return super(CastMemberCreate, self).dispatch(*args, **kwargs)
@@ -309,7 +348,7 @@ class CastMemberCreate(CreateView):
 		return initial
 	
 	def form_valid(self, form):
-		form.instance.scene = form.initial['scene']
+		form.instance.scene = form.initial['scene']		
 		return super(CastMemberCreate, self).form_valid(form)
 	
 	def get_context_data(self, **kwargs) :
@@ -318,10 +357,9 @@ class CastMemberCreate(CreateView):
 		scene = Scene.objects.get(pk=scene_pk)
 		context['scene'] = scene
 		context['chapter'] = scene.chapter
-		context['story'] = scene.chapter.story
+		context['story'] = scene.chapter.story	
 		return context
-
-
+	
 class CastMemberDetail(DetailView):
 	model = CastMember
 	

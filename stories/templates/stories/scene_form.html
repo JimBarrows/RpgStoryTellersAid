@@ -47,22 +47,33 @@
 				{% buttons %}  			
 					<a id="add-castmember-button" class="btn btn-primary" href="{% url 'castmember-create' story_pk=form.instance.chapter.story.id chapter_pk=form.instance.chapter.id scene_pk=form.instance.id %}">{% bootstrap_icon "plus" %} Add</a>
 				{% endbuttons %}
-		
+				{{ scenecastmember_formset.management_form }}
+        {{ scenecastmember_formset.non_form_errors }}													
 				<table id="castmember-table" class='table table-striped'>
-					<thead>
-						<tr>
-							<th>Title</th>
-							<th>Description</th>
-						</tr>
-					</thead>
-					{% for castmember in form.instance.castmember_set.all %}    						    		
-						<tr>											                    						
-							<td width="20%">{{castmember.title}}</td>
-							<td width="70%">{{castmember.description}}</td>
-							<td width="10%"><a href="{% url 'castmember-edit' story_pk=form.instance.chapter.story.id chapter_pk=form.instance.chapter.id scene_pk=form.instance.id  pk=castmember.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon "pencil"%} Edit</a>
-							<a href="{% url 'castmember-delete' story_pk=form.instance.chapter.story.id chapter_pk=form.instance.chapter.id scene_pk=form.instance.id  pk=castmember.pk %}" class="btn btn-default  btn-xs">{%bootstrap_icon "remove-circle"%} Delete</a></td>
-						</tr>    			
-					{% endfor %}    	
+					{% for form in scenecastmember_formset.forms %}
+  					{% if forloop.first %}
+  						<thead>
+  							<tr>
+    							{% for field in form.visible_fields %}
+    								<th>{{ field.label|capfirst }}</th>
+    							{% endfor %}
+  							</tr>
+  						</thead>
+  					{% endif %}
+  					<tr >
+  						{% for field in form.visible_fields %}
+    						<td>    		
+    							{% if forloop.first %}
+      							{% for hidden in form.hidden_fields %}
+      								{{ hidden }}
+      							{% endfor %}
+    							{% endif %}
+      						{{ field.errors.as_ul }}
+      						{{ field }}
+    						</td>
+  						{% endfor %}
+  					</tr>
+					{% endfor %}	
 				</table>
 			</div>	
 			<div class="tab-pane" id="locations">

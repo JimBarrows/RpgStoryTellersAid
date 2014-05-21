@@ -35,6 +35,7 @@ class Scene(models.Model):
 	title = models.CharField(max_length=200)
 	description = models.TextField()
 	chapter = models.ForeignKey('Chapter')
+	members = models.ManyToManyField('CastMember', through='SceneCastMember')
 	
 	def get_absolute_url(self):
 		return reverse('scene-detail', kwargs={'pk': self.pk})
@@ -62,7 +63,7 @@ class Clue(models.Model):
 class CastMember(models.Model):
 	title = models.CharField(max_length=200)
 	description = models.TextField()
-	scene = models.ForeignKey('Scene')
+	#scene = models.ForeignKey('Scene')
 	
 	def get_absolute_url(self):
 		return reverse('castmember-detail', kwargs={'pk': self.pk})
@@ -72,6 +73,11 @@ class CastMember(models.Model):
 
 	class Meta:
 		ordering = ['title', ]
+		
+class SceneCastMember( models.Model):
+	description = models.TextField()
+	scene = models.ForeignKey(Scene)
+	cast_member = models.ForeignKey(CastMember)
 
 
 class Location(models.Model):

@@ -1,7 +1,5 @@
 from django.forms import ModelForm
 from django.forms.models import modelformset_factory, inlineformset_factory
-from stories.models import Story, Chapter
+from stories.models import Scene, SceneCastMember
 
-ChapterFormSet = inlineformset_factory( Story, Chapter)
-
-#,exclude=('story',)
+SceneCastMemberFormset = inlineformset_factory( Scene, SceneCastMember, extra=3, fields=('cast_member', 'description'))
